@@ -1,0 +1,968 @@
+---
+title: "Workshop Instructions"
+author: "Alex Skeels"
+date: "`r Sys.Date()`"
+format:
+  html:
+    css: style.css
+    smooth-scroll: true
+    toc: true          # generate a table of contents
+    toc-location: left # place TOC in a sidebar on the left
+    toc-depth: 2       # how many heading levels to include
+    number-sections: false
+execute:
+  eval: false
+  warning: false
+  fig-width: 6    # inches
+  fig-height: 4   # inches
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### **The Stuff that's Always Here**
+
+1.  ::: panel-tabset
+    ## Learning objectives {.active}
+
+    -   Work with spatial data: points and polygons
+
+    -   Visualise spatial data on maps
+
+    -   Make decisions about cleaning data
+
+    -   Produce simple species distribution models
+
+    ## Ground rules
+
+    Here are a few ground rules to keep things running smoothly:
+
+    1)  Do your best to attempt each task on your own before asking for help from the instructors or your neighbour
+
+    2)  When you get to a green box, stick the [green]{style="color:green;"} Post-it on your laptop where we can see it
+
+    3)  If you need help, stick the [red]{style="color:red;"} Post-it on your laptop
+
+    ## Getting un-stuck
+
+    Remember, no programmers know it all, so don’t struggle alone too long, but before you ask for help do try:
+
+    -   googling for what you want to do (e.g. ‘set point transparency in ggplot’)
+
+    -   googling the error message if you get one (try putting it in double quotes)
+
+    -   searching stack overflow for what you want try using tags (e.g. \[ggplot\]) to narrow down your search, e.g. search \[ggplot2\] adjust point transparency
+
+    -   use the amazing R studio cheat sheets
+
+    -   ask ChatGPT or Bard for help (they are good at R!)
+
+    -   asking your neighbours if they can help (remember to be generous with your time if someone asks you!)
+
+    -   try explaining to an imaginary person exactly what you’re trying to do
+
+    -   try working from the examples in the help files (e.g. type ?geom_point in the console and look down to the examples)
+
+    If none of this works, use your [red]{style="color:red;"} Post-it to get help from a demonstrator.
+
+    ## Before you begin
+
+    Do this at the start of the workshop. For the git commits in this part, you do not need to have descriptions (though you can add them if you prefer).
+
+    1.  On github.com create a new private repo called DS4B_Week_N, where N is the week of the semester (e.g. DS4B_Week_4)
+
+    2.  Add the GitHub user DS4B-ANU (https://github.com/DS4B-ANU) as a collaborator using these instructions.
+
+    3.  Clone your repository to your computer using GitHub Desktop. The new folder on your computer is what is known as the ‘root’ directory of your repository.
+
+    4.  Create a .gitignore file as follows:
+
+        -   In RStudio, use the dialog box in the top left to bring up the menu to add files
+
+        -   Choose “Text File”
+
+        -   Add the line .Rproj.user/ to your text file
+
+        -   Add other lines for files you need to ignore (e.g. you might like to add .DS_Store if you use a mac)
+
+        -   Save the text file in the root directory of your repo, and call it .gitignore
+
+        -   Commit and push your changes using GitHub Desktop
+
+    5.  Create a new R project as follows:
+
+        -   Open RStudio
+
+        -   Create a new R project for this workshop using the dialog button at the top left
+
+        -   Choose “Existing Folder” when the dialog comes up
+
+        -   Choose the root directory of your new repo as the folder in which to create your R project (the folder will be DS4B_Week_N as above, where N is the week of the semester)
+
+        -   Create the R project Commit and push your changes using GitHub Desktop
+
+    6.  Now we add the raw data as follows:
+
+        -   Create a folder in the root directory of your repo called data
+
+        -   Download the raw data for this workshop from Canvas
+
+        -   Save it in the data folder
+
+        -   Commit and push your changes using GitHub Desktop.
+
+    7.  Now we create the R Markdown file as follows:
+
+        -   In RStudio, use the dialog box in the top left to bring up the menu to add files
+
+        -   Choose “R Markdown”
+
+        -   Give it the title workshop_solutions.rmd
+
+        -   Save it in the root directory of your repo
+
+        -   Delete the contents of the R markdown file
+
+        -   Replace the contents with the markdown text below
+
+        -   Enter your U number and the date where indicated in the markdown text below
+
+        -   Knit your R markdown file to html in RStudio
+
+        -   Check the html file works by opening it in your browser
+
+        -   Commit and push your changes using GitHub Desktop.
+
+    8.  Open your repo on github.com, and ensure that:
+
+        -   You have added DS4B-ANU (https://github.com/DS4B-ANU) as a collaborator
+
+        -   Your root directory contains:
+
+            -   a .gitignore file (containing at least the single line .Rproj.user/)
+
+            -   a data/ folder
+
+            -   a data.csv file in the data/ folder
+
+            -   a .Rproj file with the same name as the repo (e.g. Practice_1.Rproj)
+
+            -   a workshop_solutions.rmd file, updated as above
+
+            -   a workshop_solutions.html file, knitted from the .rmd file
+
+            -   nothing else!
+
+        -   If any of these need fixing, fix them then use GitHub Desktop to commit and push your changes.
+
+    ## Remember it’s a lab book
+
+    Through this and every workshop, you should type as much descriptive text into your R Markdown document as someone (including but not limited to you) would need to understand what you’re doing.
+
+    Remember: This document is your lab book! The information in it must be sufficient to reproduce your research, allow others to understand your way of thinking, and allow you to use it in your later work (e.g. when writing assessments, theses, blogs or papers). Imagine that you are writing a manual and a report at the same time.
+
+    Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, subheadings work like this:
+
+    ```{r}
+    ## This is a level 2 subheading
+    ### This is a level 3 subheading
+    ```
+    :::
+
+## Introduction
+
+Before you start, first make sure you’ve set up your github repo correctly following the instructions in the “Before You Begin” section above.
+
+Today we are going to continue our journey of modelling the distribution of the Frilled Lizard (*Chlamydosaurus kingii*) with one of the most widely used tools in ecology: species distribution models (SDMs). Last week, we used exclusively geometric models which rely on presence-only data to model geographic range polygons. This week, we will use a class of SDMs that uses both presence and absence (or pseudo-absence) data to model suitable habitat based on environmental conditions.
+
+These models underpin:
+
+-   conservation planning\
+-   invasive species forecasts\
+-   climate change projections\
+-   biodiversity policy
+
+They are powerful tools but very easy to misuse. Throughout today’s workshop, focus less on *running models* and more on *understanding assumptions*.
+
+### The Data
+
+We are going to use the cleaned occurrence records and the associated alpha hull that we worked on last week. You may have slightly different data to your neighbours depending on how you cleaned the data and defined the alpha value for your alpha hulls. That's ok!
+
+We will also use bioclimatic data from WorldClim, which are commonly used for SDMs which describe variation in monthly averages of temperature and precipitation, e.g., mean temperature of the warmest quarter or precipitation seasonality. More details on the definition of these variables is [here](https://www.worldclim.org/data/bioclim.html).
+
+We begin with the cropped occurrence dataset you created last week and the alpha hull.
+
+```{r}
+library(tidyverse)
+library(terra)
+
+# occurence points
+occ <- read_csv("data/frilled_lizard_ALA_cropped.csv")
+
+# load alpha hull
+ahull_v <- vect("distribution/frilled_lizard_alpha_hull.shp")
+```
+
+Environmental SDMs require spatial layers describing climate or habitat. We will use **bioclim variables** derived from temperature and rainfall.
+
+Load the raster stack with the `rast` function from the `terra` package.
+
+```{r}
+bioclim_data <- rast("data/worldclim_australia.tif")
+```
+
+#### **Task 1. Inspect the Predictors (10 minutes)**
+
+Raster data can be organised as a matrix, with each row representation a latitude, and each column a longitude. It can also be organised with each row representing a unique grid cell on the landscape. This second format is useful when you are looking at multiple variables simultaneously and is what is returned by `as_tibble`.
+
+It is useful to inspect the raw data numerically and visually. Spend a few minutes using `skimr` to look at the moments of the data, `leaflet` to visualise the data on a map.
+
+-   Take a look at a few variables
+
+-   Can you guess what units the variables are in?
+
+-   Do variable ranges look reasonable?
+
+-   Do any of variables appear correlated?\
+
+```{r}
+library(skimr)
+library(leaflet)
+library(leafsync)
+
+values(bioclim_data) %>% 
+  as_tibble() %>% 
+  skim()
+
+bio01 <- leaflet() |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addRasterImage(bioclim_data$Bio01,
+                 opacity = 0.8) |>
+  addLegend(pal = colorNumeric("viridis",
+                              values(bioclim_data$Bio01),
+                              na.color = "transparent"),
+            values = values(bioclim_data$Bio01),
+            title = "Bio01")
+
+
+bio12 <- leaflet() |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addRasterImage(bioclim_data$Bio12,
+                 opacity = 0.8) |>
+  addLegend(pal = colorNumeric("viridis",
+                              values(bioclim_data$Bio12),
+                              na.color = "transparent"),
+            values = values(bioclim_data$Bio12),
+            title = "Bio12")
+
+sync(bio01, bio12)
+```
+
+### Extracting Environmental Values
+
+To model a niche, we need predictor values at occurrence locations. First, however, we want to drop points which are duplicated in a grid cell. This removes some bias from having some grid cells with many observations (e.g., close to cities) and some with very few. All grid cells with a sighting will contribute just once to our models.
+
+```{r}
+# prune data to one point per grid cell
+# Create SpatVector
+occ_v <- vect(occ, geom = c("X", "Y"), crs = crs(bioclim_data))
+
+# Get raster cell IDs
+occ_v$cell_id <- cellFromXY(bioclim_data, crds(occ_v))
+
+# Keep one point per raster cell
+occ_pruned <- occ_v[!duplicated(occ_v$cell_id), ]
+
+# Extract climate
+occ_env <- terra::extract(
+  bioclim_data,
+  occ_pruned,
+  ID = FALSE
+) |> 
+  as_tibble()
+
+occ_model <- bind_cols(
+  as_tibble(crds(occ_pruned)) |> 
+    setNames(c("longitude", "latitude")),
+  occ_env
+) |> 
+  mutate(presence = 1)
+```
+
+::: callout-tip
+## Reminder: Knit, Commit, Push!
+:::
+
+## Background Points
+
+As mentioned above, environmental model-based SDMs require both presence and absence data. For most species, we do not have reliable absence data available so we must use what is known as background (or pseudo-absence) data.
+
+Background data can be sampled in many ways, each will affect your results. A good study on selecting background points is [here](https://doi.org/10.1111/j.2041-210X.2011.00172.x).
+
+Today we are going to test this directly.
+
+### **Form Groups**
+
+With your neighbours, split into groups of **four**.
+
+Each member of the group will generate 5000 background points using a **different strategy**, then you will compare the resulting suitability maps.
+
+By the end of this exercise, your group should be able to answer:
+
+-   Do modelling decisions strongly influence predictions?
+-   Which method seems most biologically realistic?
+-   Which method would you trust for conservation decisions?
+
+There is no universally correct answer — the goal is to develop modelling judgement.
+
+#### Task 2. Generate Background Points Using Your Assigned Method
+
+-   Within your group, assign one method to each person.
+
+-   Run **only your tab**.
+
+-   Afterwards, you will compare results using synced maps.
+
+::: panel-tabset
+## Method 1 {.active}
+
+### Random Background
+
+This is the simplest and most commonly used approach. Here, we sample environmental space uniformly across the study region.
+
+`set.seed` can be used to set the seed of the random number generator. When drawing samples, this will ensure if you use the same seed (e.g. 123) you will always draw the same sample of points. Good for reproducibility.
+
+```{r}
+set.seed(123)
+
+bg <- spatSample(
+  bioclim_data,
+  size = 5000,
+  method = "random",
+  na.rm = TRUE,
+  as.points = TRUE
+)
+
+bg_env <- terra::extract(
+  bioclim_data,
+  bg,
+  ID = FALSE
+) %>% 
+  as_tibble()
+
+bg_model <- bind_cols(
+  st_coordinates(st_as_sf(bg)) %>% 
+    as_tibble() %>% 
+    rename(longitude = X, latitude = Y),
+  bg_env
+) %>% 
+  mutate(presence = 0)
+```
+
+Use `leaflet` to plot a raster + the occurrence points + the background points. What patterns do you notice?
+
+```{r}
+leaflet(bg_model) |>
+  
+  # Add a detailed basemap
+  addProviderTiles(providers$OpenStreetMap.Mapnik) |> 
+  
+  # Plot occurrence records
+  addCircleMarkers(
+    radius = 5,
+    fillOpacity = 0.7,
+    stroke = FALSE,
+    color = "#2C7FB8"
+  ) 
+
+```
+
+## Method 2
+
+### Accessible Area Background
+
+In this method, we sample points within a fixed distance of our occurrence points, using a buffer, just like in last weeks workshop. Here, we are assuming that the species could realistically disperse only within some distance of known occurrences. Further, we are also limiting the range of environments we will contrast with our occurrence points, which increase the specificity of the model to our species.
+
+We buffer occurrence points to define an **accessible area**.
+
+```{r}
+occ_proj <- st_transform(occ_sf, 3577)
+
+buffer <- st_buffer(occ_proj, dist = 300000) |> 
+  st_union()
+
+buffer_vect <- vect(st_transform(buffer, 4326))
+
+bg <- spatSample(
+  mask(bioclim_data, buffer_vect),
+  size = 5000,
+  method = "random",
+  na.rm = TRUE,
+  as.points = TRUE
+)
+
+bg_env <- terra::extract(bioclim_data, bg, ID = FALSE) %>% 
+  as_tibble()
+
+bg_model <- bind_cols(
+  st_coordinates(st_as_sf(bg)) %>% 
+    as_tibble() %>% 
+    rename(longitude = X, latitude = Y),
+  bg_env
+) %>% 
+  mutate(presence = 0)
+```
+
+Use `leaflet` to plot a raster + the occurrence points + the background points. What patterns do you notice?
+
+## Method 3
+
+### Environmental Envelope Background
+
+In this method, we sample points within Australia that are within the broad environmental range of our occurrence points. Here, we are assuming that the species could realistically disperse only within the climatic conditions that it could experience or have access to across its distribution. If its range is determined by climate, then it should only occupy a subset of the total range of conditions in the area. Further, we are also limiting the range of environments we will contrast with our occurrence points which should increase the specificity of the model to our species.
+
+In other words, instead of restricting sampling background points in geographic space, we restrict **environmental space**.
+
+We sample only within the environmental range + one standard deviation observed at presence locations.
+
+```{r}
+env_ranges <- occ_env %>% 
+  summarise(
+    across(
+      everything(),
+      list(min = ~min(.x, na.rm = TRUE)-sd(.x, na.rm = TRUE),
+           max = ~max(.x, na.rm = TRUE)+sd(.x, na.rm = TRUE))
+    )
+  )
+
+clim_df <- terra::as.data.frame(
+  bioclim_data,
+  xy = TRUE,
+  na.rm = TRUE
+)
+
+ranges_long <- env_ranges %>% 
+  pivot_longer(
+    everything(),
+    names_to = c("variable", ".value"),
+    names_sep = "_(?=[^_]+$)"   # splits on final underscore only
+  )
+
+filtered_cells <- clim_df %>% 
+  
+  pivot_longer(
+    cols = -c(x, y),
+    names_to = "variable",
+    values_to = "value"
+  ) %>% 
+  
+  left_join(ranges_long, by = "variable") %>% 
+  
+  filter(value >= min,
+         value <= max) %>% 
+  
+  group_by(x, y) %>% 
+  summarise(n = n(), .groups = "drop") %>% 
+  
+  filter(n == nrow(ranges_long)) %>% 
+  
+  select(x, y)
+
+bg <- filtered_cells %>% 
+  slice_sample(n = 5000)
+
+bg_env <- terra::extract(bioclim_data, bg, ID = FALSE) %>% 
+  as_tibble()
+
+bg_model <- bind_cols(
+  bg %>% 
+    rename(longitude = x, latitude = y),
+  bg_env
+) %>% 
+  mutate(presence = 0)
+```
+
+Use `leaflet` to plot a raster + the occurrence points + the background points. What patterns do you notice?
+
+## Method 4
+
+### Bias Correction Background
+
+In species distribution modeling, the choice of background points (locations representing where a species could potentially occur) can strongly influence the model. One way to make these background points more realistic is to account for sampling effort — that is, where people have actually looked for the species.
+
+Here, we use a bias-correction approach based on the distribution of Agamid lizards in Australia:
+
+-   The Frilled Lizard (Chlamydosaurus kingii) belongs to the family Agamidae, which includes over 70 species in Australia.
+
+-   If a researcher is out recording Agamid lizards, it is very likely that they would record the Frilled Lizard if it were present.
+
+-   Therefore, areas where Agamid lizards have been observed represent locations that have actually been sampled, and are reasonable places to draw background points.
+
+-   By sampling background points from these areas, we avoid including locations where no one has ever looked, which could otherwise bias the model by suggesting that absence is equivalent to unsurveyed locations.
+
+In other words, this method uses existing survey effort as a guide to produce more realistic background points, improving the reliability of our species distribution models.
+
+```{r}
+# Read in distribution of all agamid species
+agamid_occ <- read.csv("data/agamidae.csv")
+
+# Convert to terra vector object
+agamid_occ <- terra::vect(
+  agamid_occ,
+  geom = c("decimalLongitude", "decimalLatitude"),
+  crs = "EPSG:4326"
+)
+
+# Rasterize occurrence counts onto first climate layer
+# This gives a "density" surface of sampling effort
+agamid_density <- terra::rasterize(
+  x = agamid_occ,
+  y = bioclim_data[[1]],
+  fun = "sum"
+)
+
+# Sample random points proportional to density ("bias correction")
+# Use stratified method to weight points by existing sampling effort
+set.seed(123)  # for reproducibility
+bck_bias <- terra::spatSample(
+  x = bioclim_data[[1]],
+  size = 5000,
+  method = "stratified",
+  weights = agamid_density,
+  as.points = TRUE,
+  na.rm = TRUE
+)
+
+# Extract coordinates for tidyverse manipulation
+bg <- as_tibble(terra::crds(bck_bias)) %>% 
+  rename(longitude = x, latitude = y)
+
+# Extract environmental values for each point
+bg_env <- terra::extract(bioclim_data, bg, ID = FALSE) %>% 
+  as_tibble()
+
+# Combine into modeling-ready dataframe
+bg_model <- bind_cols(
+  bg,
+  bg_env
+) %>% 
+  mutate(presence = 0)
+```
+
+Use `leaflet` to plot a raster + the occurrence points + the background points. What patterns do you notice?
+:::
+
+::: callout-tip
+## Reminder: Knit, Commit, Push!
+:::
+
+## Fit Models
+
+Now that we have **presence and background data**, along with the environmental variables extracted at each site, we can move on to the **modeling part** of the workshop.
+
+First lets combine our occurrence and background data into a single data frame.
+
+```{r}
+sdm_data <- bind_rows(occ_model, bg_model)
+
+# Check the result
+glimpse(sdm_data)
+```
+
+We will fit two types of models:
+
+-   **Generalized Linear Model (GLM):** Models linear relationships between predictors and the response (presence/absence). Here we use logistic regression.\
+-   **Generalized Additive Model (GAM):** Can capture **non-linear relationships** using smoothing functions (`s()`), allowing the model to flexibly fit more complex patterns.
+
+> ⚠️ Note: In real-world SDMs, models are typically fitted at high spatial resolution with many predictors and more advanced statistical or machine learning techniques. Here, we use a simplified workflow to focus on the **fundamentals**.
+
+------------------------------------------------------------------------
+
+#### **Task 3. Select predictors**
+
+Selecting environmental predictors is critical. Variables should be chosen based on **ecological relevance** and to **avoid collinearity**. Both GLMs and GAMs do poorly when predictors are highly correlated.
+
+```{r}
+# Check for collinearity among predictors
+library(caret)
+
+correlation_matrix <- cor(sdm_data[, 3:21], use="complete.obs")
+correlated <- findCorrelation(correlation_matrix)
+names_correlated <- colnames(sdm_data[,3:21])[correlated]
+
+# Remove highly correlated variables
+sdm_data_uncor <-sdm_data[, !colnames(sdm_data) %in% names_correlated]
+
+# Keep track of predictors
+predictor_vars <- colnames(sdm_data_uncor)[grep("Bio", colnames(sdm_data_uncor))]
+print(predictor_vars)
+```
+
+**Ask yourself:**
+
+-   Which variables were removed due to colinearity?
+
+-   Do the remaining predictors make ecological sense for the Frilled Lizard?
+
+-   Would you remove any others based on your ecological kowledge of the species (if any)?
+
+Next, we define **formulas** for GLM and GAM models. For the GAM, `k = 4` sets the flexibility of the splines: increase `k` for more complex curves, decrease for simpler curves.
+
+```{r}
+
+# GLM: linear model
+formula_glm <- formula(paste0("presence ~ ", paste0(predictor_vars, collapse = " + ")))
+
+# GAM: non-linear model with splines
+formula_gam <- formula(paste0("presence ~ ", paste0("s(", predictor_vars,", 4)", collapse = " + ")))
+
+# Inspect formulas
+print(formula_glm)
+print(formula_gam)
+```
+
+#### **Task 4. Fit models**
+
+Now we fit both models using the uncorrelated predictors.
+
+```{r}
+library(gam)
+
+# Fit GLM (logistic regression)
+glm_sdm <- glm(formula_glm, data = sdm_data_uncor, family = binomial(link = "logit"))
+summary(glm_sdm)
+
+# Fit GAM
+gam_sdm <- gam::gam(formula_gam, data = sdm_data_uncor, family = binomial(link = "logit"))
+summary(gam_sdm)
+
+```
+
+**Ask yourself:**
+
+-   Which variables are significant in each model?
+
+-   Which model has a lower AIC (better fit)?
+
+-   Which model has a higher explained deviance (D²)?
+
+Remember: Lower AIC = better model fit, higher D² = more variance explained.
+
+Now we project the niche into geographic space by using `predict` to predict the model the climate data for the whole of Australia.
+
+```{r}
+pred_glm <- terra::predict(bioclim_data,
+                       glm_sdm,
+                       type = "response")
+
+pred_gam <- terra::predict(bioclim_data,
+                       gam_sdm,
+                       type = "response")
+
+# Create a color palette
+pal <- colorNumeric(
+  palette = "Spectral",
+  domain = c(0, 1),
+  na.color = "transparent"
+)
+
+glm_plot <- leaflet() |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addRasterImage(pred_glm, colors=pal, opacity = 0.8) %>%
+  addLegend(
+    pal = pal, 
+    values = values(pred_glm),
+    title = "GLM Suitability",
+    position = "bottomright"
+  )
+
+gam_plot <- leaflet() |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addRasterImage(pred_gam, colors=pal, opacity = 0.8) %>%
+  addLegend(
+    pal = pal, 
+    values = values(pred_gam),
+    title = "GAM Suitability",
+    position = "bottomright"
+  )
+
+sync(glm_plot, gam_plot)
+
+```
+
+We can turn a probabilistic measure of habitat suitability into a binary species dsitribution by thresholding the predictions. To do this we need to evaluate our models and assess how well the model predicts our known occurence records.
+
+A common approach is the **Receiver Operating Characteristic (ROC) curve**, which plots the trade-off between **true positive rate** and **false positive rate** across all possible thresholds.
+
+From the ROC curve, we calculate the **Area Under the Curve (AUC)**:
+
+-   **AUC ≈ 1** → the model perfectly separates presences from absences
+
+-   **AUC ≈ 0.5** → the model performs no better than random guessing
+
+```         
+
+> ⚠️ Note: Higher AUC values indicate better predictive performance, but AUC alone does not capture all aspects of model reliability — it should be interpreted alongside other evaluation metrics.
+```
+
+```{r}
+library(dismo)
+
+# Split presence and background
+p <- sdm_data_uncor[sdm_data_uncor$presence==1, ]
+a <- sdm_data_uncor[sdm_data_uncor$presence==0, ]
+
+# Evaluate models
+glm_eval <- evaluate(p=p, a=a, model=glm_sdm, type='response')
+gam_eval <- evaluate(p=p, a=a, model=gam_sdm, type='response')
+
+# Plot ROC curves
+par(mfrow=c(1,2))
+plot(glm_eval, "ROC")
+plot(gam_eval, "ROC")
+
+```
+
+Take a look at the evaluation objects and try plotting some other summary statistics, like `kappa`, the true positive rate (`TPR`), false positive rate `FPR`, etc.
+
+The aim is to find the value of habitat suitability, which has the maximum value of a metric like `spec_sens` - the threshold at which the sum of the sensitivity (true positive rate) and specificity (true negative rate) is highest. Then we say all sites with a habitat suitability higher than that threshold is classed as presence, and every cell with a habitat suitability lower than the threshold is classed as an absence.
+
+```{r}
+pred_glm_threshold <- threshold(glm_eval, stat = "spec_sens")
+pred_gam_threshold <- threshold(gam_eval, stat = "spec_sens")
+
+pred_glm_bin <- pred_glm > pred_glm_threshold
+pred_gam_bin <- pred_gam > pred_gam_threshold
+
+
+glm_bin_plot <- leaflet() |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addRasterImage(pred_glm_bin,  opacity = 0.8) 
+
+gam_bin_plot <- leaflet() |>
+  addProviderTiles(providers$CartoDB.Positron) |>
+  addRasterImage(pred_gam_bin, opacity = 0.8) 
+
+sync(glm_bin_plot, gam_bin_plot)
+```
+
+Now, use `leaflet` to add the species occurrence points and the alpha hull onto this plot.
+
+**Ask yourself:**
+
+-   How well do these align?
+
+-   Are there occurrence points in areas deemed unsuitable?
+
+-   Are the suitable areas very far from any known occurrences?
+
+::: callout-tip
+## Reminder: Knit, Commit, Push!
+:::
+
+## Model Validation
+
+So far we have evaluated the model on the same data used to fit it, so it may appear to perform very well. This is not a realistic estimate of predictive performance, because in real-world applications we want the model to generalize to new locations.
+
+A better way to estimate predictive performance is to split the data into training and testing subsets, fit the model on the training data, and evaluate it on the testing data.
+
+#### **Task 5. K-Fold Cross-Validation**
+
+K-fold cross-validation automates the validation process by splitting the data into `k` partitions and repeats the evaluation on each partition. As follows:
+
+1.  Split the data into K folds
+
+2.  Repeat K times:
+
+    -   Train the model on K – 1 folds
+
+    -   Test the model on the remaining fold
+
+3.  Combine results across folds to get an average AUC and measure of variability
+
+```{r}
+K <- 5
+k_fold <- kfold(sdm_data_uncor, k = K)
+
+# Set up table to store results
+auc_df <- data.frame(k = 1:K, glm_AUC = NA, gam_AUC = NA)
+
+for (k in 1:K) {
+  
+  # Split into training and testing data
+  train <- sdm_data_uncor[k_fold != k, ]
+  test  <- sdm_data_uncor[k_fold == k, ]
+  
+  # Refit models on training data
+  mod_glm <- update(glm_sdm, data = train)
+  mod_gam <- update(gam_sdm, data = train)
+  
+  # Evaluate on test fold
+  glm_eval_tmp <- evaluate(
+    p = test[test$presence == 1, ],
+    a = test[test$presence == 0, ],
+    model = mod_glm,
+    type = 'response'
+  )
+  
+  gam_eval_tmp <- evaluate(
+    p = test[test$presence == 1, ],
+    a = test[test$presence == 0, ],
+    model = mod_gam,
+    type = 'response'
+  )
+  
+  # Save AUC for each fold
+  auc_df[k, "glm_AUC"] <- glm_eval_tmp@auc
+  auc_df[k, "gam_AUC"] <- gam_eval_tmp@auc
+}
+
+# Inspect AUC across folds
+print(auc_df)
+```
+
+By repeating the evaluation on different subsets of the data, **k-fold cross-validation provides a more robust estimate of model predictive performance** than a single train/test split.
+
+::: callout-tip
+## Reminder: Knit, Commit, Push!
+:::
+
+## Model Predictions Through Time
+
+If we're happy with our model in the present-day and convinced we have accurately modelled the niche of the species, we might want to ask how the species distribution has changed through time.
+
+Commonly, people look to model the change in distribution into the future using models of climate change under different emissions scenarios. Equally, we might also want to know how the species was distributed in the past to understand how population structure might have evolved over time when conditions were vastly different to today.
+
+One such period is the Last Glacial Maximum \~21,000 years ago. During the LGM, Australia looked very different, it was a colder and drier place than the present day and many species may have contracted their geographic ranges to warmer and more mesic refugia.
+
+Lets see what our SDM predicts for the distribution of the Frilled Lizard at the LGM!
+
+First, lets load the LGM climate data make sure the names match the WorldClim data
+
+```{r}
+# load bioclim data for the LGM (from CHELSA)
+lgm_bioclim_data <- rast("data/chelsa_australia_LGM.tif")
+
+# The names of the different variables must match exactly
+names(bioclim_data)
+names(lgm_bioclim_data)
+
+# check they match
+names(bioclim_data) %in% names(lgm_bioclim_data)
+```
+
+Now we have data that represents the same variables, with matching names, at two different times. We can now predict the model on this new data.
+
+```{r}
+pred_glm_lgm <- predict(lgm_bioclim_data, glm_sdm, type="response")
+pred_gam_lgm <- predict(lgm_bioclim_data, gam_sdm, type="response")
+
+pred_glm_bin_lgm <- pred_glm_lgm > pred_glm_threshold
+pred_gam_bin_lgm <- pred_gam_lgm > pred_gam_threshold
+```
+
+Before we plot it out, lets do the same for the year 2100. There are many models for future climate than use different climatological models and shared socioeconomic pathways (SSP). WorldClim has data available for many of these - see [here](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html).
+
+Today we'll use MIROC6 climate model and SSP585 which is the highest emissions scenario.
+
+```{r}
+# load bioclim data for the LGM (from CHELSA)
+future_bioclim_data <- rast("data/worldclim_australia_MIROC6_2100.tif")
+
+# check they match
+names(bioclim_data) %in% names(future_bioclim_data)
+
+# make the model prediction
+pred_glm_2100 <- predict(future_bioclim_data, glm_sdm, type="response")
+pred_gam_2100 <- predict(future_bioclim_data, gam_sdm, type="response")
+
+# threshold the model prediction
+pred_glm_bin_2100 <- pred_glm_2100 > pred_glm_threshold
+pred_gam_bin_2100 <- pred_gam_2100 > pred_gam_threshold
+```
+
+### Final Task
+
+Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create a three-row plot using \`leaflet with the estimated LGM range, the present-day range, and the future distribution. On top of the present-day estimated range, plot the occurrence points and the alpha hull for comparison.
+
+Next, get together with your group and compare each members plot and answer these questions.
+
+-   Which background selection step gave you the best estimate of the present-day range?
+
+-   How did the background selection methods differ from one another?
+
+-   Can you think of a possible reason some methods performed better than others? (no wrong answers!)
+
+::: callout-tip
+## ✅ Check out!
+
+Once you’ve completed the workshop up to this point (not including any of the Going Further section), you are welcome to check out. **But first, knit, commit, and push!**
+
+If you’d like to stay and complete the ‘Going Further’ section, you’re welcome to do so — but please check out first. During the check out we will look at your `.rmd` and `.html` files, so have both loaded and ready.
+
+**To check out:** bring your laptop to Alex, Rob, or a demonstrator and let them know that you’re ready.
+:::
+
+## Going Further
+
+### (1) Thresholding with different validation metrics
+
+In the workshop so far, you have performed thresholding on the range with the metric `spec_sens`, but there are many other possible choices to use. read about the other options (`?threshold`) and try some of these out. How does the estimate of the range change? Which metrics predict a larger range? and which a smaller?
+
+### (2) Cross-validation with spatial folds
+
+In the workshop so far, we have used random folds in K-fold cross validation. These generally show consistent high performance across folds. However, to assess whether a model is transferable in space and time, it is better to split the data in a more structured way. For example, by splitting into spatial folds, we can ask whether the distribution of a species in one restricted part of its range can be informative about where it should be distributed in other parts of the continent. A robust model should be transferable. A rough script to create 6 spatial folds is below but check out the `blockCV` package for even more options to do this.
+
+```{r}
+
+# Create 2D spatial blocks
+sdm_data_uncor <- sdm_data_uncor %>%
+  mutate(
+    lon_bin = ntile(longitude, 3),
+    lat_bin = ntile(latitude,  2),
+    spatial_fold = as.numeric(interaction(lon_bin, lat_bin))
+  )
+
+# If number of folds exceeds K, randomly reduce to K
+K <- length(unique(sdm_data_uncor$spatial_fold))
+
+auc_df_spatial <- data.frame(k = 1:K, glm_AUC = NA, gam_AUC = NA)
+
+for (k in 1:K) {
+  
+  # Spatial split
+  train <- sdm_data_uncor[sdm_data_uncor$spatial_fold != k, ]
+  test  <- sdm_data_uncor[sdm_data_uncor$spatial_fold == k, ]
+  
+    if (length(unique(test$presence)) < 2) {
+    next
+  }
+
+  
+  # Refit models
+  mod_glm <- update(glm_sdm, data = train)
+  mod_gam <- update(gam_sdm, data = train)
+  
+  # Evaluate
+  glm_eval_tmp <- evaluate(
+    p = test[test$presence == 1, ],
+    a = test[test$presence == 0, ],
+    model = mod_glm,
+    type = "response"
+  )
+  
+  gam_eval_tmp <- evaluate(
+    p = test[test$presence == 1, ],
+    a = test[test$presence == 0, ],
+    model = mod_gam,
+    type = "response"
+  )
+  
+  auc_df_spatial[k, "glm_AUC"] <- glm_eval_tmp@auc
+  auc_df_spatial[k, "gam_AUC"] <- gam_eval_tmp@auc
+}
+
+print(auc_df_spatial)
+
+```

@@ -1,0 +1,22 @@
+.panel-tabset .nav-tabs {
+  flex-wrap: nowrap;
+}
+
+.panel-tabset .nav-tabs .nav-link {
+  white-space: nowrap;
+}
+
+.panel-tabset .nav-link {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.highlight-blue {
+  color: #2C7FB8;
+  font-weight: 600;
+}
+
+.highlight-red {
+  color: #D1495B;
+}
+

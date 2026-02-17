@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alex Skeels">
+<meta name="dcterms.date" content="2026-02-17">
+
+<title>Workshop Instructions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="workshop_instructions_wk8_files/libs/clipboard/clipboard.min.js"></script>
+<script src="workshop_instructions_wk8_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="workshop_instructions_wk8_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="workshop_instructions_wk8_files/libs/quarto-html/popper.min.js"></script>
+<script src="workshop_instructions_wk8_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="workshop_instructions_wk8_files/libs/quarto-html/anchor.min.js"></script>
+<link href="workshop_instructions_wk8_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="workshop_instructions_wk8_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="workshop_instructions_wk8_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="workshop_instructions_wk8_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="workshop_instructions_wk8_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#background-points" id="toc-background-points" class="nav-link" data-scroll-target="#background-points">Background Points</a></li>
+  <li><a href="#fit-models" id="toc-fit-models" class="nav-link" data-scroll-target="#fit-models">Fit Models</a></li>
+  <li><a href="#model-validation" id="toc-model-validation" class="nav-link" data-scroll-target="#model-validation">Model Validation</a></li>
+  <li><a href="#model-predictions-through-time" id="toc-model-predictions-through-time" class="nav-link" data-scroll-target="#model-predictions-through-time">Model Predictions Through Time</a></li>
+  <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">Going Further</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Workshop Instructions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Alex Skeels </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 17, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-stuff-thats-always-here" class="level3">
+<h3 class="anchored" data-anchor-id="the-stuff-thats-always-here"><strong>The Stuff that’s Always Here</strong></h3>
+<ol type="1">
+<li><div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Learning objectives</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Ground rules</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Getting un-stuck</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Before you begin</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Remember it’s a lab book</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="active tab-pane" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ul>
+<li><p>Work with spatial data: points and polygons</p></li>
+<li><p>Visualise spatial data on maps</p></li>
+<li><p>Make decisions about cleaning data</p></li>
+<li><p>Produce simple species distribution models</p></li>
+</ul>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Here are a few ground rules to keep things running smoothly:</p>
+<ol type="1">
+<li><p>Do your best to attempt each task on your own before asking for help from the instructors or your neighbour</p></li>
+<li><p>When you get to a green box, stick the <span style="color:green;">green</span> Post-it on your laptop where we can see it</p></li>
+<li><p>If you need help, stick the <span style="color:red;">red</span> Post-it on your laptop</p></li>
+</ol>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>Remember, no programmers know it all, so don’t struggle alone too long, but before you ask for help do try:</p>
+<ul>
+<li><p>googling for what you want to do (e.g.&nbsp;‘set point transparency in ggplot’)</p></li>
+<li><p>googling the error message if you get one (try putting it in double quotes)</p></li>
+<li><p>searching stack overflow for what you want try using tags (e.g.&nbsp;[ggplot]) to narrow down your search, e.g.&nbsp;search [ggplot2] adjust point transparency</p></li>
+<li><p>use the amazing R studio cheat sheets</p></li>
+<li><p>ask ChatGPT or Bard for help (they are good at R!)</p></li>
+<li><p>asking your neighbours if they can help (remember to be generous with your time if someone asks you!)</p></li>
+<li><p>try explaining to an imaginary person exactly what you’re trying to do</p></li>
+<li><p>try working from the examples in the help files (e.g.&nbsp;type ?geom_point in the console and look down to the examples)</p></li>
+</ul>
+<p>If none of this works, use your <span style="color:red;">red</span> Post-it to get help from a demonstrator.</p>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p>Do this at the start of the workshop. For the git commits in this part, you do not need to have descriptions (though you can add them if you prefer).</p>
+<ol type="1">
+<li><p>On github.com create a new private repo called DS4B_Week_N, where N is the week of the semester (e.g.&nbsp;DS4B_Week_4)</p></li>
+<li><p>Add the GitHub user DS4B-ANU (https://github.com/DS4B-ANU) as a collaborator using these instructions.</p></li>
+<li><p>Clone your repository to your computer using GitHub Desktop. The new folder on your computer is what is known as the ‘root’ directory of your repository.</p></li>
+<li><p>Create a .gitignore file as follows:</p>
+<ul>
+<li><p>In RStudio, use the dialog box in the top left to bring up the menu to add files</p></li>
+<li><p>Choose “Text File”</p></li>
+<li><p>Add the line .Rproj.user/ to your text file</p></li>
+<li><p>Add other lines for files you need to ignore (e.g.&nbsp;you might like to add .DS_Store if you use a mac)</p></li>
+<li><p>Save the text file in the root directory of your repo, and call it .gitignore</p></li>
+<li><p>Commit and push your changes using GitHub Desktop</p></li>
+</ul></li>
+<li><p>Create a new R project as follows:</p>
+<ul>
+<li><p>Open RStudio</p></li>
+<li><p>Create a new R project for this workshop using the dialog button at the top left</p></li>
+<li><p>Choose “Existing Folder” when the dialog comes up</p></li>
+<li><p>Choose the root directory of your new repo as the folder in which to create your R project (the folder will be DS4B_Week_N as above, where N is the week of the semester)</p></li>
+<li><p>Create the R project Commit and push your changes using GitHub Desktop</p></li>
+</ul></li>
+<li><p>Now we add the raw data as follows:</p>
+<ul>
+<li><p>Create a folder in the root directory of your repo called data</p></li>
+<li><p>Download the raw data for this workshop from Canvas</p></li>
+<li><p>Save it in the data folder</p></li>
+<li><p>Commit and push your changes using GitHub Desktop.</p></li>
+</ul></li>
+<li><p>Now we create the R Markdown file as follows:</p>
+<ul>
+<li><p>In RStudio, use the dialog box in the top left to bring up the menu to add files</p></li>
+<li><p>Choose “R Markdown”</p></li>
+<li><p>Give it the title workshop_solutions.rmd</p></li>
+<li><p>Save it in the root directory of your repo</p></li>
+<li><p>Delete the contents of the R markdown file</p></li>
+<li><p>Replace the contents with the markdown text below</p></li>
+<li><p>Enter your U number and the date where indicated in the markdown text below</p></li>
+<li><p>Knit your R markdown file to html in RStudio</p></li>
+<li><p>Check the html file works by opening it in your browser</p></li>
+<li><p>Commit and push your changes using GitHub Desktop.</p></li>
+</ul></li>
+<li><p>Open your repo on github.com, and ensure that:</p>
+<ul>
+<li><p>You have added DS4B-ANU (https://github.com/DS4B-ANU) as a collaborator</p></li>
+<li><p>Your root directory contains:</p>
+<ul>
+<li><p>a .gitignore file (containing at least the single line .Rproj.user/)</p></li>
+<li><p>a data/ folder</p></li>
+<li><p>a data.csv file in the data/ folder</p></li>
+<li><p>a .Rproj file with the same name as the repo (e.g.&nbsp;Practice_1.Rproj)</p></li>
+<li><p>a workshop_solutions.rmd file, updated as above</p></li>
+<li><p>a workshop_solutions.html file, knitted from the .rmd file</p></li>
+<li><p>nothing else!</p></li>
+</ul></li>
+<li><p>If any of these need fixing, fix them then use GitHub Desktop to commit and push your changes.</p></li>
+</ul></li>
+</ol>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p>Through this and every workshop, you should type as much descriptive text into your R Markdown document as someone (including but not limited to you) would need to understand what you’re doing.</p>
+<p>Remember: This document is your lab book! The information in it must be sufficient to reproduce your research, allow others to understand your way of thinking, and allow you to use it in your later work (e.g.&nbsp;when writing assessments, theses, blogs or papers). Imagine that you are writing a manual and a report at the same time.</p>
+<p>Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, subheadings work like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## This is a level 2 subheading</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">### This is a level 3 subheading</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div></li>
+</ol>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Before you start, first make sure you’ve set up your github repo correctly following the instructions in the “Before You Begin” section above.</p>
+<p>Today we are going to continue our journey of modelling the distribution of the Frilled Lizard (<em>Chlamydosaurus kingii</em>) with one of the most widely used tools in ecology: species distribution models (SDMs). Last week, we used exclusively geometric models which rely on presence-only data to model geographic range polygons. This week, we will use a class of SDMs that uses both presence and absence (or pseudo-absence) data to model suitable habitat based on environmental conditions.</p>
+<p>These models underpin:</p>
+<ul>
+<li>conservation planning<br>
+</li>
+<li>invasive species forecasts<br>
+</li>
+<li>climate change projections<br>
+</li>
+<li>biodiversity policy</li>
+</ul>
+<p>They are powerful tools but very easy to misuse. Throughout today’s workshop, focus less on <em>running models</em> and more on <em>understanding assumptions</em>.</p>
+<section id="the-data" class="level3">
+<h3 class="anchored" data-anchor-id="the-data">The Data</h3>
+<p>We are going to use the cleaned occurrence records and the associated alpha hull that we worked on last week. You may have slightly different data to your neighbours depending on how you cleaned the data and defined the alpha value for your alpha hulls. That’s ok!</p>
+<p>We will also use bioclimatic data from WorldClim, which are commonly used for SDMs which describe variation in monthly averages of temperature and precipitation, e.g., mean temperature of the warmest quarter or precipitation seasonality. More details on the definition of these variables is <a href="https://www.worldclim.org/data/bioclim.html">here</a>.</p>
+<p>We begin with the cropped occurrence dataset you created last week and the alpha hull.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># occurence points</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>occ <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/frilled_lizard_ALA_cropped.csv"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># load alpha hull</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ahull_v <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="st">"distribution/frilled_lizard_alpha_hull.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Environmental SDMs require spatial layers describing climate or habitat. We will use <strong>bioclim variables</strong> derived from temperature and rainfall.</p>
+<p>Load the raster stack with the <code>rast</code> function from the <code>terra</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bioclim_data <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/worldclim_australia.tif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="task-1.-inspect-the-predictors-10-minutes" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.-inspect-the-predictors-10-minutes"><strong>Task 1. Inspect the Predictors (10 minutes)</strong></h4>
+<p>Raster data can be organised as a matrix, with each row representation a latitude, and each column a longitude. It can also be organised with each row representing a unique grid cell on the landscape. This second format is useful when you are looking at multiple variables simultaneously and is what is returned by <code>as_tibble</code>.</p>
+<p>It is useful to inspect the raw data numerically and visually. Spend a few minutes using <code>skimr</code> to look at the moments of the data, <code>leaflet</code> to visualise the data on a map.</p>
+<ul>
+<li><p>Take a look at a few variables</p></li>
+<li><p>Can you guess what units the variables are in?</p></li>
+<li><p>Do variable ranges look reasonable?</p></li>
+<li><p>Do any of variables appear correlated?<br>
+</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leafsync)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(bioclim_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>bio01 <span class="ot">&lt;-</span> <span class="fu">leaflet</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>CartoDB.Positron) <span class="sc">|&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addRasterImage</span>(bioclim_data<span class="sc">$</span>Bio01,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">opacity =</span> <span class="fl">0.8</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addLegend</span>(<span class="at">pal =</span> <span class="fu">colorNumeric</span>(<span class="st">"viridis"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">values</span>(bioclim_data<span class="sc">$</span>Bio01),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                              <span class="at">na.color =</span> <span class="st">"transparent"</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">values =</span> <span class="fu">values</span>(bioclim_data<span class="sc">$</span>Bio01),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">title =</span> <span class="st">"Bio01"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>bio12 <span class="ot">&lt;-</span> <span class="fu">leaflet</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>CartoDB.Positron) <span class="sc">|&gt;</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addRasterImage</span>(bioclim_data<span class="sc">$</span>Bio12,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                 <span class="at">opacity =</span> <span class="fl">0.8</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addLegend</span>(<span class="at">pal =</span> <span class="fu">colorNumeric</span>(<span class="st">"viridis"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">values</span>(bioclim_data<span class="sc">$</span>Bio12),</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                              <span class="at">na.color =</span> <span class="st">"transparent"</span>),</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">values =</span> <span class="fu">values</span>(bioclim_data<span class="sc">$</span>Bio12),</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">title =</span> <span class="st">"Bio12"</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="fu">sync</span>(bio01, bio12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="extracting-environmental-values" class="level3">
+<h3 class="anchored" data-anchor-id="extracting-environmental-values">Extracting Environmental Values</h3>
+<p>To model a niche, we need predictor values at occurrence locations. First, however, we want to drop points which are duplicated in a grid cell. This removes some bias from having some grid cells with many observations (e.g., close to cities) and some with very few. All grid cells with a sighting will contribute just once to our models.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prune data to one point per grid cell</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create SpatVector</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>occ_v <span class="ot">&lt;-</span> <span class="fu">vect</span>(occ, <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">"X"</span>, <span class="st">"Y"</span>), <span class="at">crs =</span> <span class="fu">crs</span>(bioclim_data))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get raster cell IDs</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>occ_v<span class="sc">$</span>cell_id <span class="ot">&lt;-</span> <span class="fu">cellFromXY</span>(bioclim_data, <span class="fu">crds</span>(occ_v))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep one point per raster cell</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>occ_pruned <span class="ot">&lt;-</span> occ_v[<span class="sc">!</span><span class="fu">duplicated</span>(occ_v<span class="sc">$</span>cell_id), ]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract climate</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>occ_env <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  bioclim_data,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  occ_pruned,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">ID =</span> <span class="cn">FALSE</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>occ_model <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="fu">crds</span>(occ_pruned)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>)),</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  occ_env</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">presence =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reminder: Knit, Commit, Push!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</section>
+</section>
+<section id="background-points" class="level2">
+<h2 class="anchored" data-anchor-id="background-points">Background Points</h2>
+<p>As mentioned above, environmental model-based SDMs require both presence and absence data. For most species, we do not have reliable absence data available so we must use what is known as background (or pseudo-absence) data.</p>
+<p>Background data can be sampled in many ways, each will affect your results. A good study on selecting background points is <a href="https://doi.org/10.1111/j.2041-210X.2011.00172.x">here</a>.</p>
+<p>Today we are going to test this directly.</p>
+<section id="form-groups" class="level3">
+<h3 class="anchored" data-anchor-id="form-groups"><strong>Form Groups</strong></h3>
+<p>With your neighbours, split into groups of <strong>four</strong>.</p>
+<p>Each member of the group will generate 5000 background points using a <strong>different strategy</strong>, then you will compare the resulting suitability maps.</p>
+<p>By the end of this exercise, your group should be able to answer:</p>
+<ul>
+<li>Do modelling decisions strongly influence predictions?</li>
+<li>Which method seems most biologically realistic?</li>
+<li>Which method would you trust for conservation decisions?</li>
+</ul>
+<p>There is no universally correct answer — the goal is to develop modelling judgement.</p>
+<section id="task-2.-generate-background-points-using-your-assigned-method" class="level4">
+<h4 class="anchored">Task 2. Generate Background Points Using Your Assigned Method</h4>
+<ul>
+<li><p>Within your group, assign one method to each person.</p></li>
+<li><p>Run <strong>only your tab</strong>.</p></li>
+<li><p>Afterwards, you will compare results using synced maps.</p></li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Method 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Method 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Method 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">Method 4</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="active tab-pane" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<section id="random-background" class="level3">
+<h3 class="anchored" data-anchor-id="random-background">Random Background</h3>
+<p>This is the simplest and most commonly used approach. Here, we sample environmental space uniformly across the study region.</p>
+<p><code>set.seed</code> can be used to set the seed of the random number generator. When drawing samples, this will ensure if you use the same seed (e.g.&nbsp;123) you will always draw the same sample of points. Good for reproducibility.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>bg <span class="ot">&lt;-</span> <span class="fu">spatSample</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  bioclim_data,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">5000</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"random"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">as.points =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>bg_env <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  bioclim_data,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  bg,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">ID =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>bg_model <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_coordinates</span>(<span class="fu">st_as_sf</span>(bg)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">longitude =</span> X, <span class="at">latitude =</span> Y),</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  bg_env</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">presence =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use <code>leaflet</code> to plot a raster + the occurrence points + the background points. What patterns do you notice?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(bg_model) <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add a detailed basemap</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>OpenStreetMap.Mapnik) <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot occurrence records</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">radius =</span> <span class="dv">5</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fillOpacity =</span> <span class="fl">0.7</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">stroke =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"#2C7FB8"</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<section id="accessible-area-background" class="level3">
+<h3 class="anchored" data-anchor-id="accessible-area-background">Accessible Area Background</h3>
+<p>In this method, we sample points within a fixed distance of our occurrence points, using a buffer, just like in last weeks workshop. Here, we are assuming that the species could realistically disperse only within some distance of known occurrences. Further, we are also limiting the range of environments we will contrast with our occurrence points, which increase the specificity of the model to our species.</p>
+<p>We buffer occurrence points to define an <strong>accessible area</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>occ_proj <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(occ_sf, <span class="dv">3577</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>buffer <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(occ_proj, <span class="at">dist =</span> <span class="dv">300000</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_union</span>()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>buffer_vect <span class="ot">&lt;-</span> <span class="fu">vect</span>(<span class="fu">st_transform</span>(buffer, <span class="dv">4326</span>))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>bg <span class="ot">&lt;-</span> <span class="fu">spatSample</span>(</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mask</span>(bioclim_data, buffer_vect),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">5000</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"random"</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">as.points =</span> <span class="cn">TRUE</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>bg_env <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(bioclim_data, bg, <span class="at">ID =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>bg_model <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_coordinates</span>(<span class="fu">st_as_sf</span>(bg)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">longitude =</span> X, <span class="at">latitude =</span> Y),</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  bg_env</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">presence =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use <code>leaflet</code> to plot a raster + the occurrence points + the background points. What patterns do you notice?</p>
+</section>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<section id="environmental-envelope-background" class="level3">
+<h3 class="anchored" data-anchor-id="environmental-envelope-background">Environmental Envelope Background</h3>
+<p>In this method, we sample points within Australia that are within the broad environmental range of our occurrence points. Here, we are assuming that the species could realistically disperse only within the climatic conditions that it could experience or have access to across its distribution. If its range is determined by climate, then it should only occupy a subset of the total range of conditions in the area. Further, we are also limiting the range of environments we will contrast with our occurrence points which should increase the specificity of the model to our species.</p>
+<p>In other words, instead of restricting sampling background points in geographic space, we restrict <strong>environmental space</strong>.</p>
+<p>We sample only within the environmental range + one standard deviation observed at presence locations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>env_ranges <span class="ot">&lt;-</span> occ_env <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">everything</span>(),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(<span class="at">min =</span> <span class="sc">~</span><span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">-</span><span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">max =</span> <span class="sc">~</span><span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">+</span><span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>clim_df <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">as.data.frame</span>(</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  bioclim_data,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">xy =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>ranges_long <span class="ot">&lt;-</span> env_ranges <span class="sc">%&gt;%</span> </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">everything</span>(),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"variable"</span>, <span class="st">".value"</span>),</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">"_(?=[^_]+$)"</span>   <span class="co"># splits on final underscore only</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>filtered_cells <span class="ot">&lt;-</span> clim_df <span class="sc">%&gt;%</span> </span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(x, y),</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ranges_long, <span class="at">by =</span> <span class="st">"variable"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(value <span class="sc">&gt;=</span> min,</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>         value <span class="sc">&lt;=</span> max) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(x, y) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">==</span> <span class="fu">nrow</span>(ranges_long)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(x, y)</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>bg <span class="ot">&lt;-</span> filtered_cells <span class="sc">%&gt;%</span> </span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5000</span>)</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>bg_env <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(bioclim_data, bg, <span class="at">ID =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>bg_model <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>  bg <span class="sc">%&gt;%</span> </span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">longitude =</span> x, <span class="at">latitude =</span> y),</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>  bg_env</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">presence =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use <code>leaflet</code> to plot a raster + the occurrence points + the background points. What patterns do you notice?</p>
+</section>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<section id="bias-correction-background" class="level3">
+<h3 class="anchored" data-anchor-id="bias-correction-background">Bias Correction Background</h3>
+<p>In species distribution modeling, the choice of background points (locations representing where a species could potentially occur) can strongly influence the model. One way to make these background points more realistic is to account for sampling effort — that is, where people have actually looked for the species.</p>
+<p>Here, we use a bias-correction approach based on the distribution of Agamid lizards in Australia:</p>
+<ul>
+<li><p>The Frilled Lizard (Chlamydosaurus kingii) belongs to the family Agamidae, which includes over 70 species in Australia.</p></li>
+<li><p>If a researcher is out recording Agamid lizards, it is very likely that they would record the Frilled Lizard if it were present.</p></li>
+<li><p>Therefore, areas where Agamid lizards have been observed represent locations that have actually been sampled, and are reasonable places to draw background points.</p></li>
+<li><p>By sampling background points from these areas, we avoid including locations where no one has ever looked, which could otherwise bias the model by suggesting that absence is equivalent to unsurveyed locations.</p></li>
+</ul>
+<p>In other words, this method uses existing survey effort as a guide to produce more realistic background points, improving the reliability of our species distribution models.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in distribution of all agamid species</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>agamid_occ <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/agamidae.csv"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to terra vector object</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>agamid_occ <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">vect</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  agamid_occ,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">"decimalLongitude"</span>, <span class="st">"decimalLatitude"</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">crs =</span> <span class="st">"EPSG:4326"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Rasterize occurrence counts onto first climate layer</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># This gives a "density" surface of sampling effort</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>agamid_density <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rasterize</span>(</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> agamid_occ,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> bioclim_data[[<span class="dv">1</span>]],</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun =</span> <span class="st">"sum"</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample random points proportional to density ("bias correction")</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Use stratified method to weight points by existing sampling effort</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>bck_bias <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">spatSample</span>(</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> bioclim_data[[<span class="dv">1</span>]],</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">5000</span>,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"stratified"</span>,</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> agamid_density,</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">as.points =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract coordinates for tidyverse manipulation</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>bg <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(terra<span class="sc">::</span><span class="fu">crds</span>(bck_bias)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">longitude =</span> x, <span class="at">latitude =</span> y)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract environmental values for each point</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>bg_env <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(bioclim_data, bg, <span class="at">ID =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine into modeling-ready dataframe</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>bg_model <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  bg,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  bg_env</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">presence =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use <code>leaflet</code> to plot a raster + the occurrence points + the background points. What patterns do you notice?</p>
+</section>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reminder: Knit, Commit, Push!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="fit-models" class="level2">
+<h2 class="anchored" data-anchor-id="fit-models">Fit Models</h2>
+<p>Now that we have <strong>presence and background data</strong>, along with the environmental variables extracted at each site, we can move on to the <strong>modeling part</strong> of the workshop.</p>
+<p>First lets combine our occurrence and background data into a single data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sdm_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(occ_model, bg_model)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the result</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sdm_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We will fit two types of models:</p>
+<ul>
+<li><strong>Generalized Linear Model (GLM):</strong> Models linear relationships between predictors and the response (presence/absence). Here we use logistic regression.<br>
+</li>
+<li><strong>Generalized Additive Model (GAM):</strong> Can capture <strong>non-linear relationships</strong> using smoothing functions (<code>s()</code>), allowing the model to flexibly fit more complex patterns.</li>
+</ul>
+<blockquote class="blockquote">
+<p>⚠️ Note: In real-world SDMs, models are typically fitted at high spatial resolution with many predictors and more advanced statistical or machine learning techniques. Here, we use a simplified workflow to focus on the <strong>fundamentals</strong>.</p>
+</blockquote>
+<hr>
+<section id="task-3.-select-predictors" class="level4">
+<h4 class="anchored" data-anchor-id="task-3.-select-predictors"><strong>Task 3. Select predictors</strong></h4>
+<p>Selecting environmental predictors is critical. Variables should be chosen based on <strong>ecological relevance</strong> and to <strong>avoid collinearity</strong>. Both GLMs and GAMs do poorly when predictors are highly correlated.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for collinearity among predictors</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(sdm_data[, <span class="dv">3</span><span class="sc">:</span><span class="dv">21</span>], <span class="at">use=</span><span class="st">"complete.obs"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>correlated <span class="ot">&lt;-</span> <span class="fu">findCorrelation</span>(correlation_matrix)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>names_correlated <span class="ot">&lt;-</span> <span class="fu">colnames</span>(sdm_data[,<span class="dv">3</span><span class="sc">:</span><span class="dv">21</span>])[correlated]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove highly correlated variables</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>sdm_data_uncor <span class="ot">&lt;-</span>sdm_data[, <span class="sc">!</span><span class="fu">colnames</span>(sdm_data) <span class="sc">%in%</span> names_correlated]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep track of predictors</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>predictor_vars <span class="ot">&lt;-</span> <span class="fu">colnames</span>(sdm_data_uncor)[<span class="fu">grep</span>(<span class="st">"Bio"</span>, <span class="fu">colnames</span>(sdm_data_uncor))]</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(predictor_vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Ask yourself:</strong></p>
+<ul>
+<li><p>Which variables were removed due to colinearity?</p></li>
+<li><p>Do the remaining predictors make ecological sense for the Frilled Lizard?</p></li>
+<li><p>Would you remove any others based on your ecological kowledge of the species (if any)?</p></li>
+</ul>
+<p>Next, we define <strong>formulas</strong> for GLM and GAM models. For the GAM, <code>k = 4</code> sets the flexibility of the splines: increase <code>k</code> for more complex curves, decrease for simpler curves.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GLM: linear model</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>formula_glm <span class="ot">&lt;-</span> <span class="fu">formula</span>(<span class="fu">paste0</span>(<span class="st">"presence ~ "</span>, <span class="fu">paste0</span>(predictor_vars, <span class="at">collapse =</span> <span class="st">" + "</span>)))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># GAM: non-linear model with splines</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>formula_gam <span class="ot">&lt;-</span> <span class="fu">formula</span>(<span class="fu">paste0</span>(<span class="st">"presence ~ "</span>, <span class="fu">paste0</span>(<span class="st">"s("</span>, predictor_vars,<span class="st">", 4)"</span>, <span class="at">collapse =</span> <span class="st">" + "</span>)))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect formulas</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(formula_glm)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(formula_gam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="task-4.-fit-models" class="level4">
+<h4 class="anchored" data-anchor-id="task-4.-fit-models"><strong>Task 4. Fit models</strong></h4>
+<p>Now we fit both models using the uncorrelated predictors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gam)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit GLM (logistic regression)</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>glm_sdm <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula_glm, <span class="at">data =</span> sdm_data_uncor, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_sdm)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit GAM</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>gam_sdm <span class="ot">&lt;-</span> gam<span class="sc">::</span><span class="fu">gam</span>(formula_gam, <span class="at">data =</span> sdm_data_uncor, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gam_sdm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Ask yourself:</strong></p>
+<ul>
+<li><p>Which variables are significant in each model?</p></li>
+<li><p>Which model has a lower AIC (better fit)?</p></li>
+<li><p>Which model has a higher explained deviance (D²)?</p></li>
+</ul>
+<p>Remember: Lower AIC = better model fit, higher D² = more variance explained.</p>
+<p>Now we project the niche into geographic space by using <code>predict</code> to predict the model the climate data for the whole of Australia.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pred_glm <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">predict</span>(bioclim_data,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                       glm_sdm,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>pred_gam <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">predict</span>(bioclim_data,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                       gam_sdm,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a color palette</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorNumeric</span>(</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="st">"Spectral"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">domain =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.color =</span> <span class="st">"transparent"</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>glm_plot <span class="ot">&lt;-</span> <span class="fu">leaflet</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>CartoDB.Positron) <span class="sc">|&gt;</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addRasterImage</span>(pred_glm, <span class="at">colors=</span>pal, <span class="at">opacity =</span> <span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addLegend</span>(</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">pal =</span> pal, </span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">values</span>(pred_glm),</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"GLM Suitability"</span>,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"bottomright"</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>gam_plot <span class="ot">&lt;-</span> <span class="fu">leaflet</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>CartoDB.Positron) <span class="sc">|&gt;</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addRasterImage</span>(pred_gam, <span class="at">colors=</span>pal, <span class="at">opacity =</span> <span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addLegend</span>(</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">pal =</span> pal, </span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">values</span>(pred_gam),</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"GAM Suitability"</span>,</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"bottomright"</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="fu">sync</span>(glm_plot, gam_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can turn a probabilistic measure of habitat suitability into a binary species dsitribution by thresholding the predictions. To do this we need to evaluate our models and assess how well the model predicts our known occurence records.</p>
+<p>A common approach is the <strong>Receiver Operating Characteristic (ROC) curve</strong>, which plots the trade-off between <strong>true positive rate</strong> and <strong>false positive rate</strong> across all possible thresholds.</p>
+<p>From the ROC curve, we calculate the <strong>Area Under the Curve (AUC)</strong>:</p>
+<ul>
+<li><p><strong>AUC ≈ 1</strong> → the model perfectly separates presences from absences</p></li>
+<li><p><strong>AUC ≈ 0.5</strong> → the model performs no better than random guessing</p></li>
+</ul>
+<pre><code>
+&gt; ⚠️ Note: Higher AUC values indicate better predictive performance, but AUC alone does not capture all aspects of model reliability — it should be interpreted alongside other evaluation metrics.</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dismo)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Split presence and background</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> sdm_data_uncor[sdm_data_uncor<span class="sc">$</span>presence<span class="sc">==</span><span class="dv">1</span>, ]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> sdm_data_uncor[sdm_data_uncor<span class="sc">$</span>presence<span class="sc">==</span><span class="dv">0</span>, ]</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate models</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>glm_eval <span class="ot">&lt;-</span> <span class="fu">evaluate</span>(<span class="at">p=</span>p, <span class="at">a=</span>a, <span class="at">model=</span>glm_sdm, <span class="at">type=</span><span class="st">'response'</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>gam_eval <span class="ot">&lt;-</span> <span class="fu">evaluate</span>(<span class="at">p=</span>p, <span class="at">a=</span>a, <span class="at">model=</span>gam_sdm, <span class="at">type=</span><span class="st">'response'</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ROC curves</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(glm_eval, <span class="st">"ROC"</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gam_eval, <span class="st">"ROC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Take a look at the evaluation objects and try plotting some other summary statistics, like <code>kappa</code>, the true positive rate (<code>TPR</code>), false positive rate <code>FPR</code>, etc.</p>
+<p>The aim is to find the value of habitat suitability, which has the maximum value of a metric like <code>spec_sens</code> - the threshold at which the sum of the sensitivity (true positive rate) and specificity (true negative rate) is highest. Then we say all sites with a habitat suitability higher than that threshold is classed as presence, and every cell with a habitat suitability lower than the threshold is classed as an absence.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pred_glm_threshold <span class="ot">&lt;-</span> <span class="fu">threshold</span>(glm_eval, <span class="at">stat =</span> <span class="st">"spec_sens"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pred_gam_threshold <span class="ot">&lt;-</span> <span class="fu">threshold</span>(gam_eval, <span class="at">stat =</span> <span class="st">"spec_sens"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>pred_glm_bin <span class="ot">&lt;-</span> pred_glm <span class="sc">&gt;</span> pred_glm_threshold</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>pred_gam_bin <span class="ot">&lt;-</span> pred_gam <span class="sc">&gt;</span> pred_gam_threshold</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>glm_bin_plot <span class="ot">&lt;-</span> <span class="fu">leaflet</span>() <span class="sc">|&gt;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>CartoDB.Positron) <span class="sc">|&gt;</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addRasterImage</span>(pred_glm_bin,  <span class="at">opacity =</span> <span class="fl">0.8</span>) </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>gam_bin_plot <span class="ot">&lt;-</span> <span class="fu">leaflet</span>() <span class="sc">|&gt;</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addProviderTiles</span>(providers<span class="sc">$</span>CartoDB.Positron) <span class="sc">|&gt;</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addRasterImage</span>(pred_gam_bin, <span class="at">opacity =</span> <span class="fl">0.8</span>) </span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="fu">sync</span>(glm_bin_plot, gam_bin_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, use <code>leaflet</code> to add the species occurrence points and the alpha hull onto this plot.</p>
+<p><strong>Ask yourself:</strong></p>
+<ul>
+<li><p>How well do these align?</p></li>
+<li><p>Are there occurrence points in areas deemed unsuitable?</p></li>
+<li><p>Are the suitable areas very far from any known occurrences?</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reminder: Knit, Commit, Push!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</section>
+</section>
+<section id="model-validation" class="level2">
+<h2 class="anchored" data-anchor-id="model-validation">Model Validation</h2>
+<p>So far we have evaluated the model on the same data used to fit it, so it may appear to perform very well. This is not a realistic estimate of predictive performance, because in real-world applications we want the model to generalize to new locations.</p>
+<p>A better way to estimate predictive performance is to split the data into training and testing subsets, fit the model on the training data, and evaluate it on the testing data.</p>
+<section id="task-5.-k-fold-cross-validation" class="level4">
+<h4 class="anchored" data-anchor-id="task-5.-k-fold-cross-validation"><strong>Task 5. K-Fold Cross-Validation</strong></h4>
+<p>K-fold cross-validation automates the validation process by splitting the data into <code>k</code> partitions and repeats the evaluation on each partition. As follows:</p>
+<ol type="1">
+<li><p>Split the data into K folds</p></li>
+<li><p>Repeat K times:</p>
+<ul>
+<li><p>Train the model on K – 1 folds</p></li>
+<li><p>Test the model on the remaining fold</p></li>
+</ul></li>
+<li><p>Combine results across folds to get an average AUC and measure of variability</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>k_fold <span class="ot">&lt;-</span> <span class="fu">kfold</span>(sdm_data_uncor, <span class="at">k =</span> K)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up table to store results</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>auc_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">k =</span> <span class="dv">1</span><span class="sc">:</span>K, <span class="at">glm_AUC =</span> <span class="cn">NA</span>, <span class="at">gam_AUC =</span> <span class="cn">NA</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K) {</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Split into training and testing data</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  train <span class="ot">&lt;-</span> sdm_data_uncor[k_fold <span class="sc">!=</span> k, ]</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  test  <span class="ot">&lt;-</span> sdm_data_uncor[k_fold <span class="sc">==</span> k, ]</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Refit models on training data</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  mod_glm <span class="ot">&lt;-</span> <span class="fu">update</span>(glm_sdm, <span class="at">data =</span> train)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  mod_gam <span class="ot">&lt;-</span> <span class="fu">update</span>(gam_sdm, <span class="at">data =</span> train)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Evaluate on test fold</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  glm_eval_tmp <span class="ot">&lt;-</span> <span class="fu">evaluate</span>(</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> test[test<span class="sc">$</span>presence <span class="sc">==</span> <span class="dv">1</span>, ],</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">a =</span> test[test<span class="sc">$</span>presence <span class="sc">==</span> <span class="dv">0</span>, ],</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> mod_glm,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">'response'</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  gam_eval_tmp <span class="ot">&lt;-</span> <span class="fu">evaluate</span>(</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> test[test<span class="sc">$</span>presence <span class="sc">==</span> <span class="dv">1</span>, ],</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">a =</span> test[test<span class="sc">$</span>presence <span class="sc">==</span> <span class="dv">0</span>, ],</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> mod_gam,</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">'response'</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Save AUC for each fold</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  auc_df[k, <span class="st">"glm_AUC"</span>] <span class="ot">&lt;-</span> glm_eval_tmp<span class="sc">@</span>auc</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>  auc_df[k, <span class="st">"gam_AUC"</span>] <span class="ot">&lt;-</span> gam_eval_tmp<span class="sc">@</span>auc</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect AUC across folds</span></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(auc_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>By repeating the evaluation on different subsets of the data, <strong>k-fold cross-validation provides a more robust estimate of model predictive performance</strong> than a single train/test split.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reminder: Knit, Commit, Push!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</section>
+</section>
+<section id="model-predictions-through-time" class="level2">
+<h2 class="anchored" data-anchor-id="model-predictions-through-time">Model Predictions Through Time</h2>
+<p>If we’re happy with our model in the present-day and convinced we have accurately modelled the niche of the species, we might want to ask how the species distribution has changed through time.</p>
+<p>Commonly, people look to model the change in distribution into the future using models of climate change under different emissions scenarios. Equally, we might also want to know how the species was distributed in the past to understand how population structure might have evolved over time when conditions were vastly different to today.</p>
+<p>One such period is the Last Glacial Maximum ~21,000 years ago. During the LGM, Australia looked very different, it was a colder and drier place than the present day and many species may have contracted their geographic ranges to warmer and more mesic refugia.</p>
+<p>Lets see what our SDM predicts for the distribution of the Frilled Lizard at the LGM!</p>
+<p>First, lets load the LGM climate data make sure the names match the WorldClim data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load bioclim data for the LGM (from CHELSA)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>lgm_bioclim_data <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/chelsa_australia_LGM.tif"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The names of the different variables must match exactly</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bioclim_data)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lgm_bioclim_data)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># check they match</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bioclim_data) <span class="sc">%in%</span> <span class="fu">names</span>(lgm_bioclim_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we have data that represents the same variables, with matching names, at two different times. We can now predict the model on this new data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pred_glm_lgm <span class="ot">&lt;-</span> <span class="fu">predict</span>(lgm_bioclim_data, glm_sdm, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pred_gam_lgm <span class="ot">&lt;-</span> <span class="fu">predict</span>(lgm_bioclim_data, gam_sdm, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>pred_glm_bin_lgm <span class="ot">&lt;-</span> pred_glm_lgm <span class="sc">&gt;</span> pred_glm_threshold</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>pred_gam_bin_lgm <span class="ot">&lt;-</span> pred_gam_lgm <span class="sc">&gt;</span> pred_gam_threshold</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before we plot it out, lets do the same for the year 2100. There are many models for future climate than use different climatological models and shared socioeconomic pathways (SSP). WorldClim has data available for many of these - see <a href="https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html">here</a>.</p>
+<p>Today we’ll use MIROC6 climate model and SSP585 which is the highest emissions scenario.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load bioclim data for the LGM (from CHELSA)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>future_bioclim_data <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/worldclim_australia_MIROC6_2100.tif"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># check they match</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bioclim_data) <span class="sc">%in%</span> <span class="fu">names</span>(future_bioclim_data)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># make the model prediction</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>pred_glm_2100 <span class="ot">&lt;-</span> <span class="fu">predict</span>(future_bioclim_data, glm_sdm, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>pred_gam_2100 <span class="ot">&lt;-</span> <span class="fu">predict</span>(future_bioclim_data, gam_sdm, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># threshold the model prediction</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>pred_glm_bin_2100 <span class="ot">&lt;-</span> pred_glm_2100 <span class="sc">&gt;</span> pred_glm_threshold</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>pred_gam_bin_2100 <span class="ot">&lt;-</span> pred_gam_2100 <span class="sc">&gt;</span> pred_gam_threshold</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="final-task" class="level3">
+<h3 class="anchored" data-anchor-id="final-task">Final Task</h3>
+<p>Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create a three-row plot using `leaflet with the estimated LGM range, the present-day range, and the future distribution. On top of the present-day estimated range, plot the occurrence points and the alpha hull for comparison.</p>
+<p>Next, get together with your group and compare each members plot and answer these questions.</p>
+<ul>
+<li><p>Which background selection step gave you the best estimate of the present-day range?</p></li>
+<li><p>How did the background selection methods differ from one another?</p></li>
+<li><p>Can you think of a possible reason some methods performed better than others? (no wrong answers!)</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+✅ Check out!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Once you’ve completed the workshop up to this point (not including any of the Going Further section), you are welcome to check out. <strong>But first, knit, commit, and push!</strong></p>
+<p>If you’d like to stay and complete the ‘Going Further’ section, you’re welcome to do so — but please check out first. During the check out we will look at your <code>.rmd</code> and <code>.html</code> files, so have both loaded and ready.</p>
+<p><strong>To check out:</strong> bring your laptop to Alex, Rob, or a demonstrator and let them know that you’re ready.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="going-further" class="level2">
+<h2 class="anchored" data-anchor-id="going-further">Going Further</h2>
+<section id="thresholding-with-different-validation-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="thresholding-with-different-validation-metrics">(1) Thresholding with different validation metrics</h3>
+<p>In the workshop so far, you have performed thresholding on the range with the metric <code>spec_sens</code>, but there are many other possible choices to use. read about the other options (<code>?threshold</code>) and try some of these out. How does the estimate of the range change? Which metrics predict a larger range? and which a smaller?</p>
+</section>
+<section id="cross-validation-with-spatial-folds" class="level3">
+<h3 class="anchored" data-anchor-id="cross-validation-with-spatial-folds">(2) Cross-validation with spatial folds</h3>
+<p>In the workshop so far, we have used random folds in K-fold cross validation. These generally show consistent high performance across folds. However, to assess whether a model is transferable in space and time, it is better to split the data in a more structured way. For example, by splitting into spatial folds, we can ask whether the distribution of a species in one restricted part of its range can be informative about where it should be distributed in other parts of the continent. A robust model should be transferable. A rough script to create 6 spatial folds is below but check out the <code>blockCV</code> package for even more options to do this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create 2D spatial blocks</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sdm_data_uncor <span class="ot">&lt;-</span> sdm_data_uncor <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lon_bin =</span> <span class="fu">ntile</span>(longitude, <span class="dv">3</span>),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lat_bin =</span> <span class="fu">ntile</span>(latitude,  <span class="dv">2</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">spatial_fold =</span> <span class="fu">as.numeric</span>(<span class="fu">interaction</span>(lon_bin, lat_bin))</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># If number of folds exceeds K, randomly reduce to K</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(sdm_data_uncor<span class="sc">$</span>spatial_fold))</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>auc_df_spatial <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">k =</span> <span class="dv">1</span><span class="sc">:</span>K, <span class="at">glm_AUC =</span> <span class="cn">NA</span>, <span class="at">gam_AUC =</span> <span class="cn">NA</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K) {</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Spatial split</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  train <span class="ot">&lt;-</span> sdm_data_uncor[sdm_data_uncor<span class="sc">$</span>spatial_fold <span class="sc">!=</span> k, ]</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  test  <span class="ot">&lt;-</span> sdm_data_uncor[sdm_data_uncor<span class="sc">$</span>spatial_fold <span class="sc">==</span> k, ]</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">unique</span>(test<span class="sc">$</span>presence)) <span class="sc">&lt;</span> <span class="dv">2</span>) {</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Refit models</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  mod_glm <span class="ot">&lt;-</span> <span class="fu">update</span>(glm_sdm, <span class="at">data =</span> train)</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>  mod_gam <span class="ot">&lt;-</span> <span class="fu">update</span>(gam_sdm, <span class="at">data =</span> train)</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Evaluate</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>  glm_eval_tmp <span class="ot">&lt;-</span> <span class="fu">evaluate</span>(</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> test[test<span class="sc">$</span>presence <span class="sc">==</span> <span class="dv">1</span>, ],</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">a =</span> test[test<span class="sc">$</span>presence <span class="sc">==</span> <span class="dv">0</span>, ],</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> mod_glm,</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"response"</span></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>  gam_eval_tmp <span class="ot">&lt;-</span> <span class="fu">evaluate</span>(</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> test[test<span class="sc">$</span>presence <span class="sc">==</span> <span class="dv">1</span>, ],</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">a =</span> test[test<span class="sc">$</span>presence <span class="sc">==</span> <span class="dv">0</span>, ],</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> mod_gam,</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"response"</span></span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>  auc_df_spatial[k, <span class="st">"glm_AUC"</span>] <span class="ot">&lt;-</span> glm_eval_tmp<span class="sc">@</span>auc</span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>  auc_df_spatial[k, <span class="st">"gam_AUC"</span>] <span class="ot">&lt;-</span> gam_eval_tmp<span class="sc">@</span>auc</span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(auc_df_spatial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="workshop_instructions_wk8_files/libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
