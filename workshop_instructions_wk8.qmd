@@ -56,7 +56,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
     -   use the amazing R studio cheat sheets
 
-    -   ask ChatGPT or Bard for help (they are good at R!)
+    -   ask ChatGPT or Gemini for help (they are good at R!)
 
     -   asking your neighbours if they can help (remember to be generous with your time if someone asks you!)
 
@@ -124,9 +124,32 @@ knitr::opts_chunk$set(echo = TRUE)
 
         -   Delete the contents of the R markdown file
 
-        -   Replace the contents with the markdown text below
+        -   Replace the contents with the following markdown template:
 
-        -   Enter your U number and the date where indicated in the markdown text below
+            ````
+            ---
+            title: "BIOL3207 Workshop Solutions"
+            author: "UXXXXXXX"
+            date: "YYYY-MM-DD"
+            output: html_document
+            ---
+
+            ```{r setup, include=FALSE}
+            knitr::opts_chunk$set(echo = TRUE)
+            ```
+
+            ## Introduction
+
+            ## Background Points
+
+            ## Fit Models
+
+            ## Model Validation
+
+            ## Model Predictions Through Time
+            ````
+
+        -   Enter your U number and the date where indicated
 
         -   Knit your R markdown file to html in RStudio
 
@@ -144,7 +167,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
             -   a data/ folder
 
-            -   a data.csv file in the data/ folder
+            -   the data files downloaded from Canvas in the data/ folder
 
             -   a .Rproj file with the same name as the repo (e.g. Practice_1.Rproj)
 
@@ -200,8 +223,8 @@ library(terra)
 # occurence points
 occ <- read_csv("data/frilled_lizard_ALA_cropped.csv")
 
-# load alpha hull
-ahull_v <- vect("distribution/frilled_lizard_alpha_hull.shp")
+# load alpha hull (saved at the end of last week's workshop)
+ahull_v <- vect("data/frilled_lizard_alpha_hull.shp")
 ```
 
 Environmental SDMs require spatial layers describing climate or habitat. We will use **bioclim variables** derived from temperature and rainfall.
@@ -231,13 +254,13 @@ library(skimr)
 library(leaflet)
 library(leafsync)
 
-values(bioclim_data) %>% 
-  as_tibble() %>% 
+values(bioclim_data) |>
+  as_tibble() |>
   skim()
 
 bio01 <- leaflet() |>
   addProviderTiles(providers$CartoDB.Positron) |>
-  addRasterImage(bioclim_data$Bio01,
+  addRasterImage(raster::raster(bioclim_data$Bio01),
                  opacity = 0.8) |>
   addLegend(pal = colorNumeric("viridis",
                               values(bioclim_data$Bio01),
@@ -248,7 +271,7 @@ bio01 <- leaflet() |>
 
 bio12 <- leaflet() |>
   addProviderTiles(providers$CartoDB.Positron) |>
-  addRasterImage(bioclim_data$Bio12,
+  addRasterImage(raster::raster(bioclim_data$Bio12),
                  opacity = 0.8) |>
   addLegend(pal = colorNumeric("viridis",
                               values(bioclim_data$Bio12),
@@ -348,34 +371,48 @@ bg_env <- terra::extract(
   bioclim_data,
   bg,
   ID = FALSE
-) %>% 
+) |>
   as_tibble()
 
 bg_model <- bind_cols(
-  st_coordinates(st_as_sf(bg)) %>% 
-    as_tibble() %>% 
+  st_coordinates(st_as_sf(bg)) |>
+    as_tibble() |>
     rename(longitude = X, latitude = Y),
   bg_env
-) %>% 
+) |>
   mutate(presence = 0)
 ```
 
 Use `leaflet` to plot a raster + the occurrence points + the background points. What patterns do you notice?
 
+Here is a template showing how to combine a raster layer, occurrence points, and background points on a single leaflet map. Adapt this for your method:
+
 ```{r}
-leaflet(bg_model) |>
-  
-  # Add a detailed basemap
-  addProviderTiles(providers$OpenStreetMap.Mapnik) |> 
-  
-  # Plot occurrence records
+leaflet() |>
+  addProviderTiles(providers$OpenStreetMap.Mapnik) |>
+
+  # Add a climate raster layer (e.g. Bio01)
+  addRasterImage(raster::raster(bioclim_data$Bio01), opacity = 0.5) |>
+
+  # Plot background points in grey
   addCircleMarkers(
+    data = bg_model,
+    lng = ~longitude, lat = ~latitude,
+    radius = 3,
+    fillOpacity = 0.4,
+    stroke = FALSE,
+    color = "grey"
+  ) |>
+
+  # Plot occurrence points in blue on top
+  addCircleMarkers(
+    data = occ_model,
+    lng = ~longitude, lat = ~latitude,
     radius = 5,
     fillOpacity = 0.7,
     stroke = FALSE,
     color = "#2C7FB8"
-  ) 
-
+  )
 ```
 
 ## Method 2
@@ -387,9 +424,14 @@ In this method, we sample points within a fixed distance of our occurrence point
 We buffer occurrence points to define an **accessible area**.
 
 ```{r}
+library(sf)
+
+# Convert occurrence data to sf object (needed for spatial operations)
+occ_sf <- st_as_sf(occ, coords = c("X", "Y"), crs = 4326)
+
 occ_proj <- st_transform(occ_sf, 3577)
 
-buffer <- st_buffer(occ_proj, dist = 300000) |> 
+buffer <- st_buffer(occ_proj, dist = 300000) |>
   st_union()
 
 buffer_vect <- vect(st_transform(buffer, 4326))
@@ -402,19 +444,19 @@ bg <- spatSample(
   as.points = TRUE
 )
 
-bg_env <- terra::extract(bioclim_data, bg, ID = FALSE) %>% 
+bg_env <- terra::extract(bioclim_data, bg, ID = FALSE) |>
   as_tibble()
 
 bg_model <- bind_cols(
-  st_coordinates(st_as_sf(bg)) %>% 
-    as_tibble() %>% 
+  st_coordinates(st_as_sf(bg)) |>
+    as_tibble() |>
     rename(longitude = X, latitude = Y),
   bg_env
-) %>% 
+) |>
   mutate(presence = 0)
 ```
 
-Use `leaflet` to plot a raster + the occurrence points + the background points. What patterns do you notice?
+Use `leaflet` to plot a raster + the occurrence points + the background points using the template from Method 1 as a guide. What patterns do you notice?
 
 ## Method 3
 
@@ -427,7 +469,7 @@ In other words, instead of restricting sampling background points in geographic 
 We sample only within the environmental range + one standard deviation observed at presence locations.
 
 ```{r}
-env_ranges <- occ_env %>% 
+env_ranges <- occ_env |>
   summarise(
     across(
       everything(),
@@ -442,48 +484,50 @@ clim_df <- terra::as.data.frame(
   na.rm = TRUE
 )
 
-ranges_long <- env_ranges %>% 
+ranges_long <- env_ranges |>
   pivot_longer(
     everything(),
     names_to = c("variable", ".value"),
     names_sep = "_(?=[^_]+$)"   # splits on final underscore only
   )
 
-filtered_cells <- clim_df %>% 
-  
+filtered_cells <- clim_df |>
+
   pivot_longer(
     cols = -c(x, y),
     names_to = "variable",
     values_to = "value"
-  ) %>% 
-  
-  left_join(ranges_long, by = "variable") %>% 
-  
+  ) |>
+
+  left_join(ranges_long, by = "variable") |>
+
   filter(value >= min,
-         value <= max) %>% 
-  
-  group_by(x, y) %>% 
-  summarise(n = n(), .groups = "drop") %>% 
-  
-  filter(n == nrow(ranges_long)) %>% 
-  
+         value <= max) |>
+
+  group_by(x, y) |>
+  summarise(n = n(), .groups = "drop") |>
+
+  filter(n == nrow(ranges_long)) |>
+
   select(x, y)
 
-bg <- filtered_cells %>% 
+bg <- filtered_cells |>
   slice_sample(n = 5000)
 
-bg_env <- terra::extract(bioclim_data, bg, ID = FALSE) %>% 
+# Convert to SpatVector for terra::extract
+bg_vect <- vect(as.data.frame(bg), geom = c("x", "y"), crs = crs(bioclim_data))
+bg_env <- terra::extract(bioclim_data, bg_vect, ID = FALSE) |>
   as_tibble()
 
 bg_model <- bind_cols(
-  bg %>% 
+  bg |>
     rename(longitude = x, latitude = y),
   bg_env
-) %>% 
+) |>
   mutate(presence = 0)
 ```
 
-Use `leaflet` to plot a raster + the occurrence points + the background points. What patterns do you notice?
+Use `leaflet` to plot a raster + the occurrence points + the background points using the template from Method 1 as a guide. What patterns do you notice?
 
 ## Method 4
 
@@ -523,30 +567,40 @@ agamid_density <- terra::rasterize(
 )
 
 # Sample random points proportional to density ("bias correction")
-# Use stratified method to weight points by existing sampling effort
+# We normalise the density raster to create sampling probabilities,
+# then use spatSample with method = "weights" so areas with more
+# Agamid records are sampled more heavily.
 set.seed(123)  # for reproducibility
+
+# Normalise density to 0-1 range for use as sampling weights
+agamid_density[is.na(agamid_density)] <- 0
+agamid_weights <- agamid_density / max(values(agamid_density), na.rm = TRUE)
+
+# Mask to match bioclim extent (only sample where we have climate data)
+agamid_weights <- mask(agamid_weights, bioclim_data[[1]])
+
 bck_bias <- terra::spatSample(
-  x = bioclim_data[[1]],
+  x = agamid_weights,
   size = 5000,
-  method = "stratified",
-  weights = agamid_density,
+  method = "weights",
   as.points = TRUE,
   na.rm = TRUE
 )
 
 # Extract coordinates for tidyverse manipulation
-bg <- as_tibble(terra::crds(bck_bias)) %>% 
+bg <- as_tibble(terra::crds(bck_bias)) |>
   rename(longitude = x, latitude = y)
 
 # Extract environmental values for each point
-bg_env <- terra::extract(bioclim_data, bg, ID = FALSE) %>% 
+bg_vect <- vect(bg, geom = c("longitude", "latitude"), crs = crs(bioclim_data))
+bg_env <- terra::extract(bioclim_data, bg_vect, ID = FALSE) |>
   as_tibble()
 
 # Combine into modeling-ready dataframe
 bg_model <- bind_cols(
   bg,
   bg_env
-) %>% 
+) |>
   mutate(presence = 0)
 ```
 
@@ -639,6 +693,15 @@ summary(gam_sdm)
 
 ```
 
+::: callout-note
+## Reading model output
+In the `summary()` output, look for:
+
+-   **Significant variables**: look for small p-values (marked with `*`, `**`, or `***`) next to each predictor.
+-   **AIC**: printed at the bottom of the GLM summary. Lower AIC = better model fit.
+-   **Explained deviance (D²)**: calculate as `1 - (residual deviance / null deviance)` from the summary output. Higher D² = more variance explained.
+:::
+
 **Ask yourself:**
 
 -   Which variables are significant in each model?
@@ -647,9 +710,7 @@ summary(gam_sdm)
 
 -   Which model has a higher explained deviance (D²)?
 
-Remember: Lower AIC = better model fit, higher D² = more variance explained.
-
-Now we project the niche into geographic space by using `predict` to predict the model the climate data for the whole of Australia.
+Now we project the niche into geographic space by using `predict` to apply the fitted model to the climate data for the whole of Australia. For every grid cell, the model predicts the relative habitat suitability (a value between 0 and 1).
 
 ```{r}
 pred_glm <- terra::predict(bioclim_data,
@@ -669,9 +730,9 @@ pal <- colorNumeric(
 
 glm_plot <- leaflet() |>
   addProviderTiles(providers$CartoDB.Positron) |>
-  addRasterImage(pred_glm, colors=pal, opacity = 0.8) %>%
+  addRasterImage(raster::raster(pred_glm), colors=pal, opacity = 0.8) |>
   addLegend(
-    pal = pal, 
+    pal = pal,
     values = values(pred_glm),
     title = "GLM Suitability",
     position = "bottomright"
@@ -679,9 +740,9 @@ glm_plot <- leaflet() |>
 
 gam_plot <- leaflet() |>
   addProviderTiles(providers$CartoDB.Positron) |>
-  addRasterImage(pred_gam, colors=pal, opacity = 0.8) %>%
+  addRasterImage(raster::raster(pred_gam), colors=pal, opacity = 0.8) |>
   addLegend(
-    pal = pal, 
+    pal = pal,
     values = values(pred_gam),
     title = "GAM Suitability",
     position = "bottomright"
@@ -701,10 +762,10 @@ From the ROC curve, we calculate the **Area Under the Curve (AUC)**:
 
 -   **AUC ≈ 0.5** → the model performs no better than random guessing
 
-```         
-
-> ⚠️ Note: Higher AUC values indicate better predictive performance, but AUC alone does not capture all aspects of model reliability — it should be interpreted alongside other evaluation metrics.
-```
+::: callout-warning
+## Note
+Higher AUC values indicate better predictive performance, but AUC alone does not capture all aspects of model reliability — it should be interpreted alongside other evaluation metrics. Also note that because we are using pseudo-absences (background points) rather than true absences, the predicted values represent **relative habitat suitability** rather than true probability of occurrence.
+:::
 
 ```{r}
 library(dismo)
@@ -738,11 +799,11 @@ pred_gam_bin <- pred_gam > pred_gam_threshold
 
 glm_bin_plot <- leaflet() |>
   addProviderTiles(providers$CartoDB.Positron) |>
-  addRasterImage(pred_glm_bin,  opacity = 0.8) 
+  addRasterImage(raster::raster(pred_glm_bin), opacity = 0.8)
 
 gam_bin_plot <- leaflet() |>
   addProviderTiles(providers$CartoDB.Positron) |>
-  addRasterImage(pred_gam_bin, opacity = 0.8) 
+  addRasterImage(raster::raster(pred_gam_bin), opacity = 0.8)
 
 sync(glm_bin_plot, gam_bin_plot)
 ```
@@ -884,9 +945,11 @@ pred_gam_bin_2100 <- pred_gam_2100 > pred_gam_threshold
 
 ### Final Task
 
-Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create a three-row plot using \`leaflet with the estimated LGM range, the present-day range, and the future distribution. On top of the present-day estimated range, plot the occurrence points and the alpha hull for comparison.
+Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create three leaflet maps synced together using `leafsync::sync()`: one for the LGM range, one for the present-day range, and one for the 2100 distribution. On top of the present-day map, add the occurrence points and the alpha hull for comparison.
 
-Next, get together with your group and compare each members plot and answer these questions.
+You can sync three maps like this: `sync(map_lgm, map_present, map_future, ncol = 1)`
+
+Next, get together with your group and compare each member's plot and answer these questions.
 
 -   Which background selection step gave you the best estimate of the present-day range?
 
@@ -899,9 +962,18 @@ Next, get together with your group and compare each members plot and answer thes
 
 Once you’ve completed the workshop up to this point (not including any of the Going Further section), you are welcome to check out. **But first, knit, commit, and push!**
 
-If you’d like to stay and complete the ‘Going Further’ section, you’re welcome to do so — but please check out first. During the check out we will look at your `.rmd` and `.html` files, so have both loaded and ready.
+If you’d like to stay and complete the ‘Going Further’ section, you’re welcome to do so — but please check out first.
 
-**To check out:** bring your laptop to Alex, Rob, or a demonstrator and let them know that you’re ready.
+**Before checking out, make sure you have:**
+
+-   Fitted GLM and GAM models with cross-validation results
+-   At least one suitability map (continuous or binary) plotted with leaflet
+-   The group comparison of background point methods discussed
+-   A three-panel temporal comparison (LGM, present, future)
+-   Written reflections on the "Ask yourself" questions in your `.rmd`
+-   Your `.rmd` knits to `.html` without errors
+
+**To check out:** bring your laptop to Alex, Rob, or a demonstrator with both your `.rmd` and `.html` files open.
 :::
 
 ## Going Further

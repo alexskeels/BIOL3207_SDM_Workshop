@@ -56,7 +56,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
     -   use the amazing R studio cheat sheets
 
-    -   ask ChatGPT or Bard for help (they are good at R!)
+    -   ask ChatGPT or Gemini for help (they are good at R!)
 
     -   asking your neighbours if they can help (remember to be generous with your time if someone asks you!)
 
@@ -124,9 +124,30 @@ knitr::opts_chunk$set(echo = TRUE)
 
         -   Delete the contents of the R markdown file
 
-        -   Replace the contents with the markdown text below
+        -   Replace the contents with the following markdown template:
 
-        -   Enter your U number and the date where indicated in the markdown text below
+            ````
+            ---
+            title: "BIOL3207 Workshop Solutions"
+            author: "UXXXXXXX"
+            date: "YYYY-MM-DD"
+            output: html_document
+            ---
+
+            ```{r setup, include=FALSE}
+            knitr::opts_chunk$set(echo = TRUE)
+            ```
+
+            ## Introduction
+
+            ## Making Maps
+
+            ## Cleaning the Data
+
+            ## Geometric Species Distribution Models
+            ````
+
+        -   Enter your U number and the date where indicated
 
         -   Knit your R markdown file to html in RStudio
 
@@ -144,7 +165,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
             -   a data/ folder
 
-            -   a data.csv file in the data/ folder
+            -   the data files downloaded from Canvas in the data/ folder
 
             -   a .Rproj file with the same name as the repo (e.g. Practice_1.Rproj)
 
@@ -179,6 +200,11 @@ Today we are going to learn to work with with one of the most commonly used spat
 Today, we will focus on the latter. We will start by taking occurrence records for one of Australia's most iconic vertebrate species - the Frilled Lizard (*Chlamydosaurus kingii*) - from the Atlas of Living Australia (ALA) and identifying common errors or biases in spatial data. We will look at how to clean and subset the data in preparation for modeling the species distribution using a niche model next week.
 
 ![The frilled-necked lizard (Chlamydosaurus kingii): Photo from D. Esquerre](frilled_lizard.jpg){fig-align="center"}
+
+::: callout-note
+## About the Frilled Lizard
+The Frilled Lizard (*Chlamydosaurus kingii*) is found across tropical savanna woodlands and dry forests in northern Australia and southern New Guinea. It is strongly associated with open woodland habitats that have a grassy understorey, and relies on trees for shelter, foraging, and its characteristic threat display. The species is currently listed as Least Concern by the IUCN, though its range may be shifting in response to changing fire regimes and climate. Keep this ecological context in mind throughout the workshop — it will help you judge whether modelled distributions make biological sense.
+:::
 
 ### The Data
 
@@ -223,6 +249,11 @@ tibble(
   kable
 ```
 
+::: callout-tip
+## Hint
+Use the `missingness_table` you created above (or a similar tibble) as input to `ggplot()`. Map `n_missing` to the x-axis and use `geom_histogram()`. If you get stuck, check the `.qmd` source file for a worked solution.
+:::
+
 ```{r, echo=F}
 # solution
 library(ggplot2)
@@ -231,7 +262,7 @@ missingness_table <- tibble(
   column = names(occ),
   n_missing = colSums(is.na(occ)),
   pct_missing = colMeans(is.na(occ)) * 100
-) 
+)
 
 ggplot(missingness_table, aes(x=n_missing))+
   geom_histogram()+
@@ -245,6 +276,15 @@ Before modelling species distributions, it is always worth looking at your data 
 We will use the sf package to handle spatial data in R. The `sf` package stores geographic features as simple objects — for example, points defined by longitude and latitude.
 
 We will then use `leaflet` to build an interactive map that allows you to zoom, pan, and explore the data dynamically.
+
+Before we begin, we need to load a world coastline polygon. We will use this later to crop our spatial data so we are not estimating species ranges in the ocean.
+
+```{r}
+library(rnaturalearth)
+
+# Load world coastline polygon (we will use this later for cropping)
+world <- ne_countries(scale = "medium", returnclass = "sf")
+```
 
 #### **Task 2. Explore the spatial data (20 minutes)**
 
@@ -389,23 +429,23 @@ A buffer allows us to:
 
 Selecting an appropriate buffer distance to remove potentially erroneous points is a difficult task as there is not necessarily a set of hard-and-fast rules. We want to balance including points that could reasonably be considered part of the species range without including obviously wrong points.
 
-For this section you will write the code to create an object `buffer_iucn`. Use `st_buffer` to extend the IUCN polygon by choosing a distance (e.g. `distance = 50000` will be a distance of 50km). Use `leaflet` to plot three different buffer sizes of your choice. Your favourite of these should be named `buffer_iucn` and will be used later on.
+For this section you will write the code to create an object `buffer_iucn`. Use `st_buffer` to extend the IUCN polygon by choosing a distance (e.g. `dist = 50000` will be a distance of 50km). Use `leaflet` to plot three different buffer sizes of your choice. Your favourite of these should be named `buffer_iucn` and will be used later on.
 
 Ask yourself:
 
 -   Which buffer removes obvious errors?
 
--   Which keeps plausible edge populations?
+-   Which keeps plausible (i.e. reasonable/believable) edge populations?
 
 -   At what point does the buffer become biologically unrealistic?
 
 ##### ⚠️ Important Point 1
 
-Buffers measured in longitude/latitude can behave strangely because degrees are not equal distances across the globe. So first, we project the data into a coordinate reference system (CRS) measured in metres. Once you have created the buffers you may need to transform them back into a CRS that is measured in degrees of latitude and longitude (use `crs=4326`)
+Buffers measured in longitude/latitude can behave strangely because degrees are not equal distances across the globe (one degree of longitude is much smaller near the poles than at the equator). So first, we project the data into a **coordinate reference system (CRS) measured in metres**. CRS 3577 is an Australian equal-area projection. After creating buffers, you **must** transform back to CRS 4326 (the standard latitude/longitude system) for mapping with `leaflet`.
 
 ```{r}
 # Project to an Australian equal-area CRS (units = metres)
-iucn_proj <- st_transform(iucn_sf, crs=3577) 
+iucn_proj <- st_transform(iucn_sf, crs=3577)
 occ_proj <- st_transform(occ_sf, crs= 3577)
 ```
 
@@ -413,15 +453,28 @@ occ_proj <- st_transform(occ_sf, crs= 3577)
 
 You can crop the buffer by the coastlines, so you don't estimate part of the range in the ocean. This requires first disabling spherical geometry to avoid errors due to the `world` polygon wrapping around the globe.
 
+##### Worked example
+
+Here is a worked example showing the full workflow for a single buffer. Use this as a template to create three buffers of different sizes, then plot them together with `leaflet`.
+
 ```{r}
-# Disable spherical geometry to avoid errors
+# Step 1: Create a buffer (this example uses 50 km)
+buffer_50km <- st_buffer(iucn_proj, dist = 50000)
+
+# Step 2: Transform back to lat/lon for mapping
+buffer_50km <- st_transform(buffer_50km, crs = 4326)
+
+# Step 3: Crop by coastline to remove ocean areas
 sf_use_s2(FALSE)
-
-# Crop buffer by coastline
-buffer_iucn <- st_intersection(st_make_valid(buffer_iucn), world)
-
-# Re-enable spherical geometry
+buffer_50km <- st_intersection(st_make_valid(buffer_50km), world)
 sf_use_s2(TRUE)
+```
+
+Now create at least two more buffers of different sizes (e.g. 100 km, 200 km, 500 km) using the same steps. Plot all three on a `leaflet` map together with the occurrence points and the IUCN polygon, using different colours for each buffer. Assign your preferred buffer to the variable `buffer_iucn`:
+
+```{r}
+# YOUR CODE HERE: create additional buffers, plot them, then assign your favourite:
+# buffer_iucn <- buffer_XXXXX
 ```
 
 ```{r, echo=F}
@@ -611,6 +664,8 @@ xy_df <- unique(round(xy_df, 4))
 ahull_obj <- ahull(xy_df, alpha = alpha)
 
 # Convert to sf polygon
+# Note: the code below converts between older (sp) and newer (sf) spatial formats.
+# You do not need to understand every line — just run it and check that ahull_sf is created.
 ahull_spatial <- ahull2poly(ahull_obj)
 sub_polys <- slot(ahull_spatial, "polygons")
 
@@ -631,7 +686,7 @@ sf_use_s2(TRUE)
 
 #### **Task 8. Compare all layers**
 
-Now visualise everything together: occurrences, buffers, IUCN range, convex hull, and alpha hull, based on what you've learned using `leaflet`.
+Now visualise everything together: occurrences, buffers, IUCN range, convex hull, and alpha hull, based on what you've learned using `leaflet`. Build your map by starting with `leaflet() |> addProviderTiles(...)` and adding layers one at a time with `addCircleMarkers()` for points and `addPolygons()` for polygons. Use different colours for each layer so you can distinguish them. If you get stuck, check the `.qmd` source file for a worked solution.
 
 ```{r,echo =F}
 
@@ -715,9 +770,17 @@ terra::writeVector(vect(ahull_sf), "data/frilled_lizard_alpha_hull.shp")
 
 Once you’ve completed the workshop up to this point (not including any of the Going Further section), you are welcome to check out. **But first, knit, commit, and push!**
 
-If you’d like to stay and complete the ‘Going Further’ section, you’re welcome to do so — but please check out first. During the check out we will look at your `.rmd` and `.html` files, so have both loaded and ready.
+If you’d like to stay and complete the ‘Going Further’ section, you’re welcome to do so — but please check out first.
 
-**To check out:** bring your laptop to Alex, Rob, or a demonstrator and let them know that you’re ready.
+**Before checking out, make sure you have:**
+
+-   Cleaned occurrence data saved as a CSV (`data/frilled_lizard_ALA_cropped.csv`)
+-   An alpha hull saved as a shapefile (`data/frilled_lizard_alpha_hull.shp`)
+-   At least one leaflet map comparing different range estimation methods
+-   Written reflections on the "Ask yourself" questions in your `.rmd`
+-   Your `.rmd` knits to `.html` without errors
+
+**To check out:** bring your laptop to Alex, Rob, or a demonstrator with both your `.rmd` and `.html` files open.
 :::
 
 ## Going Further
