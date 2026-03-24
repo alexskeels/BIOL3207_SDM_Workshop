@@ -219,12 +219,17 @@ We begin with the cropped occurrence dataset you created last week and the alpha
 ```{r}
 library(tidyverse)
 library(terra)
+library(sf)
+library(raster)  # needed for leaflet raster display
 
 # occurence points
 occ <- read_csv("data/frilled_lizard_ALA_cropped.csv")
 
 # load alpha hull (saved at the end of last week's workshop)
 ahull_v <- vect("data/frilled_lizard_alpha_hull.shp")
+
+# convert to sf for use with leaflet later
+ahull_sf <- st_as_sf(ahull_v)
 ```
 
 Environmental SDMs require spatial layers describing climate or habitat. We will use **bioclim variables** derived from temperature and rainfall.
@@ -659,7 +664,7 @@ print(predictor_vars)
 
 -   Do the remaining predictors make ecological sense for the Frilled Lizard?
 
--   Would you remove any others based on your ecological kowledge of the species (if any)?
+-   Would you remove any others based on your ecological knowledge of the species (if any)?
 
 Next, we define **formulas** for GLM and GAM models. For the GAM, `k = 4` sets the flexibility of the splines: increase `k` for more complex curves, decrease for simpler curves.
 
@@ -668,8 +673,8 @@ Next, we define **formulas** for GLM and GAM models. For the GAM, `k = 4` sets t
 # GLM: linear model
 formula_glm <- formula(paste0("presence ~ ", paste0(predictor_vars, collapse = " + ")))
 
-# GAM: non-linear model with splines
-formula_gam <- formula(paste0("presence ~ ", paste0("s(", predictor_vars,", 4)", collapse = " + ")))
+# GAM: non-linear model with splines (k = basis dimension, controls wiggliness)
+formula_gam <- formula(paste0("presence ~ ", paste0("s(", predictor_vars,", k = 4)", collapse = " + ")))
 
 # Inspect formulas
 print(formula_glm)
@@ -681,14 +686,14 @@ print(formula_gam)
 Now we fit both models using the uncorrelated predictors.
 
 ```{r}
-library(gam)
+library(mgcv)
 
 # Fit GLM (logistic regression)
 glm_sdm <- glm(formula_glm, data = sdm_data_uncor, family = binomial(link = "logit"))
 summary(glm_sdm)
 
-# Fit GAM
-gam_sdm <- gam::gam(formula_gam, data = sdm_data_uncor, family = binomial(link = "logit"))
+# Fit GAM (using mgcv, which correctly handles smooth terms in predict)
+gam_sdm <- mgcv::gam(formula_gam, data = sdm_data_uncor, family = binomial(link = "logit"))
 summary(gam_sdm)
 
 ```
@@ -752,7 +757,7 @@ sync(glm_plot, gam_plot)
 
 ```
 
-We can turn a probabilistic measure of habitat suitability into a binary species dsitribution by thresholding the predictions. To do this we need to evaluate our models and assess how well the model predicts our known occurence records.
+We can turn a continuous measure of habitat suitability into a binary species distribution by thresholding the predictions. To do this we need to evaluate our models and assess how well the model predicts our known occurence records.
 
 A common approach is the **Receiver Operating Characteristic (ROC) curve**, which plots the trade-off between **true positive rate** and **false positive rate** across all possible thresholds.
 
@@ -928,7 +933,7 @@ Before we plot it out, lets do the same for the year 2100. There are many models
 Today we'll use MIROC6 climate model and SSP585 which is the highest emissions scenario.
 
 ```{r}
-# load bioclim data for the LGM (from CHELSA)
+# load bioclim data for 2100 (from WorldClim MIROC6 SSP585)
 future_bioclim_data <- rast("data/worldclim_australia_MIROC6_2100.tif")
 
 # check they match
@@ -947,7 +952,14 @@ pred_gam_bin_2100 <- pred_gam_2100 > pred_gam_threshold
 
 Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create three leaflet maps synced together using `leafsync::sync()`: one for the LGM range, one for the present-day range, and one for the 2100 distribution. On top of the present-day map, add the occurrence points and the alpha hull for comparison.
 
+::: callout-warning
+## Extrapolation caution
+When projecting models to past or future climates, the environmental conditions may fall outside the range the model was trained on. This can produce unreliable predictions, especially for GAMs where smooth terms can behave unpredictably outside the training data range. Interpret temporal projections as indicative, not definitive.
+:::
+
 You can sync three maps like this: `sync(map_lgm, map_present, map_future, ncol = 1)`
+
+To add the alpha hull to a leaflet map, use the `ahull_sf` object we created at the start: `addPolygons(data = ahull_sf, fillOpacity = 0.2, color = "red")`
 
 Next, get together with your group and compare each member's plot and answer these questions.
 

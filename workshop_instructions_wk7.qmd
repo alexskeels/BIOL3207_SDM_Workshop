@@ -233,20 +233,20 @@ library(knitr)
 # read csv
 occ <- read_csv("data/frilled_lizard_ALA.csv")
 
-# inspect 
-occ %>% 
-  head %>% 
-  kable
+# inspect
+occ |>
+  head() |>
+  kable()
 
 # how much missing data for each variable?
 tibble(
   column = names(occ),
   n_missing = colSums(is.na(occ)),
   pct_missing = colMeans(is.na(occ)) * 100
-) %>% 
-  arrange(desc(pct_missing))%>% 
-  head(100) %>% 
-  kable
+) |>
+  arrange(desc(pct_missing)) |>
+  head(100) |>
+  kable()
 ```
 
 ::: callout-tip
@@ -309,7 +309,7 @@ library(dplyr)
 library(sf)
 
 # Remove records with missing coordinates
-occ <- occ %>%
+occ <- occ |>
   filter(!is.na(decimalLongitude),
          !is.na(decimalLatitude))
 
@@ -470,10 +470,33 @@ buffer_50km <- st_intersection(st_make_valid(buffer_50km), world)
 sf_use_s2(TRUE)
 ```
 
-Now create at least two more buffers of different sizes (e.g. 100 km, 200 km, 500 km) using the same steps. Plot all three on a `leaflet` map together with the occurrence points and the IUCN polygon, using different colours for each buffer. Assign your preferred buffer to the variable `buffer_iucn`:
+Now create at least two more buffers of different sizes (e.g. 100 km, 200 km, 500 km) using the same steps. Plot all three on a `leaflet` map together with the occurrence points and the IUCN polygon, using different colours for each buffer. Here is a template for layering multiple polygons on one map:
 
 ```{r}
-# YOUR CODE HERE: create additional buffers, plot them, then assign your favourite:
+# Template: multi-layer leaflet map with different colours per polygon
+leaflet(occ_sf) |>
+  addProviderTiles(providers$OpenStreetMap.Mapnik) |>
+
+  # Occurrence points
+  addCircleMarkers(radius = 3, fillOpacity = 0.5, stroke = FALSE, color = "#2C7FB8") |>
+
+  # IUCN polygon (green)
+  addPolygons(data = iucn_sf, fillColor = "#009E73", color = "#007F5F",
+              weight = 2, fillOpacity = 0.2, popup = "IUCN Range") |>
+
+  # Buffer 1 (gold) — replace buffer_50km with your object name
+  addPolygons(data = buffer_50km, fillColor = "#FFD700", color = "#B8860B",
+              weight = 1, fillOpacity = 0.1, popup = "50 km buffer") |>
+
+  # Buffer 2 (orange) — add more addPolygons() calls for additional buffers
+  addPolygons(data = buffer_100km, fillColor = "#FFA500", color = "#FF8C00",
+              weight = 1, fillOpacity = 0.1, popup = "100 km buffer")
+```
+
+Assign your preferred buffer to the variable `buffer_iucn`. **Make sure you do this before moving on** — it is used in the next task.
+
+```{r}
+# YOUR CODE HERE: assign your favourite buffer:
 # buffer_iucn <- buffer_XXXXX
 ```
 
