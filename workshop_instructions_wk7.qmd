@@ -251,10 +251,12 @@ tibble(
 
 ::: callout-tip
 ## Hint
-Use the `missingness_table` you created above (or a similar tibble) as input to `ggplot()`. Map `n_missing` to the x-axis and use `geom_histogram()`. If you get stuck, check the `.qmd` source file for a worked solution.
+Save the missingness tibble to a variable (e.g. `missingness_table`) and use it as input to `ggplot()`. Map `n_missing` to the x-axis and use `geom_histogram()`. If you get stuck, click "Show solution" in the code block below.
 :::
 
-```{r, echo=F}
+```{r}
+#| code-fold: true
+#| code-summary: "Show solution"
 # solution
 library(ggplot2)
 
@@ -488,9 +490,9 @@ leaflet(occ_sf) |>
   addPolygons(data = buffer_50km, fillColor = "#FFD700", color = "#B8860B",
               weight = 1, fillOpacity = 0.1, popup = "50 km buffer") |>
 
-  # Buffer 2 (orange) — add more addPolygons() calls for additional buffers
-  addPolygons(data = buffer_100km, fillColor = "#FFA500", color = "#FF8C00",
-              weight = 1, fillOpacity = 0.1, popup = "100 km buffer")
+  # Buffer 2 (orange) — replace with your second buffer object, add more for others
+  addPolygons(data = buffer_50km, fillColor = "#FFA500", color = "#FF8C00",
+              weight = 1, fillOpacity = 0.1, popup = "Another buffer")
 ```
 
 Assign your preferred buffer to the variable `buffer_iucn`. **Make sure you do this before moving on** — it is used in the next task.
@@ -500,7 +502,9 @@ Assign your preferred buffer to the variable `buffer_iucn`. **Make sure you do t
 # buffer_iucn <- buffer_XXXXX
 ```
 
-```{r, echo=F}
+```{r}
+#| code-fold: true
+#| code-summary: "Show solution"
 # Solution
 
 buffer_100km <- st_buffer(iucn_proj, dist = 100000)
@@ -546,7 +550,7 @@ leaflet(occ_sf) |>
     popup = "IUCN Range"
   ) |>
   
-  # 50 km buffer
+  # 100 km buffer
   addPolygons(
     data = buffer_100km,
     fillColor = "#FFD700",   # gold
@@ -555,8 +559,8 @@ leaflet(occ_sf) |>
     fillOpacity = 0.1,
     popup = "100 km buffer"
   ) |>
-  
-  # 100 km buffer
+
+  # 200 km buffer
   addPolygons(
     data = buffer_200km,
     fillColor = "#FFA500",   # orange
@@ -565,8 +569,8 @@ leaflet(occ_sf) |>
     fillOpacity = 0.1,
     popup = "200 km buffer"
   ) |>
-  
-  # 200 km buffer
+
+  # 500 km buffer
   addPolygons(
     data = buffer_500km,
     fillColor = "#FF4500",   # red-orange
@@ -580,7 +584,7 @@ leaflet(occ_sf) |>
 buffer_iucn <- buffer_200km
 ```
 
-#### **Task 5. Crop Occurrence Records with Buffer**
+#### **Task 5. Crop Occurrence Records with Buffer (~10 minutes)**
 
 After exploring the IUCN polygon and buffers, we now want to subset our occurrence records to include only points that fall within a chosen buffer around the expert range.
 
@@ -616,7 +620,7 @@ Species distribution models (SDMs) aim to reconstruct where a species is likely 
 
 A **convex hull** (or minimum convex polygon, MCP) is one of the easiest ways to estimate a species’ range. It is the smallest polygon that encloses all occurrence points and has only convex angles (\< 180°).
 
-#### **Task 6. Build a convex hull**
+#### **Task 6. Build a convex hull (~15 minutes)**
 
 -   Extract the coordinates from your cleaned occurrence dataset.
 
@@ -655,12 +659,13 @@ sf_use_s2(TRUE)
 
 **Alpha hulls**, on the other hand, allow **concave polygons**, producing a tighter, more realistic range envelope. The alpha value controls the degree of concavity. Smaller alpha values give a tighter, more concave polygon, larger alpha values give a looser, more convex polygon.
 
-#### **Task 7. Build alpha hulls**
+#### **Task 7. Build alpha hulls (~20 minutes)**
 
 1.  Install the packages `alphahull` and `hull2spatial`
 
 ```{r}
 # hull2spatial is from GitHub not CRAN
+# install remotes first if you don't have it: install.packages("remotes")
 remotes::install_github("babichmorrowc/hull2spatial")
 library(hull2spatial)
 library(alphahull)
@@ -707,11 +712,13 @@ ahull_sf <- st_intersection(st_make_valid(ahull_sf), world)
 sf_use_s2(TRUE)
 ```
 
-#### **Task 8. Compare all layers**
+#### **Task 8. Compare all layers (~15 minutes)**
 
-Now visualise everything together: occurrences, buffers, IUCN range, convex hull, and alpha hull, based on what you've learned using `leaflet`. Build your map by starting with `leaflet() |> addProviderTiles(...)` and adding layers one at a time with `addCircleMarkers()` for points and `addPolygons()` for polygons. Use different colours for each layer so you can distinguish them. If you get stuck, check the `.qmd` source file for a worked solution.
+Now visualise everything together: occurrences, buffers, IUCN range, convex hull, and alpha hull, based on what you've learned using `leaflet`. Build your map by starting with `leaflet() |> addProviderTiles(...)` and adding layers one at a time with `addCircleMarkers()` for points and `addPolygons()` for polygons. Use different colours for each layer so you can distinguish them. If you get stuck, click "Show solution" in the code block below.
 
-```{r,echo =F}
+```{r}
+#| code-fold: true
+#| code-summary: "Show solution"
 
 # Solution
 leaflet(occ_sf) |>
@@ -785,7 +792,7 @@ Lastly, save the alpha hull as we will use it again in next week's workshop.
 sf::st_write(ahull_sf, "data/frilled_lizard_alpha_hull.shp", delete_layer = TRUE)
 
 # If you get an error, try using the terra package instead:
-terra::writeVector(vect(ahull_sf), "data/frilled_lizard_alpha_hull.shp")
+terra::writeVector(terra::vect(ahull_sf), "data/frilled_lizard_alpha_hull.shp", overwrite = TRUE)
 ```
 
 ::: callout-tip

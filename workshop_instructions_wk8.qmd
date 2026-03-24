@@ -344,7 +344,7 @@ By the end of this exercise, your group should be able to answer:
 
 There is no universally correct answer — the goal is to develop modelling judgement.
 
-#### Task 2. Generate Background Points Using Your Assigned Method
+#### Task 2. Generate Background Points Using Your Assigned Method (~20 minutes)
 
 -   Within your group, assign one method to each person.
 
@@ -638,7 +638,7 @@ We will fit two types of models:
 
 ------------------------------------------------------------------------
 
-#### **Task 3. Select predictors**
+#### **Task 3. Select predictors (~15 minutes)**
 
 Selecting environmental predictors is critical. Variables should be chosen based on **ecological relevance** and to **avoid collinearity**. Both GLMs and GAMs do poorly when predictors are highly correlated.
 
@@ -647,7 +647,7 @@ Selecting environmental predictors is critical. Variables should be chosen based
 library(caret)
 
 correlation_matrix <- cor(sdm_data[, 3:21], use="complete.obs")
-correlated <- findCorrelation(correlation_matrix)
+correlated <- findCorrelation(correlation_matrix, cutoff = 0.7)  # remove variables with |r| > 0.7
 names_correlated <- colnames(sdm_data[,3:21])[correlated]
 
 # Remove highly correlated variables
@@ -681,7 +681,7 @@ print(formula_glm)
 print(formula_gam)
 ```
 
-#### **Task 4. Fit models**
+#### **Task 4. Fit models (~20 minutes)**
 
 Now we fit both models using the uncorrelated predictors.
 
@@ -704,7 +704,7 @@ In the `summary()` output, look for:
 
 -   **Significant variables**: look for small p-values (marked with `*`, `**`, or `***`) next to each predictor.
 -   **AIC**: printed at the bottom of the GLM summary. Lower AIC = better model fit.
--   **Explained deviance (D²)**: calculate as `1 - (residual deviance / null deviance)` from the summary output. Higher D² = more variance explained.
+-   **Explained deviance (D²)**: calculate as `1 - (residual deviance / null deviance)` from the summary output. Higher D² = more variance explained. In R: `1 - (glm_sdm$deviance / glm_sdm$null.deviance)`. For the GAM, `summary(gam_sdm)` prints "Deviance explained" directly.
 :::
 
 **Ask yourself:**
@@ -780,6 +780,8 @@ p <- sdm_data_uncor[sdm_data_uncor$presence==1, ]
 a <- sdm_data_uncor[sdm_data_uncor$presence==0, ]
 
 # Evaluate models
+# evaluate() returns an object with slots accessed using @ (e.g. glm_eval@auc)
+# This is different from $ which you use for data frames — @ is for S4 objects
 glm_eval <- evaluate(p=p, a=a, model=glm_sdm, type='response')
 gam_eval <- evaluate(p=p, a=a, model=gam_sdm, type='response')
 
@@ -833,7 +835,7 @@ So far we have evaluated the model on the same data used to fit it, so it may ap
 
 A better way to estimate predictive performance is to split the data into training and testing subsets, fit the model on the training data, and evaluate it on the testing data.
 
-#### **Task 5. K-Fold Cross-Validation**
+#### **Task 5. K-Fold Cross-Validation (~15 minutes)**
 
 K-fold cross-validation automates the validation process by splitting the data into `k` partitions and repeats the evaluation on each partition. As follows:
 
@@ -914,15 +916,18 @@ lgm_bioclim_data <- rast("data/chelsa_australia_LGM.tif")
 names(bioclim_data)
 names(lgm_bioclim_data)
 
-# check they match
+# check they match — if not, force the names to align
 names(bioclim_data) %in% names(lgm_bioclim_data)
+
+# ensure names match exactly (some climate datasets use different naming)
+names(lgm_bioclim_data) <- names(bioclim_data)
 ```
 
 Now we have data that represents the same variables, with matching names, at two different times. We can now predict the model on this new data.
 
 ```{r}
-pred_glm_lgm <- predict(lgm_bioclim_data, glm_sdm, type="response")
-pred_gam_lgm <- predict(lgm_bioclim_data, gam_sdm, type="response")
+pred_glm_lgm <- terra::predict(lgm_bioclim_data, glm_sdm, type="response")
+pred_gam_lgm <- terra::predict(lgm_bioclim_data, gam_sdm, type="response")
 
 pred_glm_bin_lgm <- pred_glm_lgm > pred_glm_threshold
 pred_gam_bin_lgm <- pred_gam_lgm > pred_gam_threshold
@@ -936,19 +941,20 @@ Today we'll use MIROC6 climate model and SSP585 which is the highest emissions s
 # load bioclim data for 2100 (from WorldClim MIROC6 SSP585)
 future_bioclim_data <- rast("data/worldclim_australia_MIROC6_2100.tif")
 
-# check they match
+# check they match — if not, force the names to align
 names(bioclim_data) %in% names(future_bioclim_data)
+names(future_bioclim_data) <- names(bioclim_data)
 
 # make the model prediction
-pred_glm_2100 <- predict(future_bioclim_data, glm_sdm, type="response")
-pred_gam_2100 <- predict(future_bioclim_data, gam_sdm, type="response")
+pred_glm_2100 <- terra::predict(future_bioclim_data, glm_sdm, type="response")
+pred_gam_2100 <- terra::predict(future_bioclim_data, gam_sdm, type="response")
 
 # threshold the model prediction
 pred_glm_bin_2100 <- pred_glm_2100 > pred_glm_threshold
 pred_gam_bin_2100 <- pred_gam_2100 > pred_gam_threshold
 ```
 
-### Final Task
+### Final Task (~20 minutes)
 
 Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create three leaflet maps synced together using `leafsync::sync()`: one for the LGM range, one for the present-day range, and one for the 2100 distribution. On top of the present-day map, add the occurrence points and the alpha hull for comparison.
 
@@ -1001,7 +1007,7 @@ In the workshop so far, we have used random folds in K-fold cross validation. Th
 ```{r}
 
 # Create 2D spatial blocks
-sdm_data_uncor <- sdm_data_uncor %>%
+sdm_data_uncor <- sdm_data_uncor |>
   mutate(
     lon_bin = ntile(longitude, 3),
     lat_bin = ntile(latitude,  2),
