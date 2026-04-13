@@ -21,175 +21,175 @@ execute:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### **The Stuff that's Always Here**
+## **The Stuff that's Always Here**
 
-1.  ::: panel-tabset
-    ## Learning objectives {.active}
+::: panel-tabset
+### Learning objectives {.active}
 
-    -   Work with spatial data: points and polygons
+-   Work with spatial data: points and polygons
 
-    -   Visualise spatial data on maps
+-   Visualise spatial data on maps
 
-    -   Make decisions about cleaning data
+-   Make decisions about cleaning data
 
-    -   Produce simple species distribution models
+-   Produce simple species distribution models
 
-    ## Ground rules
+### Ground rules
 
-    Here are a few ground rules to keep things running smoothly:
+Here are a few ground rules to keep things running smoothly:
 
-    1)  Do your best to attempt each task on your own before asking for help from the instructors or your neighbour
+1)  Do your best to attempt each task on your own before asking for help from the instructors or your neighbour
 
-    2)  When you get to a green box, stick the [green]{style="color:green;"} Post-it on your laptop where we can see it
+2)  When you get to a green box, stick the [green]{style="color:green;"} Post-it on your laptop where we can see it
 
-    3)  If you need help, stick the [red]{style="color:red;"} Post-it on your laptop
+3)  If you need help, stick the [red]{style="color:red;"} Post-it on your laptop
 
-    ## Getting un-stuck
+### Getting un-stuck
 
-    Remember, no programmers know it all, so don’t struggle alone too long, but before you ask for help do try:
+Remember, no programmers know it all, so don’t struggle alone too long, but before you ask for help do try:
 
-    -   googling for what you want to do (e.g. ‘set point transparency in ggplot’)
+-   googling for what you want to do (e.g. ‘set point transparency in ggplot’)
 
-    -   googling the error message if you get one (try putting it in double quotes)
+-   googling the error message if you get one (try putting it in double quotes)
 
-    -   searching stack overflow for what you want try using tags (e.g. \[ggplot\]) to narrow down your search, e.g. search \[ggplot2\] adjust point transparency
+-   searching stack overflow for what you want try using tags (e.g. \[ggplot\]) to narrow down your search, e.g. search \[ggplot2\] adjust point transparency
 
-    -   use the amazing R studio cheat sheets
+-   use the amazing R studio cheat sheets
 
-    -   ask ChatGPT or Gemini for help (they are good at R!)
+-   ask ChatGPT or Gemini for help (they are good at R!)
 
-    -   asking your neighbours if they can help (remember to be generous with your time if someone asks you!)
+-   asking your neighbours if they can help (remember to be generous with your time if someone asks you!)
 
-    -   try explaining to an imaginary person exactly what you’re trying to do
+-   try explaining to an imaginary person exactly what you’re trying to do
 
-    -   try working from the examples in the help files (e.g. type ?geom_point in the console and look down to the examples)
+-   try working from the examples in the help files (e.g. type ?geom_point in the console and look down to the examples)
 
-    If none of this works, use your [red]{style="color:red;"} Post-it to get help from a demonstrator.
+If none of this works, use your [red]{style="color:red;"} Post-it to get help from a demonstrator.
 
-    ## Before you begin
+### Before you begin
 
-    Do this at the start of the workshop. For the git commits in this part, you do not need to have descriptions (though you can add them if you prefer).
+Do this at the start of the workshop. For the git commits in this part, you do not need to have descriptions (though you can add them if you prefer).
 
-    1.  On github.com create a new private repo called DS4B_Week_N, where N is the week of the semester (e.g. DS4B_Week_4)
+1.  On github.com create a new private repo called DS4B_Week_N, where N is the week of the semester (e.g. DS4B_Week_4)
 
-    2.  Add the GitHub user DS4B-ANU (https://github.com/DS4B-ANU) as a collaborator using these instructions.
+2.  Add the GitHub user DS4B-ANU (https://github.com/DS4B-ANU) as a collaborator using these instructions.
 
-    3.  Clone your repository to your computer using GitHub Desktop. The new folder on your computer is what is known as the ‘root’ directory of your repository.
+3.  Clone your repository to your computer using GitHub Desktop. The new folder on your computer is what is known as the ‘root’ directory of your repository.
 
-    4.  Create a .gitignore file as follows:
+4.  Create a .gitignore file as follows:
 
-        -   In RStudio, use the dialog box in the top left to bring up the menu to add files
+    -   In RStudio, use the dialog box in the top left to bring up the menu to add files
 
-        -   Choose “Text File”
+    -   Choose “Text File”
 
-        -   Add the line .Rproj.user/ to your text file
+    -   Add the line .Rproj.user/ to your text file
 
-        -   Add other lines for files you need to ignore (e.g. you might like to add .DS_Store if you use a mac)
+    -   Add other lines for files you need to ignore (e.g. you might like to add .DS_Store if you use a mac)
 
-        -   Save the text file in the root directory of your repo, and call it .gitignore
+    -   Save the text file in the root directory of your repo, and call it .gitignore
 
-        -   Commit and push your changes using GitHub Desktop
+    -   Commit and push your changes using GitHub Desktop
 
-    5.  Create a new R project as follows:
+5.  Create a new R project as follows:
 
-        -   Open RStudio
+    -   Open RStudio
 
-        -   Create a new R project for this workshop using the dialog button at the top left
+    -   Create a new R project for this workshop using the dialog button at the top left
 
-        -   Choose “Existing Folder” when the dialog comes up
+    -   Choose “Existing Folder” when the dialog comes up
 
-        -   Choose the root directory of your new repo as the folder in which to create your R project (the folder will be DS4B_Week_N as above, where N is the week of the semester)
+    -   Choose the root directory of your new repo as the folder in which to create your R project (the folder will be DS4B_Week_N as above, where N is the week of the semester)
 
-        -   Create the R project Commit and push your changes using GitHub Desktop
+    -   Create the R project Commit and push your changes using GitHub Desktop
 
-    6.  Now we add the raw data as follows:
+6.  Now we add the raw data as follows:
 
-        -   Create a folder in the root directory of your repo called data
+    -   Create a folder in the root directory of your repo called data
 
-        -   Download the raw data for this workshop from Canvas
+    -   Download the raw data for this workshop from Canvas
 
-        -   Save it in the data folder
+    -   Save it in the data folder
 
-        -   Commit and push your changes using GitHub Desktop.
+    -   Commit and push your changes using GitHub Desktop.
 
-    7.  Now we create the R Markdown file as follows:
+7.  Now we create the R Markdown file as follows:
 
-        -   In RStudio, use the dialog box in the top left to bring up the menu to add files
+    -   In RStudio, use the dialog box in the top left to bring up the menu to add files
 
-        -   Choose “R Markdown”
+    -   Choose “R Markdown”
 
-        -   Give it the title workshop_solutions.rmd
+    -   Give it the title workshop_solutions.rmd
 
-        -   Save it in the root directory of your repo
+    -   Save it in the root directory of your repo
 
-        -   Delete the contents of the R markdown file
+    -   Delete the contents of the R markdown file
 
-        -   Replace the contents with the following markdown template:
+    -   Replace the contents with the following markdown template:
 
-            ````
-            ---
-            title: "BIOL3207 Workshop Solutions"
-            author: "UXXXXXXX"
-            date: "YYYY-MM-DD"
-            output: html_document
-            ---
+        ````
+        ---
+        title: "BIOL3207 Workshop Solutions"
+        author: "UXXXXXXX"
+        date: "YYYY-MM-DD"
+        output: html_document
+        ---
 
-            ```{r setup2, include=FALSE}
-            knitr::opts_chunk$set(echo = TRUE)
-            ```
+        ```{r setup2, include=FALSE}
+        knitr::opts_chunk$set(echo = TRUE)
+        ```
 
-            ## Introduction
+        ## Introduction
 
-            ## Making Maps
+        ## Making Maps
 
-            ## Cleaning the Data
+        ## Cleaning the Data
 
-            ## Geometric Species Distribution Models
-            ````
+        ## Geometric Species Distribution Models
+        ````
 
-        -   Enter your U number and the date where indicated
+    -   Enter your U number and the date where indicated
 
-        -   Knit your R markdown file to html in RStudio
+    -   Knit your R markdown file to html in RStudio
 
-        -   Check the html file works by opening it in your browser
+    -   Check the html file works by opening it in your browser
 
-        -   Commit and push your changes using GitHub Desktop.
+    -   Commit and push your changes using GitHub Desktop.
 
-    8.  Open your repo on github.com, and ensure that:
+8.  Open your repo on github.com, and ensure that:
 
-        -   You have added DS4B-ANU (https://github.com/DS4B-ANU) as a collaborator
+    -   You have added DS4B-ANU (https://github.com/DS4B-ANU) as a collaborator
 
-        -   Your root directory contains:
+    -   Your root directory contains:
 
-            -   a .gitignore file (containing at least the single line .Rproj.user/)
+        -   a .gitignore file (containing at least the single line .Rproj.user/)
 
-            -   a data/ folder
+        -   a data/ folder
 
-            -   the data files downloaded from Canvas in the data/ folder
+        -   the data files downloaded from Canvas in the data/ folder
 
-            -   a .Rproj file with the same name as the repo (e.g. Practice_1.Rproj)
+        -   a .Rproj file with the same name as the repo (e.g. Practice_1.Rproj)
 
-            -   a workshop_solutions.rmd file, updated as above
+        -   a workshop_solutions.rmd file, updated as above
 
-            -   a workshop_solutions.html file, knitted from the .rmd file
+        -   a workshop_solutions.html file, knitted from the .rmd file
 
-            -   nothing else!
+        -   nothing else!
 
-        -   If any of these need fixing, fix them then use GitHub Desktop to commit and push your changes.
+    -   If any of these need fixing, fix them then use GitHub Desktop to commit and push your changes.
 
-    ## Remember it’s a lab book
+### Remember it’s a lab book
 
-    Through this and every workshop, you should type as much descriptive text into your R Markdown document as someone (including but not limited to you) would need to understand what you’re doing.
+Through this and every workshop, you should type as much descriptive text into your R Markdown document as someone (including but not limited to you) would need to understand what you’re doing.
 
-    Remember: This document is your lab book! The information in it must be sufficient to reproduce your research, allow others to understand your way of thinking, and allow you to use it in your later work (e.g. when writing assessments, theses, blogs or papers). Imagine that you are writing a manual and a report at the same time.
+Remember: This document is your lab book! The information in it must be sufficient to reproduce your research, allow others to understand your way of thinking, and allow you to use it in your later work (e.g. when writing assessments, theses, blogs or papers). Imagine that you are writing a manual and a report at the same time.
 
-    Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, subheadings work like this:
+Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, subheadings work like this:
 
-    ```{r}
-    ## This is a level 2 subheading
-    ### This is a level 3 subheading
-    ```
-    :::
+```{r}
+## This is a level 2 subheading
+### This is a level 3 subheading
+```
+:::
 
 ## Introduction
 
