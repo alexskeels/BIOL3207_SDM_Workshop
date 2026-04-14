@@ -21,7 +21,7 @@ execute:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## **The Stuff that's Always Here**
+## The Stuff that's Always Here
 
 ::: panel-tabset
 ### Learning objectives {.active}
@@ -240,7 +240,7 @@ Load the raster stack with the `rast` function from the `terra` package.
 bioclim_data <- rast("data/worldclim_australia.tif")
 ```
 
-#### **Task 1. Inspect the Predictors (10 minutes)**
+#### **Task 1. Inspect the Predictors (~10 minutes)**
 
 Raster data can be organised as a matrix, with each row representation a latitude, and each column a longitude. It can also be organised with each row representing a unique grid cell on the landscape. This second format is useful when you are looking at multiple variables simultaneously and is what is returned by `as_tibble`.
 
@@ -330,7 +330,7 @@ Background data can be sampled in many ways, each will affect your results. A go
 
 Today we are going to test this directly.
 
-### **Form Groups**
+### Form Groups
 
 With your neighbours, split into groups of **four**.
 
@@ -344,7 +344,7 @@ By the end of this exercise, your group should be able to answer:
 
 There is no universally correct answer — the goal is to develop modelling judgement.
 
-#### Task 2. Generate Background Points Using Your Assigned Method (~20 minutes)
+#### **Task 2. Generate Background Points Using Your Assigned Method (~20 minutes)**
 
 -   Within your group, assign one method to each person.
 

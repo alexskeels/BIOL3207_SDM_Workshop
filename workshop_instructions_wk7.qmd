@@ -21,7 +21,7 @@ execute:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## **The Stuff that's Always Here**
+## The Stuff that's Always Here
 
 ::: panel-tabset
 ### Learning objectives {.active}
@@ -212,7 +212,7 @@ The ALA is a collaborative, digital, open infrastructure that pulls together Aus
 
 I got todays data directly from the ALA website and I'll explain how I got this and whats in the dataset. Every dataset downloaded from ALA is given a Digital Object Identifier (DOI) so anyone can download the exact same one. Here is our one for the [Frilled Lizard](https://doi.org/10.26197/ala.2e4809b8-791f-4adb-b1aa-f3e0fd94f86a), but you should have also already downloaded this from Canvas.
 
-#### Task 1. Exploring the data frame (10 minutes)
+#### **Task 1. Exploring the data frame (~10 minutes)**
 
 The data has lots of columns, use `kable` to look at them to get an idea of the kinds of information are recorded in the ALA. Pay attention to ones that explicitly record taxonomic information (e.g. species, genus, family), ecological information (e.g. habitat, behaviour), and spatial information (e.g. latitude, longitude, place names).
 
@@ -288,7 +288,7 @@ library(rnaturalearth)
 world <- ne_countries(scale = "medium", returnclass = "sf")
 ```
 
-#### **Task 2. Explore the spatial data (20 minutes)**
+#### **Task 2. Explore the spatial data (~20 minutes)**
 
 Inspect where occurrence records are located.
 
@@ -304,7 +304,7 @@ Ask yourself:
 
 These kinds of biases are extremely common in ecological data and can strongly influence downstream models.
 
-##### **Prepare the spatial data**
+##### Prepare the spatial data
 
 ```{r}
 library(dplyr)
@@ -323,7 +323,7 @@ occ_sf <- st_as_sf(
 )
 ```
 
-##### **Build an interactive map**
+##### Build an interactive map
 
 Now we add a proper basemap with roads, place names, and terrain.
 
@@ -360,7 +360,7 @@ For many taxa, the International Union for the Conservation of Nature (IUCN) pro
 
 For example, the Frilled Lizard was assessed by the IUCN in 2014: <https://www.iucnredlist.org/species/170384/21644690>
 
-#### **Task 3. Compare expert range vs occurrence records (20 minutes)**
+#### **Task 3. Compare expert range vs occurrence records (~20 minutes)**
 
 We will now load the IUCN range polygon and compare it to the occurrence records. Plot the datasets together and inspect where they agree and where they don’t.
 
@@ -376,7 +376,7 @@ Ask yourself:
 
 -   Why might some areas inside the polygon have no observations?
 
-##### **Load the IUCN spatial polygon**
+##### Load the IUCN spatial polygon
 
 Shapefiles are a common spatial format that actually consist of several linked files (.shp, .dbf, .prj, etc.). The sf package reads these in the background.
 
@@ -386,7 +386,7 @@ library(sf)
 iucn_sf <- st_read("data/frilled_lizard.shp")
 ```
 
-##### **Build an interactive map**
+##### Build an interactive map
 
 ```{r}
 leaflet(occ_sf) |>
@@ -411,7 +411,7 @@ leaflet(occ_sf) |>
   )
 ```
 
-### **Cropping to the Expert Range**
+### Cropping to the Expert Range
 
 One simple approach to cleaning the data would be to keep only records that fall inside the IUCN polygon. This effectively delegates quality control to the expert panel.
 
@@ -427,7 +427,7 @@ A buffer allows us to:
 
 -   capture populations near shifting range boundaries
 
-#### **Task 4 — Explore buffer distances (≈20 minutes)**
+#### **Task 4. Explore buffer distances (~20 minutes)**
 
 Selecting an appropriate buffer distance to remove potentially erroneous points is a difficult task as there is not necessarily a set of hard-and-fast rules. We want to balance including points that could reasonably be considered part of the species range without including obviously wrong points.
 
