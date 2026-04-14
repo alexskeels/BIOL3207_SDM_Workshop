@@ -1,7 +1,7 @@
 # BIOL3207 Species Distribution Modelling Workshop (2026)
 
 Workshop materials for the two-week Species Distribution Modelling (SDM)
-module of **BIOL3207 – Evolution, Ecology and Genetics** at the Australian
+module of **BIOL3207 – Data Science for Biologists** at the Australian
 National University.
 
 The workshops walk students through a full SDM pipeline using the frilled
@@ -22,6 +22,7 @@ lizard (*Chlamydosaurus kingii*) as a case study:
 | --- | --- |
 | `workshop_instructions_wk7.qmd` / `.html` | Week 7 instructions (Quarto source + self-contained HTML) |
 | `workshop_instructions_wk8.qmd` / `.html` | Week 8 instructions (Quarto source + self-contained HTML) |
+| `Week_7_Slides.pdf` / `Week_8_Slides.pdf` | Lecture slides for the two SDM weeks |
 | `data/` | Raw input data for both workshops (occurrences, climate layers, shapefiles) |
 | `style.css` | Custom styling applied to the rendered HTML |
 | `frilled_lizard.jpg` | Cover image used in the instructions |
