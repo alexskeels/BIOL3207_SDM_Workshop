@@ -6,10 +6,13 @@ format:
   html:
     css: style.css
     smooth-scroll: true
-    toc: true          # generate a table of contents
-    toc-location: left # place TOC in a sidebar on the left
-    toc-depth: 3       # how many heading levels to include
+    toc: true                 # generate a table of contents
+    toc-location: left        # place TOC in a sidebar on the left
+    toc-depth: 3              # how many heading levels to include
     number-sections: false
+    embed-resources: true     # bundle CSS/JS/images into the .html so it works on Canvas
+    standalone: true
+    html-math-method: katex   # embeds math instead of calling a CDN
 execute:
   eval: false
   warning: false
@@ -190,6 +193,26 @@ Please keep the level 1 headings we have given you above, so it’s easy for us 
 ### This is a level 3 subheading
 ```
 :::
+
+## Get the data
+
+Before running any code below, make sure you have the raw data in the right place.
+
+Your working directory should be your `DS4B_Week_7/` folder, with a `data/` subfolder inside it:
+
+```
+DS4B_Week_7/
+├── DS4B_Week_7.Rproj
+├── workshop_solutions.rmd
+└── data/        <-- unzipped data files go here
+```
+
+You have two options:
+
+1.  **From Canvas** — download `data.zip` from the Week 7 module, unzip it, and move the contents into your `data/` folder.
+2.  **From GitHub** — clone or download the `data/` folder directly from <https://github.com/alexskeels/BIOL3207_SDM_Workshop> and drop it into your `DS4B_Week_7/` folder.
+
+**Check it worked:** run `list.files("data")` in the console. If the data files are listed, you're ready to go.
 
 ## Packages for today
 

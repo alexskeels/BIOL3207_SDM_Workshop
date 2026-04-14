@@ -47,3 +47,11 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Quarto render artefacts (embed-resources means the standalone .html is all we need)
+/_site/
+/.quarto/
+*_files/
+*.knit.md
+*.utf8.md
+*.rmarkdown
