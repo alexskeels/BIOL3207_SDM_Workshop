@@ -8,7 +8,7 @@ format:
     smooth-scroll: true
     toc: true          # generate a table of contents
     toc-location: left # place TOC in a sidebar on the left
-    toc-depth: 2       # how many heading levels to include
+    toc-depth: 3       # how many heading levels to include
     number-sections: false
 execute:
   eval: false
@@ -183,19 +183,49 @@ Through this and every workshop, you should type as much descriptive text into y
 
 Remember: This document is your lab book! The information in it must be sufficient to reproduce your research, allow others to understand your way of thinking, and allow you to use it in your later work (e.g. when writing assessments, theses, blogs or papers). Imagine that you are writing a manual and a report at the same time.
 
-Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, subheadings work like this:
+Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, like this:
 
-```{r}
+```
 ## This is a level 2 subheading
 ### This is a level 3 subheading
 ```
+:::
+
+## Packages for today
+
+Before you start Task 1, run this chunk **once** to install every package you'll need this week. `hull2spatial` is only on GitHub, so it needs `remotes` to install.
+
+```{r, eval=FALSE}
+install.packages(c(
+  "tidyverse", "knitr", "sf", "leaflet", "rnaturalearth",
+  "alphahull", "sp", "terra", "remotes"
+))
+remotes::install_github("babichmorrowc/hull2spatial")
+```
+
+Then add this chunk to the top of your own `workshop_solutions` file so every package is loaded for the session:
+
+```{r, eval=FALSE}
+library(tidyverse)
+library(knitr)
+library(sf)
+library(leaflet)
+library(rnaturalearth)
+library(alphahull)
+library(hull2spatial)
+library(sp)
+library(terra)
+```
+
+::: callout-note
+The code chunks in *this* instructions document have `eval: false` set globally, which is why no output appears if you knit this file. You should be writing your code in your **own** `workshop_solutions` `.qmd` (created in step 7 of "Before you begin"), which should have `eval: true`.
 :::
 
 ## Introduction
 
 Before you start, first make sure you’ve set up your github repo correctly following the instructions in the “Before You Begin” section above.
 
-Today we are going to learn to work with with one of the most commonly used spatial data types in R - observation records. Observation records are point samples where a variable of interest and the geographic coordinates, in latitude and longitude, have been recorded. Observation data in this format could record all kinds of information, from the location of McDonalds restaurants, to the presence of recorded cases of particular Covid-19 strains, to sightings of organisms in the wild.
+Today we are going to learn to work with one of the most commonly used spatial data types in R - observation records. Observation records are point samples where a variable of interest and the geographic coordinates, in latitude and longitude, have been recorded. Observation data in this format could record all kinds of information, from the location of McDonalds restaurants, to the presence of recorded cases of particular Covid-19 strains, to sightings of organisms in the wild.
 
 Today, we will focus on the latter. We will start by taking occurrence records for one of Australia's most iconic vertebrate species - the Frilled Lizard (*Chlamydosaurus kingii*) - from the Atlas of Living Australia (ALA) and identifying common errors or biases in spatial data. We will look at how to clean and subset the data in preparation for modeling the species distribution using a niche model next week.
 
@@ -208,9 +238,9 @@ The Frilled Lizard (*Chlamydosaurus kingii*) is found across tropical savanna wo
 
 ### The Data
 
-The ALA is a collaborative, digital, open infrastructure that pulls together Australian biodiversity data from multiple sources, making it accessible and reusable. It hosts an enormous amount of open source biodiversity data that can be readily downloaded, and even has it's own R package to help do so ('galah'), which will be touched on in week 9.
+The ALA is a collaborative, digital, open infrastructure that pulls together Australian biodiversity data from multiple sources, making it accessible and reusable. It hosts an enormous amount of open source biodiversity data that can be readily downloaded, and even has its own R package to help do so ('galah'), which will be touched on in week 9.
 
-I got todays data directly from the ALA website and I'll explain how I got this and whats in the dataset. Every dataset downloaded from ALA is given a Digital Object Identifier (DOI) so anyone can download the exact same one. Here is our one for the [Frilled Lizard](https://doi.org/10.26197/ala.2e4809b8-791f-4adb-b1aa-f3e0fd94f86a), but you should have also already downloaded this from Canvas.
+I got today's data directly from the ALA website and I'll explain how I got this and what's in the dataset. Every dataset downloaded from ALA is given a Digital Object Identifier (DOI) so anyone can download the exact same one. Here is our one for the [Frilled Lizard](https://doi.org/10.26197/ala.2e4809b8-791f-4adb-b1aa-f3e0fd94f86a), but you should have also already downloaded this from Canvas.
 
 #### **Task 1. Exploring the data frame (~10 minutes)**
 
@@ -227,9 +257,6 @@ Ask yourself:
 -   What sorts of information are often not recorded
 
 ```{r}
-library(tidyverse)
-library(knitr)
-
 # read csv
 occ <- read_csv("data/frilled_lizard_ALA.csv")
 
@@ -258,7 +285,6 @@ Save the missingness tibble to a variable (e.g. `missingness_table`) and use it 
 #| code-fold: true
 #| code-summary: "Show solution"
 # solution
-library(ggplot2)
 
 missingness_table <- tibble(
   column = names(occ),
@@ -282,8 +308,6 @@ We will then use `leaflet` to build an interactive map that allows you to zoom, 
 Before we begin, we need to load a world coastline polygon. We will use this later to crop our spatial data so we are not estimating species ranges in the ocean.
 
 ```{r}
-library(rnaturalearth)
-
 # Load world coastline polygon (we will use this later for cropping)
 world <- ne_countries(scale = "medium", returnclass = "sf")
 ```
@@ -307,9 +331,6 @@ These kinds of biases are extremely common in ecological data and can strongly i
 ##### Prepare the spatial data
 
 ```{r}
-library(dplyr)
-library(sf)
-
 # Remove records with missing coordinates
 occ <- occ |>
   filter(!is.na(decimalLongitude),
@@ -328,10 +349,8 @@ occ_sf <- st_as_sf(
 Now we add a proper basemap with roads, place names, and terrain.
 
 ```{r}
-library(leaflet)
-
 leaflet(occ_sf) |>
-  
+
   # Add a detailed basemap
   addProviderTiles(providers$OpenStreetMap.Mapnik) |> 
   
@@ -381,8 +400,6 @@ Ask yourself:
 Shapefiles are a common spatial format that actually consist of several linked files (.shp, .dbf, .prj, etc.). The sf package reads these in the background.
 
 ```{r}
-library(sf)
-
 iucn_sf <- st_read("data/frilled_lizard.shp")
 ```
 
@@ -490,16 +507,18 @@ leaflet(occ_sf) |>
   addPolygons(data = buffer_50km, fillColor = "#FFD700", color = "#B8860B",
               weight = 1, fillOpacity = 0.1, popup = "50 km buffer") |>
 
-  # Buffer 2 (orange) — replace with your second buffer object, add more for others
-  addPolygons(data = buffer_50km, fillColor = "#FFA500", color = "#FF8C00",
-              weight = 1, fillOpacity = 0.1, popup = "Another buffer")
+  # Buffer 2 (orange) — REPLACE `your_second_buffer` with the buffer object you made above
+  addPolygons(data = your_second_buffer, fillColor = "#FFA500", color = "#FF8C00",
+              weight = 1, fillOpacity = 0.1, popup = "Your second buffer")
 ```
 
 Assign your preferred buffer to the variable `buffer_iucn`. **Make sure you do this before moving on** — it is used in the next task.
 
 ```{r}
-# YOUR CODE HERE: assign your favourite buffer:
-# buffer_iucn <- buffer_XXXXX
+# YOUR CODE HERE: replace the right-hand side with your favourite buffer object
+# (e.g. buffer_iucn <- buffer_100km). The default below uses the 50 km buffer
+# so Task 5 still runs if you skip this step — but do make a choice of your own.
+buffer_iucn <- buffer_50km
 ```
 
 ```{r}
@@ -661,16 +680,7 @@ sf_use_s2(TRUE)
 
 #### **Task 7. Build alpha hulls (~20 minutes)**
 
-1.  Install the packages `alphahull` and `hull2spatial`
-
-```{r}
-# hull2spatial is from GitHub not CRAN
-# install remotes first if you don't have it: install.packages("remotes")
-remotes::install_github("babichmorrowc/hull2spatial")
-library(hull2spatial)
-library(alphahull)
-library(sp)
-```
+1.  Make sure `alphahull`, `hull2spatial` and `sp` are loaded (they were listed in the "Packages for today" chunk at the top of this workshop — if you skipped that, go install and load them now).
 
 2.  Choose an alpha value (generally \< 10).
 
@@ -744,7 +754,7 @@ leaflet(occ_sf) |>
     popup = "IUCN Range"
   ) |>
   
-  # 50 km buffer
+  # Convex hull
   addPolygons(
     data = hull_sf,
     fillColor = "#FFD700",   # gold
@@ -753,8 +763,8 @@ leaflet(occ_sf) |>
     fillOpacity = 0.1,
     popup = "convex hull"
   ) |>
-  
-  # 100 km buffer
+
+  # Alpha hull
   addPolygons(
     data = ahull_sf,
     fillColor = "#FFA500",   # orange
@@ -763,15 +773,15 @@ leaflet(occ_sf) |>
     fillOpacity = 0.1,
     popup = "alpha hull"
   ) |>
-  
-  # 200 km buffer
+
+  # Your chosen buffer (from Task 4)
   addPolygons(
-    data = buffer_200km,
+    data = buffer_iucn,
     fillColor = "#FF4500",   # red-orange
     color = "#B22222",
     weight = 1,
     fillOpacity = 0.1,
-    popup = "200 km buffer"
+    popup = "your buffer"
   )
 
 

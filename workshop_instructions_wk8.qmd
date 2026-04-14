@@ -8,7 +8,7 @@ format:
     smooth-scroll: true
     toc: true          # generate a table of contents
     toc-location: left # place TOC in a sidebar on the left
-    toc-depth: 2       # how many heading levels to include
+    toc-depth: 3       # how many heading levels to include
     number-sections: false
 execute:
   eval: false
@@ -185,12 +185,61 @@ Through this and every workshop, you should type as much descriptive text into y
 
 Remember: This document is your lab book! The information in it must be sufficient to reproduce your research, allow others to understand your way of thinking, and allow you to use it in your later work (e.g. when writing assessments, theses, blogs or papers). Imagine that you are writing a manual and a report at the same time.
 
-Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, subheadings work like this:
+Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, like this:
 
-```{r}
+```
 ## This is a level 2 subheading
 ### This is a level 3 subheading
 ```
+:::
+
+## Packages for today
+
+Run this chunk **once** to install every package you'll need for this week's SDM workshop:
+
+```{r, eval=FALSE}
+install.packages(c(
+  "tidyverse", "terra", "sf", "raster",
+  "skimr", "leaflet", "leafsync",
+  "caret", "mgcv", "dismo"
+))
+```
+
+Then add this chunk to the top of your own `workshop_solutions` file so every package is loaded for the session:
+
+```{r, eval=FALSE}
+library(tidyverse)
+library(terra)
+library(sf)
+library(raster)     # needed for leaflet raster display
+library(skimr)
+library(leaflet)
+library(leafsync)
+library(caret)
+library(mgcv)       # for GAMs
+library(dismo)      # for evaluate(), threshold(), kfold()
+```
+
+::: callout-note
+The code chunks in *this* instructions document have `eval: false` set globally, which is why no output appears if you knit this file. You should be writing your code in your **own** `workshop_solutions` `.qmd`, which should have `eval: true`.
+:::
+
+::: callout-tip
+## Quick glossary
+
+A few terms you'll meet this week — refer back here whenever one trips you up:
+
+- **Presence record** — a confirmed observation of the species at a location.
+- **Background / pseudo-absence point** — a location treated as "not a confirmed presence". Used by statistical SDMs that need contrast between species locations and the broader landscape. Background ≠ true absence.
+- **Bioclim variables** — the 19 standard climate summaries (e.g. `Bio01` = annual mean temperature, `Bio12` = annual precipitation) from WorldClim / CHELSA.
+- **GLM** — generalised linear model (here, logistic regression on presence vs background).
+- **GAM** — generalised additive model; like a GLM but with smooth (non-linear) terms via `s()`. The argument `k` controls how wiggly the smooth can be.
+- **Collinearity** — when two predictors carry nearly the same information (high correlation). A problem for GLMs/GAMs.
+- **AUC / ROC** — the ROC curve plots true-positive rate vs false-positive rate across all possible thresholds; AUC is its area. AUC = 0.5 is random, 1.0 is perfect.
+- **Threshold** — a value of predicted suitability above which we call a cell "suitable". `spec_sens` is the threshold that maximises sensitivity + specificity.
+- **K-fold cross-validation** — split data into K parts, train on K-1 and test on the held-out fold, repeat K times. Gives a more honest estimate of model performance than training AUC.
+- **LGM** — Last Glacial Maximum (~21,000 years ago).
+- **MIROC6 / SSP585** — a climate model (MIROC6) run under a high-emissions future scenario (SSP585, ≈ RCP 8.5) for 2100.
 :::
 
 ## Introduction
@@ -217,15 +266,12 @@ We will also use bioclimatic data from WorldClim, which are commonly used for SD
 We begin with the cropped occurrence dataset you created last week and the alpha hull.
 
 ```{r}
-library(tidyverse)
-library(terra)
-library(sf)
-library(raster)  # needed for leaflet raster display
-
-# occurence points
+# occurrence points — the cleaned CSV you wrote at the end of Week 7 (Task 5)
 occ <- read_csv("data/frilled_lizard_ALA_cropped.csv")
 
-# load alpha hull (saved at the end of last week's workshop)
+# alpha hull — the shapefile you wrote at the end of Week 7 (Task 7).
+# If you get a "Cannot open data source" error here, you have not yet
+# saved this file. Re-run the final chunk of Week 7 before continuing.
 ahull_v <- vect("data/frilled_lizard_alpha_hull.shp")
 
 # convert to sf for use with leaflet later
@@ -242,7 +288,7 @@ bioclim_data <- rast("data/worldclim_australia.tif")
 
 #### **Task 1. Inspect the Predictors (~10 minutes)**
 
-Raster data can be organised as a matrix, with each row representation a latitude, and each column a longitude. It can also be organised with each row representing a unique grid cell on the landscape. This second format is useful when you are looking at multiple variables simultaneously and is what is returned by `as_tibble`.
+Raster data can be organised as a matrix, with each row representing a latitude, and each column a longitude. It can also be organised with each row representing a unique grid cell on the landscape. This second format is useful when you are looking at multiple variables simultaneously and is what is returned by `as_tibble`.
 
 It is useful to inspect the raw data numerically and visually. Spend a few minutes using `skimr` to look at the moments of the data, `leaflet` to visualise the data on a map.
 
@@ -252,13 +298,9 @@ It is useful to inspect the raw data numerically and visually. Spend a few minut
 
 -   Do variable ranges look reasonable?
 
--   Do any of variables appear correlated?\
+-   Do any of the variables appear correlated?\
 
 ```{r}
-library(skimr)
-library(leaflet)
-library(leafsync)
-
 values(bioclim_data) |>
   as_tibble() |>
   skim()
@@ -352,10 +394,12 @@ There is no universally correct answer — the goal is to develop modelling judg
 
 -   Afterwards, you will compare results using synced maps.
 
-::: panel-tabset
-## Method 1 {.active}
+::: callout-note
+Each tab produces a data frame called `bg_model` with the same columns (`longitude`, `latitude`, `Bio01`..`Bio19`, `presence = 0`). Every task after this one just picks up `bg_model` by name, so the rest of the workshop runs identically no matter which method you ran — you only need to run your own tab.
+:::
 
-### Random Background
+::: panel-tabset
+### Random Background {.active}
 
 This is the simplest and most commonly used approach. Here, we sample environmental space uniformly across the study region.
 
@@ -420,17 +464,13 @@ leaflet() |>
   )
 ```
 
-## Method 2
-
 ### Accessible Area Background
 
-In this method, we sample points within a fixed distance of our occurrence points, using a buffer, just like in last weeks workshop. Here, we are assuming that the species could realistically disperse only within some distance of known occurrences. Further, we are also limiting the range of environments we will contrast with our occurrence points, which increase the specificity of the model to our species.
+In this method, we sample points within a fixed distance of our occurrence points, using a buffer, just like in last week's workshop. Here, we are assuming that the species could realistically disperse only within some distance of known occurrences. Further, we are also limiting the range of environments we will contrast with our occurrence points, which increase the specificity of the model to our species.
 
 We buffer occurrence points to define an **accessible area**.
 
 ```{r}
-library(sf)
-
 # Convert occurrence data to sf object (needed for spatial operations)
 occ_sf <- st_as_sf(occ, coords = c("X", "Y"), crs = 4326)
 
@@ -462,8 +502,6 @@ bg_model <- bind_cols(
 ```
 
 Use `leaflet` to plot a raster + the occurrence points + the background points using the template from Method 1 as a guide. What patterns do you notice?
-
-## Method 3
 
 ### Environmental Envelope Background
 
@@ -533,8 +571,6 @@ bg_model <- bind_cols(
 ```
 
 Use `leaflet` to plot a raster + the occurrence points + the background points using the template from Method 1 as a guide. What patterns do you notice?
-
-## Method 4
 
 ### Bias Correction Background
 
@@ -643,18 +679,20 @@ We will fit two types of models:
 Selecting environmental predictors is critical. Variables should be chosen based on **ecological relevance** and to **avoid collinearity**. Both GLMs and GAMs do poorly when predictors are highly correlated.
 
 ```{r}
-# Check for collinearity among predictors
-library(caret)
+# Check for collinearity among predictors.
+# Select the bioclim columns by name (works regardless of how many there are
+# or where they sit in the data frame).
+bio_cols <- grep("^Bio", colnames(sdm_data), value = TRUE)
+correlation_matrix <- cor(sdm_data[, bio_cols], use = "complete.obs")
 
-correlation_matrix <- cor(sdm_data[, 3:21], use="complete.obs")
-correlated <- findCorrelation(correlation_matrix, cutoff = 0.7)  # remove variables with |r| > 0.7
-names_correlated <- colnames(sdm_data[,3:21])[correlated]
+correlated <- findCorrelation(correlation_matrix, cutoff = 0.7)  # |r| > 0.7
+names_correlated <- bio_cols[correlated]
 
 # Remove highly correlated variables
-sdm_data_uncor <-sdm_data[, !colnames(sdm_data) %in% names_correlated]
+sdm_data_uncor <- sdm_data[, !colnames(sdm_data) %in% names_correlated]
 
 # Keep track of predictors
-predictor_vars <- colnames(sdm_data_uncor)[grep("Bio", colnames(sdm_data_uncor))]
+predictor_vars <- grep("^Bio", colnames(sdm_data_uncor), value = TRUE)
 print(predictor_vars)
 ```
 
@@ -686,8 +724,6 @@ print(formula_gam)
 Now we fit both models using the uncorrelated predictors.
 
 ```{r}
-library(mgcv)
-
 # Fit GLM (logistic regression)
 glm_sdm <- glm(formula_glm, data = sdm_data_uncor, family = binomial(link = "logit"))
 summary(glm_sdm)
@@ -757,7 +793,7 @@ sync(glm_plot, gam_plot)
 
 ```
 
-We can turn a continuous measure of habitat suitability into a binary species distribution by thresholding the predictions. To do this we need to evaluate our models and assess how well the model predicts our known occurence records.
+We can turn a continuous measure of habitat suitability into a binary species distribution by thresholding the predictions. To do this we need to evaluate our models and assess how well the model predicts our known occurrence records.
 
 A common approach is the **Receiver Operating Characteristic (ROC) curve**, which plots the trade-off between **true positive rate** and **false positive rate** across all possible thresholds.
 
@@ -773,23 +809,28 @@ Higher AUC values indicate better predictive performance, but AUC alone does not
 :::
 
 ```{r}
-library(dismo)
+# Split presence and background, drop rows with missing predictors so
+# predict() returns a clean, matching-length vector.
+p <- na.omit(sdm_data_uncor[sdm_data_uncor$presence == 1, ])
+a <- na.omit(sdm_data_uncor[sdm_data_uncor$presence == 0, ])
 
-# Split presence and background
-p <- sdm_data_uncor[sdm_data_uncor$presence==1, ]
-a <- sdm_data_uncor[sdm_data_uncor$presence==0, ]
+# Get predicted suitability for presence and background points separately, and
+# strip dims/names with as.numeric() so dismo::evaluate() recognises them as
+# plain vectors (predict.gam returns a 1-D array, which dismo misinterprets).
+glm_pred_p <- as.numeric(predict(glm_sdm, newdata = p, type = "response"))
+glm_pred_a <- as.numeric(predict(glm_sdm, newdata = a, type = "response"))
+gam_pred_p <- as.numeric(predict(gam_sdm, newdata = p, type = "response"))
+gam_pred_a <- as.numeric(predict(gam_sdm, newdata = a, type = "response"))
 
-# Evaluate models
-# evaluate() returns an object with slots accessed using @ (e.g. glm_eval@auc)
-# This is different from $ which you use for data frames — @ is for S4 objects
-glm_eval <- evaluate(p=p, a=a, model=glm_sdm, type='response')
-gam_eval <- evaluate(p=p, a=a, model=gam_sdm, type='response')
+# Evaluate models using the predicted values directly.
+# evaluate() returns an S4 object — use @ (not $) to access slots, e.g. glm_eval@auc
+glm_eval <- evaluate(p = glm_pred_p, a = glm_pred_a)
+gam_eval <- evaluate(p = gam_pred_p, a = gam_pred_a)
 
 # Plot ROC curves
-par(mfrow=c(1,2))
+par(mfrow = c(1, 2))
 plot(glm_eval, "ROC")
 plot(gam_eval, "ROC")
-
 ```
 
 Take a look at the evaluation objects and try plotting some other summary statistics, like `kappa`, the true positive rate (`TPR`), false positive rate `FPR`, etc.
@@ -857,30 +898,29 @@ k_fold <- kfold(sdm_data_uncor, k = K)
 auc_df <- data.frame(k = 1:K, glm_AUC = NA, gam_AUC = NA)
 
 for (k in 1:K) {
-  
-  # Split into training and testing data
-  train <- sdm_data_uncor[k_fold != k, ]
-  test  <- sdm_data_uncor[k_fold == k, ]
-  
+
+  # Split into training and testing data (drop NA rows for clean predict())
+  train <- na.omit(sdm_data_uncor[k_fold != k, ])
+  test  <- na.omit(sdm_data_uncor[k_fold == k, ])
+
+  test_p <- test[test$presence == 1, ]
+  test_a <- test[test$presence == 0, ]
+
   # Refit models on training data
   mod_glm <- update(glm_sdm, data = train)
   mod_gam <- update(gam_sdm, data = train)
-  
-  # Evaluate on test fold
+
+  # Predict on the held-out fold. as.numeric() strips attributes that would
+  # otherwise make dismo::evaluate() fall through to its broken model branch.
   glm_eval_tmp <- evaluate(
-    p = test[test$presence == 1, ],
-    a = test[test$presence == 0, ],
-    model = mod_glm,
-    type = 'response'
+    p = as.numeric(predict(mod_glm, newdata = test_p, type = "response")),
+    a = as.numeric(predict(mod_glm, newdata = test_a, type = "response"))
   )
-  
   gam_eval_tmp <- evaluate(
-    p = test[test$presence == 1, ],
-    a = test[test$presence == 0, ],
-    model = mod_gam,
-    type = 'response'
+    p = as.numeric(predict(mod_gam, newdata = test_p, type = "response")),
+    a = as.numeric(predict(mod_gam, newdata = test_a, type = "response"))
   )
-  
+
   # Save AUC for each fold
   auc_df[k, "glm_AUC"] <- glm_eval_tmp@auc
   auc_df[k, "gam_AUC"] <- gam_eval_tmp@auc
@@ -905,6 +945,11 @@ Commonly, people look to model the change in distribution into the future using 
 One such period is the Last Glacial Maximum \~21,000 years ago. During the LGM, Australia looked very different, it was a colder and drier place than the present day and many species may have contracted their geographic ranges to warmer and more mesic refugia.
 
 Lets see what our SDM predicts for the distribution of the Frilled Lizard at the LGM!
+
+::: callout-warning
+## Extrapolation caution — read before projecting
+When we project a model to past or future climates, the environmental conditions may fall outside the range the model was trained on. This can produce unreliable predictions, especially for GAMs where smooth terms can behave unpredictably outside the training data range. The `spec_sens` threshold below was chosen on *present-day* data and may not be appropriate for LGM or 2100 conditions. Interpret these temporal projections as **indicative, not definitive**.
+:::
 
 First, lets load the LGM climate data make sure the names match the WorldClim data
 
@@ -954,14 +999,9 @@ pred_glm_bin_2100 <- pred_glm_2100 > pred_glm_threshold
 pred_gam_bin_2100 <- pred_gam_2100 > pred_gam_threshold
 ```
 
-### Final Task (~20 minutes)
+#### **Final Task (~20 minutes)**
 
 Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create three leaflet maps synced together using `leafsync::sync()`: one for the LGM range, one for the present-day range, and one for the 2100 distribution. On top of the present-day map, add the occurrence points and the alpha hull for comparison.
-
-::: callout-warning
-## Extrapolation caution
-When projecting models to past or future climates, the environmental conditions may fall outside the range the model was trained on. This can produce unreliable predictions, especially for GAMs where smooth terms can behave unpredictably outside the training data range. Interpret temporal projections as indicative, not definitive.
-:::
 
 You can sync three maps like this: `sync(map_lgm, map_present, map_future, ncol = 1)`
 
@@ -1020,35 +1060,33 @@ K <- length(unique(sdm_data_uncor$spatial_fold))
 auc_df_spatial <- data.frame(k = 1:K, glm_AUC = NA, gam_AUC = NA)
 
 for (k in 1:K) {
-  
-  # Spatial split
-  train <- sdm_data_uncor[sdm_data_uncor$spatial_fold != k, ]
-  test  <- sdm_data_uncor[sdm_data_uncor$spatial_fold == k, ]
-  
-    if (length(unique(test$presence)) < 2) {
+
+  # Spatial split (drop NA rows for clean predict())
+  train <- na.omit(sdm_data_uncor[sdm_data_uncor$spatial_fold != k, ])
+  test  <- na.omit(sdm_data_uncor[sdm_data_uncor$spatial_fold == k, ])
+
+  if (length(unique(test$presence)) < 2) {
     next
   }
 
-  
+  test_p <- test[test$presence == 1, ]
+  test_a <- test[test$presence == 0, ]
+
   # Refit models
   mod_glm <- update(glm_sdm, data = train)
   mod_gam <- update(gam_sdm, data = train)
-  
-  # Evaluate
+
+  # Evaluate. as.numeric() strips attributes that would otherwise make
+  # dismo::evaluate() fall through to its broken model branch.
   glm_eval_tmp <- evaluate(
-    p = test[test$presence == 1, ],
-    a = test[test$presence == 0, ],
-    model = mod_glm,
-    type = "response"
+    p = as.numeric(predict(mod_glm, newdata = test_p, type = "response")),
+    a = as.numeric(predict(mod_glm, newdata = test_a, type = "response"))
   )
-  
   gam_eval_tmp <- evaluate(
-    p = test[test$presence == 1, ],
-    a = test[test$presence == 0, ],
-    model = mod_gam,
-    type = "response"
+    p = as.numeric(predict(mod_gam, newdata = test_p, type = "response")),
+    a = as.numeric(predict(mod_gam, newdata = test_a, type = "response"))
   )
-  
+
   auc_df_spatial[k, "glm_AUC"] <- glm_eval_tmp@auc
   auc_df_spatial[k, "gam_AUC"] <- gam_eval_tmp@auc
 }
