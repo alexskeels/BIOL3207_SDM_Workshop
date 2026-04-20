@@ -309,7 +309,11 @@ Load the raster stack with the `rast` function from the `terra` package.
 bioclim_data <- rast("data/worldclim_australia.tif")
 ```
 
-#### **Task 1. Inspect the Predictors (\~10 minutes)**
+# **Task 1. Inspect the Predictors**
+
+::: {.callout-note}
+This should take no more than 15 minutes
+:::
 
 Raster data can be organised as a matrix, with each row representing a latitude, and each column a longitude. It can also be organised with each row representing a unique grid cell on the landscape. This second format is useful when you are looking at multiple variables simultaneously and is what is returned by `as_tibble`.
 
@@ -409,7 +413,11 @@ By the end of this exercise, your group should be able to answer:
 
 There is no universally correct answer — the goal is to develop modelling judgement.
 
-#### **Task 2. Generate Background Points Using Your Assigned Method (\~20 minutes)**
+# **Task 2. Generate Background Points Using Your Assigned Method**
+
+::: {.callout-note}
+This should take no more than 30 minutes
+:::
 
 -   Within your group, assign one method to each person.
 
@@ -697,7 +705,11 @@ We will fit two types of models:
 
 ------------------------------------------------------------------------
 
-#### **Task 3. Select predictors (\~15 minutes)**
+# **Task 3. Select predictors**
+
+::: {.callout-note}
+This should take no more than 15 minutes
+:::
 
 Selecting environmental predictors is critical. Variables should be chosen based on **ecological relevance** and to **avoid collinearity**. Both GLMs and GAMs do poorly when predictors are highly correlated.
 
@@ -742,7 +754,11 @@ print(formula_glm)
 print(formula_gam)
 ```
 
-#### **Task 4. Fit models (\~20 minutes)**
+# **Task 4. Fit models**
+
+::: {.callout-note}
+This should take no more than 35 minutes
+:::
 
 Now we fit both models using the uncorrelated predictors.
 
@@ -901,7 +917,11 @@ So far we have evaluated the model on the same data used to fit it, so it may ap
 
 A better way to estimate predictive performance is to split the data into training and testing subsets, fit the model on the training data, and evaluate it on the testing data.
 
-#### **Task 5. K-Fold Cross-Validation (\~15 minutes)**
+# **Task 5. K-Fold Cross-Validation**
+
+::: {.callout-note}
+This should take no more than 25 minutes
+:::
 
 K-fold cross-validation automates the validation process by splitting the data into `k` partitions and repeats the evaluation on each partition. As follows:
 
@@ -957,89 +977,25 @@ print(auc_df)
 
 By repeating the evaluation on different subsets of the data, **k-fold cross-validation provides a more robust estimate of model predictive performance** than a single train/test split.
 
+::: callout-note
+## If you are making good time, try performing a spatial folds CV
+
+In the code above we used random folds — but to assess whether a model is *transferable in space*, it is better to split the data spatially. You can create 6 spatial folds by binning longitude and latitude, then adapt the CV loop above to use `spatial_fold` instead of random `k_fold`. Check out the `blockCV` package for even more options.
+
+```{r}
+# Create 2D spatial blocks
+sdm_data_uncor <- sdm_data_uncor |>
+  mutate(
+    lon_bin = ntile(longitude, 3),
+    lat_bin = ntile(latitude,  2),
+    spatial_fold = as.numeric(interaction(lon_bin, lat_bin))
+  )
+```
+:::
+
 ::: callout-tip
 ## Reminder: Knit, Commit, Push!
 :::
-
-## Model Predictions Through Time
-
-If we're happy with our model in the present-day and convinced we have accurately modelled the niche of the species, we might want to ask how the species distribution has changed through time.
-
-Commonly, people look to model the change in distribution into the future using models of climate change under different emissions scenarios. Equally, we might also want to know how the species was distributed in the past to understand how population structure might have evolved over time when conditions were vastly different to today.
-
-One such period is the Last Glacial Maximum \~21,000 years ago. During the LGM, Australia looked very different, it was a colder and drier place than the present day and many species may have contracted their geographic ranges to warmer and more mesic refugia.
-
-Lets see what our SDM predicts for the distribution of the Frilled Lizard at the LGM!
-
-::: callout-warning
-## Extrapolation caution — read before projecting
-
-When we project a model to past or future climates, the environmental conditions may fall outside the range the model was trained on. This can produce unreliable predictions, especially for GAMs where smooth terms can behave unpredictably outside the training data range. The `spec_sens` threshold below was chosen on *present-day* data and may not be appropriate for LGM or 2100 conditions. Interpret these temporal projections as **indicative, not definitive**.
-:::
-
-First, lets load the LGM climate data make sure the names match the WorldClim data
-
-```{r}
-# load bioclim data for the LGM (from CHELSA)
-lgm_bioclim_data <- rast("data/chelsa_australia_LGM.tif")
-
-# The names of the different variables must match exactly
-names(bioclim_data)
-names(lgm_bioclim_data)
-
-# check they match — if not, force the names to align
-names(bioclim_data) %in% names(lgm_bioclim_data)
-
-# ensure names match exactly (some climate datasets use different naming)
-names(lgm_bioclim_data) <- names(bioclim_data)
-```
-
-Now we have data that represents the same variables, with matching names, at two different times. We can now predict the model on this new data.
-
-```{r}
-pred_glm_lgm <- terra::predict(lgm_bioclim_data, glm_sdm, type="response")
-pred_gam_lgm <- terra::predict(lgm_bioclim_data, gam_sdm, type="response")
-
-pred_glm_bin_lgm <- pred_glm_lgm > pred_glm_threshold
-pred_gam_bin_lgm <- pred_gam_lgm > pred_gam_threshold
-```
-
-Before we plot it out, lets do the same for the year 2100. There are many models for future climate than use different climatological models and shared socioeconomic pathways (SSP). WorldClim has data available for many of these - see [here](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html).
-
-Today we'll use MIROC6 climate model and SSP585 which is the highest emissions scenario.
-
-```{r}
-# load bioclim data for 2100 (from WorldClim MIROC6 SSP585)
-future_bioclim_data <- rast("data/worldclim_australia_MIROC6_2100.tif")
-
-# check they match — if not, force the names to align
-names(bioclim_data) %in% names(future_bioclim_data)
-names(future_bioclim_data) <- names(bioclim_data)
-
-# make the model prediction
-pred_glm_2100 <- terra::predict(future_bioclim_data, glm_sdm, type="response")
-pred_gam_2100 <- terra::predict(future_bioclim_data, gam_sdm, type="response")
-
-# threshold the model prediction
-pred_glm_bin_2100 <- pred_glm_2100 > pred_glm_threshold
-pred_gam_bin_2100 <- pred_gam_2100 > pred_gam_threshold
-```
-
-#### **Final Task (\~20 minutes)**
-
-Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create three leaflet maps synced together using `leafsync::sync()`: one for the LGM range, one for the present-day range, and one for the 2100 distribution. On top of the present-day map, add the occurrence points and the alpha hull for comparison.
-
-You can sync three maps like this: `sync(map_lgm, map_present, map_future, ncol = 1)`
-
-To add the alpha hull to a leaflet map, use the `ahull_sf` object we created at the start: `addPolygons(data = ahull_sf, fillOpacity = 0.2, color = "red")`
-
-Next, get together with your group and compare each member's plot and answer these questions.
-
--   Which background selection step gave you the best estimate of the present-day range?
-
--   How did the background selection methods differ from one another?
-
--   Can you think of a possible reason some methods performed better than others? (no wrong answers!)
 
 ::: callout-tip
 ## ✅ Workshop Complete
@@ -1057,59 +1013,32 @@ If you’d like to stay and complete the ‘Going Further’ section, you’re w
 
 ### (1) Thresholding with different validation metrics
 
-In the workshop so far, you have performed thresholding on the range with the metric `spec_sens`, but there are many other possible choices to use. read about the other options (`?threshold`) and try some of these out. How does the estimate of the range change? Which metrics predict a larger range? and which a smaller?
+In the workshop so far, you have performed thresholding on the range with the metric `spec_sens`, but there are many other possible choices to use. Read about the other options (`?threshold`) and try some of these out. How does the estimate of the range change? Which metrics predict a larger range? and which a smaller?
 
-### (2) Cross-validation with spatial folds
+### (2) Model Predictions Through Time
 
-In the workshop so far, we have used random folds in K-fold cross validation. These generally show consistent high performance across folds. However, to assess whether a model is transferable in space and time, it is better to split the data in a more structured way. For example, by splitting into spatial folds, we can ask whether the distribution of a species in one restricted part of its range can be informative about where it should be distributed in other parts of the continent. A robust model should be transferable. A rough script to create 6 spatial folds is below but check out the `blockCV` package for even more options to do this.
+If we’re happy with our model in the present-day and convinced we have accurately modelled the niche of the species, we might want to ask how the species distribution has changed through time.
 
-```{r}
+Commonly, people look to model the change in distribution into the future using models of climate change under different emissions scenarios. Equally, we might also want to know how the species was distributed in the past to understand how population structure might have evolved over time when conditions were vastly different to today.
 
-# Create 2D spatial blocks
-sdm_data_uncor <- sdm_data_uncor |>
-  mutate(
-    lon_bin = ntile(longitude, 3),
-    lat_bin = ntile(latitude,  2),
-    spatial_fold = as.numeric(interaction(lon_bin, lat_bin))
-  )
+One such period is the Last Glacial Maximum ~21,000 years ago. During the LGM, Australia looked very different — it was a colder and drier place than the present day and many species may have contracted their geographic ranges to warmer and more mesic refugia. Another period is the future under climate change.
 
-# If number of folds exceeds K, randomly reduce to K
-K <- length(unique(sdm_data_uncor$spatial_fold))
 
-auc_df_spatial <- data.frame(k = 1:K, glm_AUC = NA, gam_AUC = NA)
+::: callout-tip
+## Hints
+-   Download LGM bioclim climate data from [CHELSA](https://www.chelsa-climate.org/), and future bioclim data from CHELSA or [WorldClim](https://www.worldclim.org/data/cmip6/cmip6climate.html)
+-   Load the climate data in with `rast()` and make sure the layer names match the present-day WorldClim names exactly (use `names() <-` to force alignment if needed).
+-   Use `terra::predict()` with your fitted model and the new raster to get continuous suitability predictions, then threshold them the same way you did for present-day.
+:::
 
-for (k in 1:K) {
+### (3) Compare distributions across time
 
-  # Spatial split (drop NA rows for clean predict())
-  train <- na.omit(sdm_data_uncor[sdm_data_uncor$spatial_fold != k, ])
-  test  <- na.omit(sdm_data_uncor[sdm_data_uncor$spatial_fold == k, ])
+Once you have predictions for the LGM, present-day, and 2100, create three leaflet maps synced together using `leafsync::sync()` to visualise how the predicted range shifts through time.
 
-  if (length(unique(test$presence)) < 2) {
-    next
-  }
+::: callout-tip
+## Hints
 
-  test_p <- test[test$presence == 1, ]
-  test_a <- test[test$presence == 0, ]
-
-  # Refit models
-  mod_glm <- update(glm_sdm, data = train)
-  mod_gam <- update(gam_sdm, data = train)
-
-  # Evaluate. as.numeric() strips attributes that would otherwise make
-  # dismo::evaluate() fall through to its broken model branch.
-  glm_eval_tmp <- evaluate(
-    p = as.numeric(predict(mod_glm, newdata = test_p, type = "response")),
-    a = as.numeric(predict(mod_glm, newdata = test_a, type = "response"))
-  )
-  gam_eval_tmp <- evaluate(
-    p = as.numeric(predict(mod_gam, newdata = test_p, type = "response")),
-    a = as.numeric(predict(mod_gam, newdata = test_a, type = "response"))
-  )
-
-  auc_df_spatial[k, "glm_AUC"] <- glm_eval_tmp@auc
-  auc_df_spatial[k, "gam_AUC"] <- gam_eval_tmp@auc
-}
-
-print(auc_df_spatial)
-
-```
+-   You can sync three maps like this: `sync(map_lgm, map_present, map_future, ncol = 1)`
+-   Add the alpha hull and occurrence points to the present-day map for comparison: `addPolygons(data = ahull_sf, fillOpacity = 0.2, color = "red")`
+-   Compare results with your group — which background selection method gave the best present-day estimate? How did methods differ? Can you think of a reason some performed better than others?
+:::

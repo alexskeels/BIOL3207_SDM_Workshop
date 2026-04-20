@@ -1,0 +1,85 @@
+---
+title: "week_8_model projections_through_time"
+format: html
+editor: visual
+---
+
+## Model Predictions Through Time
+
+If we're happy with our model in the present-day and convinced we have accurately modelled the niche of the species, we might want to ask how the species distribution has changed through time.
+
+Commonly, people look to model the change in distribution into the future using models of climate change under different emissions scenarios. Equally, we might also want to know how the species was distributed in the past to understand how population structure might have evolved over time when conditions were vastly different to today.
+
+One such period is the Last Glacial Maximum \~21,000 years ago. During the LGM, Australia looked very different, it was a colder and drier place than the present day and many species may have contracted their geographic ranges to warmer and more mesic refugia.
+
+Lets see what our SDM predicts for the distribution of the Frilled Lizard at the LGM!
+
+::: callout-warning
+## Extrapolation caution — read before projecting
+
+When we project a model to past or future climates, the environmental conditions may fall outside the range the model was trained on. This can produce unreliable predictions, especially for GAMs where smooth terms can behave unpredictably outside the training data range. The `spec_sens` threshold below was chosen on *present-day* data and may not be appropriate for LGM or 2100 conditions. Interpret these temporal projections as **indicative, not definitive**.
+:::
+
+First, lets load the LGM climate data make sure the names match the WorldClim data
+
+```{r}
+# load bioclim data for the LGM (from CHELSA)
+lgm_bioclim_data <- rast("data/chelsa_australia_LGM.tif")
+
+# The names of the different variables must match exactly
+names(bioclim_data)
+names(lgm_bioclim_data)
+
+# check they match — if not, force the names to align
+names(bioclim_data) %in% names(lgm_bioclim_data)
+
+# ensure names match exactly (some climate datasets use different naming)
+names(lgm_bioclim_data) <- names(bioclim_data)
+```
+
+Now we have data that represents the same variables, with matching names, at two different times. We can now predict the model on this new data.
+
+```{r}
+pred_glm_lgm <- terra::predict(lgm_bioclim_data, glm_sdm, type="response")
+pred_gam_lgm <- terra::predict(lgm_bioclim_data, gam_sdm, type="response")
+
+pred_glm_bin_lgm <- pred_glm_lgm > pred_glm_threshold
+pred_gam_bin_lgm <- pred_gam_lgm > pred_gam_threshold
+```
+
+Before we plot it out, lets do the same for the year 2100. There are many models for future climate than use different climatological models and shared socioeconomic pathways (SSP). WorldClim has data available for many of these - see [here](https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html).
+
+Today we'll use MIROC6 climate model and SSP585 which is the highest emissions scenario.
+
+```{r}
+# load bioclim data for 2100 (from WorldClim MIROC6 SSP585)
+future_bioclim_data <- rast("data/worldclim_australia_MIROC6_2100.tif")
+
+# check they match — if not, force the names to align
+names(bioclim_data) %in% names(future_bioclim_data)
+names(future_bioclim_data) <- names(bioclim_data)
+
+# make the model prediction
+pred_glm_2100 <- terra::predict(future_bioclim_data, glm_sdm, type="response")
+pred_gam_2100 <- terra::predict(future_bioclim_data, gam_sdm, type="response")
+
+# threshold the model prediction
+pred_glm_bin_2100 <- pred_glm_2100 > pred_glm_threshold
+pred_gam_bin_2100 <- pred_gam_2100 > pred_gam_threshold
+```
+
+#### **Final Task (\~20 minutes)**
+
+Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create three leaflet maps synced together using `leafsync::sync()`: one for the LGM range, one for the present-day range, and one for the 2100 distribution. On top of the present-day map, add the occurrence points and the alpha hull for comparison.
+
+You can sync three maps like this: `sync(map_lgm, map_present, map_future, ncol = 1)`
+
+To add the alpha hull to a leaflet map, use the `ahull_sf` object we created at the start: `addPolygons(data = ahull_sf, fillOpacity = 0.2, color = "red")`
+
+Next, get together with your group and compare each member's plot and answer these questions.
+
+-   Which background selection step gave you the best estimate of the present-day range?
+
+-   How did the background selection methods differ from one another?
+
+-   Can you think of a possible reason some methods performed better than others? (no wrong answers!)
