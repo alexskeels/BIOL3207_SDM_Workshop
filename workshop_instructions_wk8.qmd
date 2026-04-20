@@ -129,7 +129,7 @@ Do this at the start of the workshop. For the git commits in this part, you do n
 
     -   Replace the contents with the following markdown template:
 
-        ````
+        ````         
         ---
         title: "BIOL3207 Workshop Solutions"
         author: "UXXXXXXX"
@@ -190,7 +190,7 @@ Remember: This document is your lab book! The information in it must be sufficie
 
 Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, like this:
 
-```
+```         
 ## This is a level 2 subheading
 ### This is a level 3 subheading
 ```
@@ -202,7 +202,7 @@ Before running any code below, make sure you have the raw data in the right plac
 
 Your working directory should be your `DS4B_Week_8/` folder, with a `data/` subfolder inside it:
 
-```
+```         
 DS4B_Week_8/
 ├── DS4B_Week_8.Rproj
 ├── workshop_solutions.rmd
@@ -252,17 +252,17 @@ The code chunks in *this* instructions document have `eval: false` set globally,
 
 A few terms you'll meet this week — refer back here whenever one trips you up:
 
-- **Presence record** — a confirmed observation of the species at a location.
-- **Background / pseudo-absence point** — a location treated as "not a confirmed presence". Used by statistical SDMs that need contrast between species locations and the broader landscape. Background ≠ true absence.
-- **Bioclim variables** — the 19 standard climate summaries (e.g. `Bio01` = annual mean temperature, `Bio12` = annual precipitation) from WorldClim / CHELSA.
-- **GLM** — generalised linear model (here, logistic regression on presence vs background).
-- **GAM** — generalised additive model; like a GLM but with smooth (non-linear) terms via `s()`. The argument `k` controls how wiggly the smooth can be.
-- **Collinearity** — when two predictors carry nearly the same information (high correlation). A problem for GLMs/GAMs.
-- **AUC / ROC** — the ROC curve plots true-positive rate vs false-positive rate across all possible thresholds; AUC is its area. AUC = 0.5 is random, 1.0 is perfect.
-- **Threshold** — a value of predicted suitability above which we call a cell "suitable". `spec_sens` is the threshold that maximises sensitivity + specificity.
-- **K-fold cross-validation** — split data into K parts, train on K-1 and test on the held-out fold, repeat K times. Gives a more honest estimate of model performance than training AUC.
-- **LGM** — Last Glacial Maximum (~21,000 years ago).
-- **MIROC6 / SSP585** — a climate model (MIROC6) run under a high-emissions future scenario (SSP585, ≈ RCP 8.5) for 2100.
+-   **Presence record** — a confirmed observation of the species at a location.
+-   **Background / pseudo-absence point** — a location treated as "not a confirmed presence". Used by statistical SDMs that need contrast between species locations and the broader landscape. Background ≠ true absence.
+-   **Bioclim variables** — the 19 standard climate summaries (e.g. `Bio01` = annual mean temperature, `Bio12` = annual precipitation) from WorldClim / CHELSA.
+-   **GLM** — generalised linear model (here, logistic regression on presence vs background).
+-   **GAM** — generalised additive model; like a GLM but with smooth (non-linear) terms via `s()`. The argument `k` controls how wiggly the smooth can be.
+-   **Collinearity** — when two predictors carry nearly the same information (high correlation). A problem for GLMs/GAMs.
+-   **AUC / ROC** — the ROC curve plots true-positive rate vs false-positive rate across all possible thresholds; AUC is its area. AUC = 0.5 is random, 1.0 is perfect.
+-   **Threshold** — a value of predicted suitability above which we call a cell "suitable". `spec_sens` is the threshold that maximises sensitivity + specificity.
+-   **K-fold cross-validation** — split data into K parts, train on K-1 and test on the held-out fold, repeat K times. Gives a more honest estimate of model performance than training AUC.
+-   **LGM** — Last Glacial Maximum (\~21,000 years ago).
+-   **MIROC6 / SSP585** — a climate model (MIROC6) run under a high-emissions future scenario (SSP585, ≈ RCP 8.5) for 2100.
 :::
 
 ## Introduction
@@ -309,7 +309,7 @@ Load the raster stack with the `rast` function from the `terra` package.
 bioclim_data <- rast("data/worldclim_australia.tif")
 ```
 
-#### **Task 1. Inspect the Predictors (~10 minutes)**
+#### **Task 1. Inspect the Predictors (\~10 minutes)**
 
 Raster data can be organised as a matrix, with each row representing a latitude, and each column a longitude. It can also be organised with each row representing a unique grid cell on the landscape. This second format is useful when you are looking at multiple variables simultaneously and is what is returned by `as_tibble`.
 
@@ -409,7 +409,7 @@ By the end of this exercise, your group should be able to answer:
 
 There is no universally correct answer — the goal is to develop modelling judgement.
 
-#### **Task 2. Generate Background Points Using Your Assigned Method (~20 minutes)**
+#### **Task 2. Generate Background Points Using Your Assigned Method (\~20 minutes)**
 
 -   Within your group, assign one method to each person.
 
@@ -697,7 +697,7 @@ We will fit two types of models:
 
 ------------------------------------------------------------------------
 
-#### **Task 3. Select predictors (~15 minutes)**
+#### **Task 3. Select predictors (\~15 minutes)**
 
 Selecting environmental predictors is critical. Variables should be chosen based on **ecological relevance** and to **avoid collinearity**. Both GLMs and GAMs do poorly when predictors are highly correlated.
 
@@ -742,7 +742,7 @@ print(formula_glm)
 print(formula_gam)
 ```
 
-#### **Task 4. Fit models (~20 minutes)**
+#### **Task 4. Fit models (\~20 minutes)**
 
 Now we fit both models using the uncorrelated predictors.
 
@@ -759,6 +759,7 @@ summary(gam_sdm)
 
 ::: callout-note
 ## Reading model output
+
 In the `summary()` output, look for:
 
 -   **Significant variables**: look for small p-values (marked with `*`, `**`, or `***`) next to each predictor.
@@ -828,6 +829,7 @@ From the ROC curve, we calculate the **Area Under the Curve (AUC)**:
 
 ::: callout-warning
 ## Note
+
 Higher AUC values indicate better predictive performance, but AUC alone does not capture all aspects of model reliability — it should be interpreted alongside other evaluation metrics. Also note that because we are using pseudo-absences (background points) rather than true absences, the predicted values represent **relative habitat suitability** rather than true probability of occurrence.
 :::
 
@@ -899,7 +901,7 @@ So far we have evaluated the model on the same data used to fit it, so it may ap
 
 A better way to estimate predictive performance is to split the data into training and testing subsets, fit the model on the training data, and evaluate it on the testing data.
 
-#### **Task 5. K-Fold Cross-Validation (~15 minutes)**
+#### **Task 5. K-Fold Cross-Validation (\~15 minutes)**
 
 K-fold cross-validation automates the validation process by splitting the data into `k` partitions and repeats the evaluation on each partition. As follows:
 
@@ -971,6 +973,7 @@ Lets see what our SDM predicts for the distribution of the Frilled Lizard at the
 
 ::: callout-warning
 ## Extrapolation caution — read before projecting
+
 When we project a model to past or future climates, the environmental conditions may fall outside the range the model was trained on. This can produce unreliable predictions, especially for GAMs where smooth terms can behave unpredictably outside the training data range. The `spec_sens` threshold below was chosen on *present-day* data and may not be appropriate for LGM or 2100 conditions. Interpret these temporal projections as **indicative, not definitive**.
 :::
 
@@ -1022,7 +1025,7 @@ pred_glm_bin_2100 <- pred_glm_2100 > pred_glm_threshold
 pred_gam_bin_2100 <- pred_gam_2100 > pred_gam_threshold
 ```
 
-#### **Final Task (~20 minutes)**
+#### **Final Task (\~20 minutes)**
 
 Each person in your group should pick the model algorithm they think performed best (GLM or GAM) and create three leaflet maps synced together using `leafsync::sync()`: one for the LGM range, one for the present-day range, and one for the 2100 distribution. On top of the present-day map, add the occurrence points and the alpha hull for comparison.
 
@@ -1039,22 +1042,15 @@ Next, get together with your group and compare each member's plot and answer the
 -   Can you think of a possible reason some methods performed better than others? (no wrong answers!)
 
 ::: callout-tip
-## ✅ Check out!
+## ✅ Workshop Complete
 
-Once you’ve completed the workshop up to this point (not including any of the Going Further section), you are welcome to check out. **But first, knit, commit, and push!**
+Once you’ve completed the workshop up to this point (not including any of the Going Further section), you are welcome to leave. **But first, make sure:**
 
-If you’d like to stay and complete the ‘Going Further’ section, you’re welcome to do so — but please check out first.
-
-**Before checking out, make sure you have:**
-
--   Fitted GLM and GAM models with cross-validation results
--   At least one suitability map (continuous or binary) plotted with leaflet
--   The group comparison of background point methods discussed
--   A three-panel temporal comparison (LGM, present, future)
+-   **You knit, commit, and push!**
 -   Written reflections on the "Ask yourself" questions in your `.rmd`
 -   Your `.rmd` knits to `.html` without errors
 
-**To check out:** bring your laptop to Alex, Rob, or a demonstrator with both your `.rmd` and `.html` files open.
+If you’d like to stay and complete the ‘Going Further’ section, you’re welcome (and encouraged!) to do so.
 :::
 
 ## Going Further

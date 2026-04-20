@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(quarto render:*)",
+      "Bash(where quarto.exe)",
+      "Read(//c/Program Files/Quarto/**)",
+      "Read(//c/Program Files/RStudio/resources/app/bin/quarto/bin//**)",
+      "Bash(\"/c/Program Files/RStudio/resources/app/bin/quarto/bin/quarto.exe\" render workshop_instructions_wk8.qmd --to html)"
+    ]
+  }
+}

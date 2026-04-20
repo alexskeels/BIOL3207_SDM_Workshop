@@ -129,7 +129,7 @@ Do this at the start of the workshop. For the git commits in this part, you do n
 
     -   Replace the contents with the following markdown template:
 
-        ````
+        ````         
         ---
         title: "BIOL3207 Workshop Solutions"
         author: "UXXXXXXX"
@@ -188,7 +188,7 @@ Remember: This document is your lab book! The information in it must be sufficie
 
 Please keep the level 1 headings we have given you above, so it’s easy for us to come around and help you. Please use subheadings to divide up your work within each section, like this:
 
-```
+```         
 ## This is a level 2 subheading
 ### This is a level 3 subheading
 ```
@@ -200,7 +200,7 @@ Before running any code below, make sure you have the raw data in the right plac
 
 Your working directory should be your `DS4B_Week_7/` folder, with a `data/` subfolder inside it:
 
-```
+```         
 DS4B_Week_7/
 ├── DS4B_Week_7.Rproj
 ├── workshop_solutions.rmd
@@ -256,6 +256,7 @@ Today, we will focus on the latter. We will start by taking occurrence records f
 
 ::: callout-note
 ## About the Frilled Lizard
+
 The Frilled Lizard (*Chlamydosaurus kingii*) is found across tropical savanna woodlands and dry forests in northern Australia and southern New Guinea. It is strongly associated with open woodland habitats that have a grassy understorey, and relies on trees for shelter, foraging, and its characteristic threat display. The species is currently listed as Least Concern by the IUCN, though its range may be shifting in response to changing fire regimes and climate. Keep this ecological context in mind throughout the workshop — it will help you judge whether modelled distributions make biological sense.
 :::
 
@@ -265,7 +266,11 @@ The ALA is a collaborative, digital, open infrastructure that pulls together Aus
 
 I got today's data directly from the ALA website and I'll explain how I got this and what's in the dataset. Every dataset downloaded from ALA is given a Digital Object Identifier (DOI) so anyone can download the exact same one. Here is our one for the [Frilled Lizard](https://doi.org/10.26197/ala.2e4809b8-791f-4adb-b1aa-f3e0fd94f86a), but you should have also already downloaded this from Canvas.
 
-#### **Task 1. Exploring the data frame (~10 minutes)**
+#### **Task 1. Exploring the data frame**
+
+::: callout-note
+This should take no more than 10 minutes
+:::
 
 The data has lots of columns, use `kable` to look at them to get an idea of the kinds of information are recorded in the ALA. Pay attention to ones that explicitly record taxonomic information (e.g. species, genus, family), ecological information (e.g. habitat, behaviour), and spatial information (e.g. latitude, longitude, place names).
 
@@ -301,6 +306,7 @@ tibble(
 
 ::: callout-tip
 ## Hint
+
 Save the missingness tibble to a variable (e.g. `missingness_table`) and use it as input to `ggplot()`. Map `n_missing` to the x-axis and use `geom_histogram()`. If you get stuck, click "Show solution" in the code block below.
 :::
 
@@ -335,7 +341,11 @@ Before we begin, we need to load a world coastline polygon. We will use this lat
 world <- ne_countries(scale = "medium", returnclass = "sf")
 ```
 
-#### **Task 2. Explore the spatial data (~20 minutes)**
+#### **Task 2. Explore the spatial data**
+
+::: callout-note
+This should take no more than 15 minutes
+:::
 
 Inspect where occurrence records are located.
 
@@ -402,7 +412,11 @@ For many taxa, the International Union for the Conservation of Nature (IUCN) pro
 
 For example, the Frilled Lizard was assessed by the IUCN in 2014: <https://www.iucnredlist.org/species/170384/21644690>
 
-#### **Task 3. Compare expert range vs occurrence records (~20 minutes)**
+#### **Task 3. Compare expert range vs occurrence records**
+
+::: callout-note
+This should take no more than 20 minutes
+:::
 
 We will now load the IUCN range polygon and compare it to the occurrence records. Plot the datasets together and inspect where they agree and where they don’t.
 
@@ -467,7 +481,11 @@ A buffer allows us to:
 
 -   capture populations near shifting range boundaries
 
-#### **Task 4. Explore buffer distances (~20 minutes)**
+#### **Task 4. Explore buffer distances**
+
+::: callout-note
+This should take no more than 15 minutes
+:::
 
 Selecting an appropriate buffer distance to remove potentially erroneous points is a difficult task as there is not necessarily a set of hard-and-fast rules. We want to balance including points that could reasonably be considered part of the species range without including obviously wrong points.
 
@@ -626,7 +644,11 @@ leaflet(occ_sf) |>
 buffer_iucn <- buffer_200km
 ```
 
-#### **Task 5. Crop Occurrence Records with Buffer (~10 minutes)**
+#### **Task 5. Crop Occurrence Records with Buffer**
+
+::: callout-note
+This should take no more than 10 minutes
+:::
 
 After exploring the IUCN polygon and buffers, we now want to subset our occurrence records to include only points that fall within a chosen buffer around the expert range.
 
@@ -662,7 +684,11 @@ Species distribution models (SDMs) aim to reconstruct where a species is likely 
 
 A **convex hull** (or minimum convex polygon, MCP) is one of the easiest ways to estimate a species’ range. It is the smallest polygon that encloses all occurrence points and has only convex angles (\< 180°).
 
-#### **Task 6. Build a convex hull (~15 minutes)**
+#### **Task 6. Build a convex hull**
+
+::: callout-note
+This should take no more than 15 minutes
+:::
 
 -   Extract the coordinates from your cleaned occurrence dataset.
 
@@ -701,7 +727,11 @@ sf_use_s2(TRUE)
 
 **Alpha hulls**, on the other hand, allow **concave polygons**, producing a tighter, more realistic range envelope. The alpha value controls the degree of concavity. Smaller alpha values give a tighter, more concave polygon, larger alpha values give a looser, more convex polygon.
 
-#### **Task 7. Build alpha hulls (~20 minutes)**
+#### **Task 7. Build alpha hulls**
+
+::: callout-note
+This should take no more than 20 minutes
+:::
 
 1.  Make sure `alphahull`, `hull2spatial` and `sp` are loaded (they were listed in the "Packages for today" chunk at the top of this workshop — if you skipped that, go install and load them now).
 
@@ -745,7 +775,11 @@ ahull_sf <- st_intersection(st_make_valid(ahull_sf), world)
 sf_use_s2(TRUE)
 ```
 
-#### **Task 8. Compare all layers (~15 minutes)**
+#### **Task 8. Compare all layers**
+
+::: callout-note
+This should take no more than 15 minutes
+:::
 
 Now visualise everything together: occurrences, buffers, IUCN range, convex hull, and alpha hull, based on what you've learned using `leaflet`. Build your map by starting with `leaflet() |> addProviderTiles(...)` and adding layers one at a time with `addCircleMarkers()` for points and `addPolygons()` for polygons. Use different colours for each layer so you can distinguish them. If you get stuck, click "Show solution" in the code block below.
 
@@ -829,21 +863,17 @@ terra::writeVector(terra::vect(ahull_sf), "data/frilled_lizard_alpha_hull.shp", 
 ```
 
 ::: callout-tip
-## ✅ Check out!
+## ✅ Workshop Complete
 
-Once you’ve completed the workshop up to this point (not including any of the Going Further section), you are welcome to check out. **But first, knit, commit, and push!**
+Once you’ve completed the workshop up to this point (not including any of the Going Further section), you are welcome to leave. **But first, make sure:**
 
-If you’d like to stay and complete the ‘Going Further’ section, you’re welcome to do so — but please check out first.
-
-**Before checking out, make sure you have:**
-
--   Cleaned occurrence data saved as a CSV (`data/frilled_lizard_ALA_cropped.csv`)
--   An alpha hull saved as a shapefile (`data/frilled_lizard_alpha_hull.shp`)
--   At least one leaflet map comparing different range estimation methods
--   Written reflections on the "Ask yourself" questions in your `.rmd`
+-   **You knit, commit, and push!**
+-   You have saved your cleaned occurrence data as a CSV (`data/frilled_lizard_ALA_cropped.csv`)
+-   You have saved your alpha hull as a shapefile (`data/frilled_lizard_alpha_hull.shp`)
+-   You have written reflections on the "Ask yourself" questions in your `.rmd`
 -   Your `.rmd` knits to `.html` without errors
 
-**To check out:** bring your laptop to Alex, Rob, or a demonstrator with both your `.rmd` and `.html` files open.
+If you’d like to stay and complete the ‘Going Further’ section, you’re welcome (and encouraged!) to do so.
 :::
 
 ## Going Further
