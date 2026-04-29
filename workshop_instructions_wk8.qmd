@@ -332,26 +332,29 @@ values(bioclim_data) |>
   as_tibble() |>
   skim()
 
+# Define one palette per layer and reuse it for BOTH the raster image and the
+# legend, so the colours on the map match the colours in the legend.
+pal_bio01 <- colorNumeric("Spectral", values(bioclim_data$Bio01),
+                          na.color = "transparent", reverse = TRUE)
+pal_bio12 <- colorNumeric("Spectral", values(bioclim_data$Bio12),
+                          na.color = "transparent", reverse = TRUE)
+
 bio01 <- leaflet() |>
   addProviderTiles(providers$CartoDB.Positron) |>
   addRasterImage(raster::raster(bioclim_data$Bio01),
-                 opacity = 0.8) |>
-  addLegend(pal = colorNumeric("viridis",
-                              values(bioclim_data$Bio01),
-                              na.color = "transparent"),
+                 colors = pal_bio01, opacity = 0.8) |>
+  addLegend(pal = pal_bio01,
             values = values(bioclim_data$Bio01),
-            title = "Bio01")
+            title = "Bio01 (°C)")
 
 
 bio12 <- leaflet() |>
   addProviderTiles(providers$CartoDB.Positron) |>
   addRasterImage(raster::raster(bioclim_data$Bio12),
-                 opacity = 0.8) |>
-  addLegend(pal = colorNumeric("viridis",
-                              values(bioclim_data$Bio12),
-                              na.color = "transparent"),
+                 colors = pal_bio12, opacity = 0.8) |>
+  addLegend(pal = pal_bio12,
             values = values(bioclim_data$Bio12),
-            title = "Bio12")
+            title = "Bio12 (mm)")
 
 sync(bio01, bio12)
 ```
@@ -583,7 +586,7 @@ filtered_cells <- clim_df |>
 
   filter(n == nrow(ranges_long)) |>
 
-  select(x, y)
+  dplyr::select(x, y)
 
 bg <- filtered_cells |>
   slice_sample(n = 5000)
